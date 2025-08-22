@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Альбом Клану</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #0f0f0f, #1e1e1e);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2rem;
+      text-shadow: 0 0 8px #fff, 0 0 16px #000;
+    }
+
+    .album {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .photo-card {
+      background: #222;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: transform 0.2s;
+    }
+
+    .photo-card:hover {
+      transform: scale(1.05);
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .caption {
+      padding: 10px;
+      text-align: center;
+      font-size: 1rem;
+      background: #111;
+    }
+  </style>
+</head>
+<body>
+  <h1>📖 Альбом Клану</h1>
+  
+  <div class="album">
+    <div class="photo-card">
+      <img src="https://via.placeholder.com/400x250" alt="Фото 1">
+      <div class="caption">Фото 1</div>
+    </div>
+    <div class="photo-card">
+      <img src="https://via.placeholder.com/400x250" alt="Фото 2">
+      <div class="caption">Фото 2</div>
+    </div>
+    <div class="photo-card">
+      <img src="https://via.placeholder.com/400x250" alt="Фото 3">
+      <div class="caption">Фото 3</div>
+    </div>
+    <div class="photo-card">
+      <img src="https://via.placeholder.com/400x250" alt="Фото 4">
+      <div class="caption">Фото 4</div>
+    </div>
+    <div class="photo-card">
+      <img src="https://via.placeholder.com/400x250" alt="Фото 5">
+      <div class="caption">Фото 5</div>
+    </div>
+  </div>
+</body>
+</html>
