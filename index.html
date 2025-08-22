@@ -16,12 +16,40 @@
     position: relative;
     overflow-x: hidden;
 
-    /* Фото + червоний градієнт */
+    /* Фото + червоний градієнт + горизонтальне повторення */
     background: 
       linear-gradient(rgba(0,0,0,0.7), rgba(150,0,0,0.6)), 
       url("https://cdn.discordapp.com/attachments/1404565577648832545/1408370900545568778/IMG_4850.jpg?ex=68a97f1c&is=68a82d9c&hm=d8f6e918f51b4f04bc38f3e78b8159fbf4523165b3b32e0f53f665fcd723f7b5") repeat-x top;
     
-    background-size: auto 100%; /* Авто по ширині, висота 100% */
+    background-size: auto 100%; 
+    animation: backgroundMove 60s linear infinite;
+  }
+
+  @keyframes backgroundMove {
+    0% { background-position-x: 0; }
+    100% { background-position-x: -1000px; }
+  }
+
+  /* Анімація появи з ефектом вибуху */
+  .explode {
+    transform: scale(0);
+    opacity: 0;
+    animation: explodeAnim 1s forwards;
+  }
+
+  @keyframes explodeAnim {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
   }
 
   h1 {
@@ -93,6 +121,18 @@
     justify-content: center;
     text-align: center;
     border-radius: 10px;
+    opacity: 0;
+    animation: btnAppear 1s forwards;
+  }
+
+  .btn:nth-child(1) { animation-delay: 2.5s; }
+  .btn:nth-child(2) { animation-delay: 2.7s; }
+  .btn:nth-child(3) { animation-delay: 2.9s; }
+  .btn:nth-child(4) { animation-delay: 3.1s; }
+
+  @keyframes btnAppear {
+    from { opacity: 0; transform: scale(0.5);}
+    to { opacity: 1; transform: scale(1);}
   }
 
   .btn:hover {
@@ -114,9 +154,9 @@
 </head>
 <body>
 
-  <h1>SLOTHIM</h1>
+  <h1 class="explode">SLOTHIM</h1>
 
-  <div class="description-container">
+  <div class="description-container explode">
     <div class="description-text">
 Серйозний клан для сильних та відданих гравців.  
 У нас сувора дисципліна, чіткі правила та висока організація.  
@@ -128,6 +168,7 @@
     <button class="btn">Склад клану</button>
     <button class="btn">Система підвищення</button>
     <button class="btn">Фотоальбом клану</button>
+    <button class="btn">Хто ми?</button>
   </div>
 
   <footer>© 2025 SLOTHIM. Усі права захищено</footer>
