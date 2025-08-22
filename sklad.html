@@ -5,96 +5,101 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Склад Клану</title>
 <style>
-  body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    min-height: 100vh;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: linear-gradient(rgba(0,0,0,0.8), rgba(150,0,0,0.6)),
-                url("https://cdn.discordapp.com/attachments/1404565577648832545/1408370900545568778/IMG_4850.jpg") repeat-x top;
-    background-size: auto 100%;
-    animation: backgroundMove 60s linear infinite;
-    overflow-x: hidden;
-    padding: 20px;
-  }
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  min-height: 100vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(rgba(0,0,0,0.8), rgba(150,0,0,0.6)),
+              url("https://cdn.discordapp.com/attachments/1404565577648832545/1408370900545568778/IMG_4850.jpg") repeat-x top;
+  background-size: auto 100%;
+  animation: backgroundMove 60s linear infinite;
+  overflow-x: hidden;
+  padding: 20px;
+}
 
-  @keyframes backgroundMove {
-    0% { background-position-x: 0; }
-    100% { background-position-x: -1000px; }
-  }
+@keyframes backgroundMove {
+  0% { background-position-x: 0; }
+  100% { background-position-x: -1000px; }
+}
 
-  h1 {
-    font-size: 3em;
-    color: red;
-    text-shadow: 0 0 5px #000, 0 0 15px #000;
-    margin-bottom: 20px;
-    text-align: center;
-    animation: neon 2s infinite alternate;
-  }
+h1 {
+  font-size: 3em;
+  color: red;
+  text-shadow: 0 0 5px #000, 0 0 15px #000;
+  margin-bottom: 20px;
+  text-align: center;
+  animation: neon 2s infinite alternate;
+}
 
-  @keyframes neon {
-    from { text-shadow: 0 0 5px #000, 0 0 15px #ff0000; }
-    to { text-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000; }
-  }
+@keyframes neon {
+  from { text-shadow: 0 0 5px #000, 0 0 15px #ff0000; }
+  to { text-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000; }
+}
 
-  table {
-    width: 100%;
-    max-width: 600px;
-    border-collapse: collapse;
-    background: rgba(0,0,0,0.7);
-    border: 2px solid red;
-    border-radius: 10px;
-    overflow: hidden;
-  }
+table {
+  width: 100%;
+  max-width: 800px;
+  border-collapse: collapse;
+  background: rgba(0,0,0,0.7);
+  border: 2px solid red;
+  border-radius: 10px;
+  overflow: hidden;
+}
 
-  th, td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid red;
-    color: white;
-    font-size: 1.1em;
-  }
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid red;
+  color: white;
+  font-size: 1.1em;
+  vertical-align: top;
+}
 
-  th {
-    background: rgba(255,0,0,0.3);
-  }
+th {
+  background: rgba(255,0,0,0.3);
+}
 
-  td ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-  }
+td .nick-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
 
-  td ul li {
-    margin: 0;
-  }
+td .nick-list span {
+  background: rgba(255,0,0,0.2);
+  padding: 2px 6px;
+  border-radius: 5px;
+  white-space: nowrap;
+}
 
-  footer {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 1em;
-    color: #ccc;
-    background: rgba(0,0,0,0.5);
-    padding: 5px 15px;
-    border-radius: 8px;
-  }
+tr:last-child td {
+  border-bottom: none;
+}
 
-  /* Адаптивність */
-  @media (max-width: 768px) {
-    h1 { font-size: 2.5em; }
-    th, td { font-size: 1em; padding: 10px; }
-  }
+footer {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 1em;
+  color: #ccc;
+  background: rgba(0,0,0,0.5);
+  padding: 5px 15px;
+  border-radius: 8px;
+}
 
-  @media (max-width: 480px) {
-    h1 { font-size: 2em; }
-    th, td { font-size: 0.9em; padding: 8px; }
-  }
+/* Адаптивність */
+@media (max-width: 768px) {
+  h1 { font-size: 2.5em; }
+  th, td { font-size: 1em; padding: 10px; }
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 2em; }
+  th, td { font-size: 0.9em; padding: 8px; }
+}
 </style>
 </head>
 <body>
@@ -108,53 +113,31 @@
   </tr>
   <tr>
     <td>Лідер</td>
-    <td><ul><li>Святослав Банк</li></ul></td>
+    <td><div class="nick-list"><span>Святослав Банк</span></div></td>
   </tr>
   <tr>
     <td>Модератор</td>
-    <td>
-      <ul>
-        <li>Альфонсо Аріаз</li>
-        <li>Марік Хелл</li>
-      </ul>
-    </td>
+    <td><div class="nick-list"><span>Альфонсо Аріаз</span><span>Марік Хелл</span></div></td>
   </tr>
   <tr>
     <td>Старший</td>
-    <td><ul><li>Христя Банк</li></ul></td>
+    <td><div class="nick-list"><span>Христя Банк</span></div></td>
   </tr>
   <tr>
     <td>Місцевий</td>
-    <td>
-      <ul>
-        <li>Бодя Кабіна</li>
-        <li>Назарчик Романів</li>
-        <li>Діана Волтерсон</li>
-      </ul>
-    </td>
+    <td><div class="nick-list"><span>Бодя Кабіна</span><span>Назарчик Романів</span><span>Діана Волтерсон</span></div></td>
   </tr>
   <tr>
     <td>Молодший</td>
     <td>
-      <ul>
-        <li>Ростислав Орестович</li>
-        <li>Влад Фелікс</li>
-        <li>Міша Макаль</li>
-        <li>Гарі Хелл</li>
-        <li>Тарас Сліптон</li>
-        <li>Матвій Яксманецький</li>
-        <li>Вадим Вомен</li>
-        <li>Ілля Михайлов</li>
-        <li>Макар Синявський</li>
-        <li>Нікітосік Фенікс</li>
-        <li>Ілюха Мельник</li>
-        <li>Саня Турчин</li>
-        <li>Андрій Мажоров</li>
-        <li>Владислав Мальборо</li>
-        <li>Давид Махахлов</li>
-        <li>Максімка Овнпотожний</li>
-        <li>Руслан Тетріс</li>
-      </ul>
+      <div class="nick-list">
+        <span>Ростислав Орестович</span><span>Влад Фелікс</span><span>Міша Макаль</span>
+        <span>Гарі Хелл</span><span>Тарас Сліптон</span><span>Матвій Яксманецький</span>
+        <span>Вадим Вомен</span><span>Ілля Михайлов</span><span>Макар Синявський</span>
+        <span>Нікітосік Фенікс</span><span>Ілюха Мельник</span><span>Саня Турчин</span>
+        <span>Андрій Мажоров</span><span>Владислав Мальборо</span><span>Давид Махахлов</span>
+        <span>Максімка Овнпотожний</span><span>Руслан Тетріс</span>
+      </div>
     </td>
   </tr>
 </table>
