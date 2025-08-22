@@ -38,7 +38,7 @@
 
   h1 {
     animation-delay: 0.5s;
-    font-size: 6em;
+    font-size: 5em;
     font-weight: bold;
     text-transform: uppercase;
     color: #0a0a0a;
@@ -55,7 +55,7 @@
 
   .description-container {
     margin: 20px;
-    padding: 25px;
+    padding: 20px;
     border: 2px solid #ff0000;
     border-radius: 15px;
     max-width: 800px;
@@ -83,16 +83,16 @@
 
   .buttons {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     margin: 30px 0;
     flex-wrap: wrap;
     justify-content: center;
   }
 
   .btn {
-    width: 180px;
-    height: 180px;
-    font-size: 1.2em;
+    width: 160px;
+    height: 160px;
+    font-size: 1.1em;
     font-weight: bold;
     text-transform: uppercase;
     background: rgba(0, 0, 0, 0.7);
@@ -126,6 +126,19 @@
     background: rgba(0,0,0,0.5);
     padding: 5px 15px;
     border-radius: 8px;
+  }
+
+  /* Адаптивність під мобільні телефони та планшети */
+  @media (max-width: 768px) {
+    h1 { font-size: 3.5em; }
+    .description-text { font-size: 1.2em; }
+    .btn { width: 140px; height: 140px; font-size: 1em; }
+  }
+
+  @media (max-width: 480px) {
+    h1 { font-size: 2.5em; }
+    .description-text { font-size: 1em; }
+    .btn { width: 120px; height: 120px; font-size: 0.9em; }
   }
 </style>
 </head>
