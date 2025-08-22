@@ -13,57 +13,49 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: linear-gradient(rgba(0,0,0,0.8), rgba(150,0,0,0.6)),
-                url("https://cdn.discordapp.com/attachments/1404565577648832545/1408370900545568778/IMG_4850.jpg?ex=68a97f1c&is=68a82d9c&hm=d8f6e918f51b4f04bc38f3e78b8159fbf4523165b3b32e0f53f665fcd723f7b5") repeat-x top;
-    background-size: auto 100%;
-    animation: backgroundMove 60s linear infinite;
+    position: relative;
     overflow-x: hidden;
-    padding: 20px;
-  }
 
-  @keyframes backgroundMove {
-    0% { background-position-x: 0; }
-    100% { background-position-x: -1000px; }
+    /* Статичний фон з градієнтом */
+    background: 
+      linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.6)),
+      url("https://cdn.discordapp.com/attachments/1404565577648832545/1408370900545568778/IMG_4850.jpg") no-repeat center top;
+    background-size: cover;
   }
 
   h1 {
+    margin-top: 30px;
     font-size: 3em;
     color: red;
     text-shadow: 0 0 5px #000, 0 0 15px #000;
-    margin-bottom: 20px;
     text-align: center;
-    animation: neon 2s infinite alternate;
   }
 
-  @keyframes neon {
-    from { text-shadow: 0 0 5px #000, 0 0 15px #ff0000; }
-    to { text-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000; }
+  .content {
+    max-width: 1000px;
+    background: rgba(0,0,0,0.7);
+    border: 2px solid red;
+    border-radius: 15px;
+    padding: 25px;
+    margin: 30px 20px;
   }
 
   table {
     width: 100%;
-    max-width: 600px;
     border-collapse: collapse;
-    background: rgba(0,0,0,0.7);
-    border: 2px solid red;
-    border-radius: 10px;
-    overflow: hidden;
+    margin-top: 20px;
   }
 
   th, td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid red;
+    border: 1px solid red;
+    padding: 10px;
+    text-align: center;
+    font-size: 1.2em;
     color: white;
-    font-size: 1.1em;
   }
 
   th {
-    background: rgba(255,0,0,0.3);
-  }
-
-  tr:last-child td {
-    border-bottom: none;
+    background: rgba(255,0,0,0.7);
   }
 
   footer {
@@ -76,15 +68,14 @@
     border-radius: 8px;
   }
 
-  /* Адаптивність */
   @media (max-width: 768px) {
     h1 { font-size: 2.5em; }
-    th, td { font-size: 1em; padding: 10px; }
+    th, td { font-size: 1em; padding: 8px; }
   }
 
   @media (max-width: 480px) {
     h1 { font-size: 2em; }
-    th, td { font-size: 0.9em; padding: 8px; }
+    th, td { font-size: 0.9em; padding: 6px; }
   }
 </style>
 </head>
@@ -92,32 +83,34 @@
 
 <h1>Склад Клану</h1>
 
-<table>
-  <tr>
-    <th>Звання</th>
-    <th>Нік</th>
-  </tr>
-  <tr>
-    <td>Лідер</td>
-    <td>Тут твій нік</td>
-  </tr>
-  <tr>
-    <td>Модератор</td>
-    <td>Тут твій нік</td>
-  </tr>
-  <tr>
-    <td>Старший</td>
-    <td>Тут твій нік</td>
-  </tr>
-  <tr>
-    <td>Місцевий</td>
-    <td>Тут твій нік</td>
-  </tr>
-  <tr>
-    <td>Молодший</td>
-    <td>Тут твій нік</td>
-  </tr>
-</table>
+<div class="content">
+  <table>
+    <tr>
+      <th>Звання</th>
+      <th>Нік</th>
+    </tr>
+    <tr>
+      <td>Лідер</td>
+      <td>Тут твій нік</td>
+    </tr>
+    <tr>
+      <td>Модератор</td>
+      <td>Тут твій нік</td>
+    </tr>
+    <tr>
+      <td>Старший</td>
+      <td>Тут твій нік</td>
+    </tr>
+    <tr>
+      <td>Місцевий</td>
+      <td>Тут твій нік</td>
+    </tr>
+    <tr>
+      <td>Молодший</td>
+      <td>Тут твій нік</td>
+    </tr>
+  </table>
+</div>
 
 <footer>© 2025 SLOTHIM. Усі права захищено</footer>
 
