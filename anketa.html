@@ -8,7 +8,6 @@
 <style>
 body{background: linear-gradient(135deg,#0a0f1e,#121a33); color:#e9efff; font-family:sans-serif;}
 .bg-glass{background: rgba(255,255,255,0.08); backdrop-filter: blur(14px);}
-.bg-glass2{background: rgba(255,255,255,0.14); backdrop-filter: blur(18px);}
 .pill{border-radius:999px;}
 .shine{position:relative; overflow:hidden;}
 .shine::after{content:'';position:absolute;inset:-250% -50%;background:linear-gradient(120deg,transparent 45%,rgba(255,255,255,.12) 50%,transparent 55%);transform:rotate(12deg);animation:shine 8s linear infinite;}
@@ -18,25 +17,33 @@ body{background: linear-gradient(135deg,#0a0f1e,#121a33); color:#e9efff; font-fa
 <body class="min-h-screen p-4">
 <header class="mb-4">
 <h1 class="text-2xl font-bold">⚔️ Заявки на вступ у клан</h1>
-<p class="text-slate-300 text-sm">Всі заявки зберігаються на GitHub. Редагування лише з паролем.</p>
-<button id="enterPassBtn" class="pill bg-emerald-500/80 px-3 py-2 mt-2">Ввести секретний пароль</button>
+<p class="text-slate-300 text-sm">Всі заявки зберігаються на GitHub. Редагування лише за паролем.</p>
 </header>
 <main>
 <section class="grid md:grid-cols-2 gap-4" id="list"></section>
 <div id="empty" class="text-slate-400 text-center py-10">Поки що заявок немає.</div>
+<div class="mt-6 text-center">
+<button id="editBtn" class="pill bg-emerald-500/80 px-4 py-2">Редагувати заявки</button>
+</div>
 </main>
 <script>
-// ================= CONFIG =================
-const GH_OWNER = 'YOUR_OWNER';
-const GH_REPO = 'YOUR_REPO';
+// ========== CONFIG ==========
+const GH_OWNER = 'YOUR_OWNER'; // твій GitHub username
+const GH_REPO = 'YOUR_REPO';   // твій репо
 const ISSUE_LABEL = 'application';
-const SECRET_PASS = 'mypassword123'; // Змінити пізніше
+const SECRET_PASS = 'SlotHim08831'; // новий пароль
 
 let canEdit = false;
 
-document.getElementById('enterPassBtn').addEventListener('click',()=>{
+document.getElementById('editBtn').addEventListener('click', ()=>{
   const p = prompt('Введіть секретний пароль:');
-  if(p===SECRET_PASS){ canEdit=true; alert('Доступ до редагування увімкнено'); render(); } else { alert('Невірний пароль'); }
+  if(p===SECRET_PASS){
+    canEdit=true; 
+    alert('Доступ до редагування увімкнено'); 
+    renderIssues();
+  } else { 
+    alert('Невірний пароль'); 
+  }
 });
 
 const listEl = document.getElementById('list');
@@ -48,7 +55,7 @@ async function fetchIssues(){
   if(!res.ok){listEl.innerHTML='Помилка при отриманні заявок'; return;}
   const data = await res.json();
   const issues = data.filter(x=>!x.pull_request);
-  render(issues);
+  renderIssues(issues);
 }
 
 function mdToHtml(md){
@@ -62,7 +69,7 @@ function statusFromLabels(labels){
   return 'pending';
 }
 
-function render(issues){
+function renderIssues(issues){
   if(!issues) return;
   listEl.innerHTML='';
   if(issues.length===0){ emptyEl.style.display='block'; return; } else { emptyEl.style.display='none'; }
