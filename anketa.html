@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>⚔️ Вступ до клану — Заявки</title>
+  <meta name="theme-color" content="#0b1221" />
+  <!-- Tailwind CDN (зручно для GitHub Pages) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{
+      --glass: rgba(255,255,255,.08);
+      --glass-strong: rgba(255,255,255,.15);
+    }
+    body{
+      /* Красивий анімований фон */
+      background: radial-gradient(1200px 800px at 80% 10%, #2645ff33 0%, transparent 45%),
+                 radial-gradient(1000px 1000px at 10% 90%, #00b3ff2e 0%, transparent 40%),
+                 linear-gradient(135deg, #0b1221 0%, #121a33 60%, #081019 100%);
+      background-attachment: fixed;
+    }
+    .bg-glass{ background: var(--glass); backdrop-filter: blur(10px); }
+    .bg-glass-strong{ background: var(--glass-strong); backdrop-filter: blur(16px); }
+    .shine{ position: relative; overflow: hidden; }
+    .shine::after{ content:""; position:absolute; inset:-200% -50%; background: linear-gradient(120deg, transparent 45%, rgba(255,255,255,.12) 50%, transparent 55%);
+      transform: rotate(12deg); animation: shine 7s linear infinite; }
+    @keyframes shine { 0%{transform:translateX(-60%) rotate(12deg)} 100%{transform:translateX(60%) rotate(12deg)} }
+    .badge{box-shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 6px 16px rgba(0,0,0,.3)}
+    .pill{border-radius:999px}
+    .input{background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.15); border-radius:14px; padding:.7rem .9rem; color:#e8eeff}
+    .input:focus{outline:none; border-color:#8ab4ff; box-shadow:0 0 0 3px #8ab4ff33}
+    .label{color:#b8c3e0; font-size:.85rem}
+  </style>
+</head>
+<body class="min-h-screen text-slate-100">
+  <!-- Шапка -->
+  <header class="sticky top-0 z-30 bg-gradient-to-b from-black/40 to-transparent backdrop-blur-sm">
+    <div class="max-w-6xl mx-auto flex items-center gap-3 px-4 py-3">
+      <div class="w-10 h-10 rounded-2xl bg-glass grid place-items-center shadow-lg">
+        <span class="text-xl">⚔️</span>
+      </div>
+      <div>
+        <h1 class="text-xl sm:text-2xl font-extrabold tracking-wide">Вступ до клану — заявки</h1>
+        <p class="text-slate-300 text-xs sm:text-sm">Заповнюй анкету. Адміни затверджують або відхиляють в реальному часі.</p>
+      </div>
+      <div class="ml-auto flex items-center gap-2">
+        <button id="signinBtn" class="pill bg-glass border border-white/15 px-3 py-2 text-sm hover:bg-glass-strong transition">Увійти через Google</button>
+        <button id="signoutBtn" class="pill bg-red-500/80 px-3 py-2 text-sm hover:bg-red-500 transition hidden">Вийти</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 pb-28 pt-4">
+    <!-- Інфо панель -->
+    <section class="mb-6 grid md:grid-cols-3 gap-4">
+      <div class="bg-glass rounded-2xl p-4 shadow-xl">
+        <div class="text-sm text-slate-300">Статус:</div>
+        <div id="authStatus" class="mt-1 text-lg font-semibold">Гість</div>
+        <div id="roleStatus" class="text-slate-400 text-sm">Права: перегляд і подача заявки</div>
+      </div>
+      <div class="bg-glass rounded-2xl p-4 shadow-xl">
+        <div class="text-sm text-slate-300">Адміни, які можуть приймати/відхиляти:</div>
+        <div class="mt-1 font-semibold" id="adminList">07sviatoslav08@gmail.com, b6553251@gmail.com</div>
+      </div>
+      <div class="bg-glass rounded-2xl p-4 shadow-xl">
+        <div class="text-sm text-slate-300">Порада:</div>
+        <div class="mt-1">Заповни анкету нижче. Після відправки твоя заявка з'явиться у списку праворуч.</div>
+      </div>
+    </section>
+
+    <!-- Контент: форма + список заявок -->
+    <section class="grid lg:grid-cols-2 gap-6">
+      <!-- Форма заявки -->
+      <div class="bg-glass rounded-2xl shadow-2xl p-5 shine">
+        <h2 class="text-xl font-extrabold mb-4">Форма для вступу в клан</h2>
+        <form id="applyForm" class="grid grid-cols-1 gap-4">
+          <!-- 1-4 -->
+          <div>
+            <label class="label">1) Нік у грі *</label>
+            <input class="input w-full" name="nick" required />
+          </div>
+          <div>
+            <label class="label">2) ID *</label>
+            <input class="input w-full" name="pid" required />
+          </div>
+          <div>
+            <label class="label">3) Вік *</label>
+            <input type="number" min="1" class="input w-full" name="age" required />
+          </div>
+          <div>
+            <label class="label">4) Часовий пояс / місто *</label>
+            <input class="input w-full" name="zone" required />
+          </div>
+
+          <!-- 5-8 -->
+          <div>
+            <label class="label">5) Скільки часу проводиш у грі щодня</label>
+            <input class="input w-full" name="daily" />
+          </div>
+          <div>
+            <label class="label">6) Скільки часу граєш на сервері</label>
+            <input class="input w-full" name="since" />
+          </div>
+          <div>
+            <label class="label">7) Попередні клани</label>
+            <input class="input w-full" name="prevClans" />
+          </div>
+          <div>
+            <label class="label">8) Причина виходу з попереднього клану</label>
+            <textarea class="input w-full" name="leaveReason" rows="2"></textarea>
+          </div>
+
+          <!-- 9-12 -->
+          <div>
+            <label class="label">9) Чому хочеш до нашого клану</label>
+            <textarea class="input w-full" name="why" rows="2"></textarea>
+          </div>
+          <div>
+            <label class="label">10) Чим готовий допомагати клану</label>
+            <textarea class="input w-full" name="help" rows="2" placeholder="актив, ресурси, івенти, економіка…"></textarea>
+          </div>
+          <div>
+            <label class="label">11) Ставлення до дисципліни та правил</label>
+            <textarea class="input w-full" name="discipline" rows="2"></textarea>
+          </div>
+          <div>
+            <label class="label">12) Чи є мікрофон та Discord</label>
+            <input class="input w-full" name="voice" placeholder="Так/Ні; дискорт нік" />
+          </div>
+
+          <!-- 13-16 -->
+          <div>
+            <label class="label">13) Чи готовий виходити на збори клану</label>
+            <input class="input w-full" name="meetings" />
+          </div>
+          <div>
+            <label class="label">14) Правила серверу (1–10)</label>
+            <input type="number" min="1" max="10" class="input w-full" name="rulesLevel" />
+          </div>
+          <div>
+            <label class="label">15) Навички у грі</label>
+            <input class="input w-full" name="skills" placeholder="стрільба, водіння, економіка…" />
+          </div>
+          <div>
+            <label class="label">16) Чи готовий виконувати вказівки старших</label>
+            <input class="input w-full" name="obey" />
+          </div>
+
+          <!-- 17-20 -->
+          <div>
+            <label class="label">17) Чи є авто/бізнес, яким можеш допомагати</label>
+            <input class="input w-full" name="assets" />
+          </div>
+          <div>
+            <label class="label">18) Чи був бан/варн на сервері (якщо так – за що)</label>
+            <textarea class="input w-full" name="punish" rows="2"></textarea>
+          </div>
+          <div>
+            <label class="label">19) Чи готовий працювати в команді</label>
+            <input class="input w-full" name="team" />
+          </div>
+          <div>
+            <label class="label">20) Додаткова інформація про себе</label>
+            <textarea class="input w-full" name="extra" rows="3"></textarea>
+          </div>
+
+          <div class="flex items-center gap-3 pt-2">
+            <button class="pill bg-emerald-500 hover:bg-emerald-600 px-4 py-2 font-semibold shadow-lg" type="submit">Надіслати заявку</button>
+            <span id="submitMsg" class="text-sm text-slate-300"></span>
+          </div>
+        </form>
+      </div>
+
+      <!-- Список заявок -->
+      <div class="space-y-4">
+        <h2 class="text-xl font-extrabold">Заявки</h2>
+        <div id="list" class="grid md:grid-cols-2 gap-4"></div>
+        <template id="cardTpl">
+          <article class="bg-glass rounded-2xl p-4 shadow-xl border border-white/10">
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <div class="font-bold text-lg"><span data-field="nick"></span> <span class="text-slate-400 text-sm">(<span data-field="pid"></span>)</span></div>
+              <div class="pill px-2 py-1 text-xs badge" data-field="statusBadge"></div>
+            </div>
+            <div class="text-slate-300 text-sm mb-2">Вік: <span data-field="age"></span> • Часовий пояс: <span data-field="zone"></span></div>
+            <details class="bg-black/20 rounded-xl p-3">
+              <summary class="cursor-pointer select-none">Показати деталі</summary>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm mt-2">
+                <div><b>5)</b> <span data-field="daily"></span></div>
+                <div><b>6)</b> <span data-field="since"></span></div>
+                <div><b>7)</b> <span data-field="prevClans"></span></div>
+                <div><b>8)</b> <span data-field="leaveReason"></span></div>
+                <div class="sm:col-span-2"><b>9)</b> <span data-field="why"></span></div>
+                <div class="sm:col-span-2"><b>10)</b> <span data-field="help"></span></div>
+                <div class="sm:col-span-2"><b>11)</b> <span data-field="discipline"></span></div>
+                <div><b>12)</b> <span data-field="voice"></span></div>
+                <div><b>13)</b> <span data-field="meetings"></span></div>
+                <div><b>14)</b> <span data-field="rulesLevel"></span></div>
+                <div><b>15)</b> <span data-field="skills"></span></div>
+                <div><b>16)</b> <span data-field="obey"></span></div>
+                <div><b>17)</b> <span data-field="assets"></span></div>
+                <div class="sm:col-span-2"><b>18)</b> <span data-field="punish"></span></div>
+                <div><b>19)</b> <span data-field="team"></span></div>
+                <div class="sm:col-span-2"><b>20)</b> <span data-field="extra"></span></div>
+              </div>
+            </details>
+            <div class="text-xs text-slate-400 mt-2">Надіслано: <span data-field="submittedAt"></span></div>
+            <div class="mt-3 hidden" data-admin="controls">
+              <textarea class="input w-full mb-2" rows="2" placeholder="Коментар модератора" data-admin="comment"></textarea>
+              <div class="flex gap-2">
+                <button class="pill bg-emerald-500 hover:bg-emerald-600 px-3 py-2" data-admin="approve">Прийняти</button>
+                <button class="pill bg-rose-500 hover:bg-rose-600 px-3 py-2" data-admin="reject">Відхилити</button>
+              </div>
+              <div class="text-xs text-slate-400 mt-2" data-field="moderation"></div>
+            </div>
+          </article>
+        </template>
+      </div>
+    </section>
+  </main>
+
+  <!-- Firebase (v10, модульний SDK). Працює на GitHub Pages, потрібен лише ваш проект Firebase. -->
+  <script type="module">
+    // ======== Налаштування ========
+    const ADMIN_EMAILS = [
+      '07sviatoslav08@gmail.com',
+      'b6553251@gmail.com',
+    ];
+
+    // ⚠️ Заповни свої дані з Firebase Console → Project settings → Web app
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    // ======== Імпорт SDK ========
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js';
+    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js';
+    import { getFirestore, collection, addDoc, serverTimestamp, onSnapshot, query, orderBy, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js';
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // ======== Елементи ========
+    const signinBtn = document.getElementById('signinBtn');
+    const signoutBtn = document.getElementById('signoutBtn');
+    const authStatus = document.getElementById('authStatus');
+    const roleStatus = document.getElementById('roleStatus');
+    const listEl = document.getElementById('list');
+    const cardTpl = document.getElementById('cardTpl');
+    const form = document.getElementById('applyForm');
+
+    let currentUser = null;
+    let isAdmin = false;
+
+    // ======== Авторизація ========
+    const provider = new GoogleAuthProvider();
+
+    signinBtn.addEventListener('click', async () => {
+      try {
+        await signInWithPopup(auth, provider);
+      } catch (e) {
+        alert('Не вдалось увійти: ' + (e?.message || e));
+      }
+    });
+
+    signoutBtn.addEventListener('click', () => signOut(auth));
+
+    onAuthStateChanged(auth, (user) => {
+      currentUser = user;
+      if (user?.email) {
+        authStatus.textContent = `${user.email}`;
+        isAdmin = ADMIN_EMAILS.includes(user.email);
+        roleStatus.textContent = isAdmin ? 'Права: АДМІН (можеш приймати/відхиляти заявки)' : 'Права: перегляд і подача заявки';
+        signinBtn.classList.add('hidden');
+        signoutBtn.classList.remove('hidden');
+      } else {
+        authStatus.textContent = 'Гість';
+        roleStatus.textContent = 'Права: перегляд і подача заявки';
+        isAdmin = false;
+        signinBtn.classList.remove('hidden');
+        signoutBtn.classList.add('hidden');
+      }
+      renderAll();
+    });
+
+    // ======== Надсилання заявки ========
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitMsg = document.getElementById('submitMsg');
+      submitMsg.textContent = '';
+
+      const data = Object.fromEntries(new FormData(form).entries());
+      // Мінімальна валідація
+      if (!data.nick || !data.pid || !data.age || !data.zone) {
+        submitMsg.textContent = 'Заповни поля зі *';
+        submitMsg.className = 'text-rose-300 text-sm';
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, 'applications'), {
+          ...data,
+          age: Number(data.age) || data.age,
+          rulesLevel: data.rulesLevel ? Number(data.rulesLevel) : null,
+          status: 'pending',
+          submittedAt: serverTimestamp(),
+          applicantEmail: currentUser?.email || null,
+        });
+        form.reset();
+        submitMsg.textContent = 'Заявка надіслана! Очікуй рішення.';
+        submitMsg.className = 'text-emerald-300 text-sm';
+      } catch (e) {
+        console.error(e);
+        submitMsg.textContent = 'Помилка надсилання. Перевір підключення Firebase.';
+        submitMsg.className = 'text-rose-300 text-sm';
+      }
+    });
+
+    // ======== Вивід заявок ========
+    let unsubscribe = null;
+    function renderAll(){
+      if (unsubscribe) { unsubscribe(); }
+      const q = query(collection(db, 'applications'), orderBy('submittedAt', 'desc'));
+      unsubscribe = onSnapshot(q, (snap) => {
+        listEl.innerHTML = '';
+        snap.forEach((docSnap) => {
+          const data = docSnap.data();
+          const node = cardTpl.content.firstElementChild.cloneNode(true);
+
+          fill(node, 'nick', data.nick || '—');
+          fill(node, 'pid', data.pid || '—');
+          fill(node, 'age', data.age ?? '—');
+          fill(node, 'zone', data.zone || '—');
+          fill(node, 'daily', data.daily || '—');
+          fill(node, 'since', data.since || '—');
+          fill(node, 'prevClans', data.prevClans || '—');
+          fill(node, 'leaveReason', data.leaveReason || '—');
+          fill(node, 'why', data.why || '—');
+          fill(node, 'help', data.help || '—');
+          fill(node, 'discipline', data.discipline || '—');
+          fill(node, 'voice', data.voice || '—');
+          fill(node, 'meetings', data.meetings || '—');
+          fill(node, 'rulesLevel', (data.rulesLevel ?? '—')); 
+          fill(node, 'skills', data.skills || '—');
+          fill(node, 'obey', data.obey || '—');
+          fill(node, 'assets', data.assets || '—');
+          fill(node, 'punish', data.punish || '—');
+          fill(node, 'team', data.team || '—');
+          fill(node, 'extra', data.extra || '—');
+          fill(node, 'submittedAt', tsToStr(data.submittedAt));
+
+          // Статус бейдж
+          const badge = node.querySelector('[data-field="statusBadge"]');
+          const status = (data.status || 'pending');
+          badge.textContent = status === 'approved' ? 'Прийнято' : status === 'rejected' ? 'Відхилено' : 'На розгляді';
+          badge.classList.add(
+            'bg-slate-900/50','border','border-white/10','pill'
+          );
+          if(status==='approved') badge.classList.add('bg-emerald-500/20','text-emerald-200');
+          if(status==='rejected') badge.classList.add('bg-rose-500/20','text-rose-200');
+          if(status==='pending') badge.classList.add('bg-amber-500/20','text-amber-200');
+
+          // Адмін контролі
+          const adminBox = node.querySelector('[data-admin="controls"]');
+          const commentEl = node.querySelector('[data-admin="comment"]');
+          const infoEl = node.querySelector('[data-field="moderation"]');
+
+          if (isAdmin) {
+            adminBox.classList.remove('hidden');
+            commentEl.value = data.moderatorComment || '';
+
+            adminBox.querySelector('[data-admin="approve"]').addEventListener('click', () => moderate(docSnap.id, 'approved', commentEl.value));
+            adminBox.querySelector('[data-admin="reject"]').addEventListener('click', () => moderate(docSnap.id, 'rejected', commentEl.value));
+
+            if (data.moderatorEmail) {
+              infoEl.textContent = `${data.status==='approved'?'✅':'❌'} Рішення: ${data.status}. Модератор: ${data.moderatorEmail}. Коментар: ${data.moderatorComment || '—'}`;
+            }
+          } else {
+            // для звичайних користувачів — показати, якщо вже є рішення
+            if (data.moderatorEmail) {
+              adminBox.classList.remove('hidden');
+              commentEl.setAttribute('readonly', 'true');
+              adminBox.querySelector('[data-admin="approve"]').classList.add('hidden');
+              adminBox.querySelector('[data-admin="reject"]').classList.add('hidden');
+              infoEl.textContent = `${data.status==='approved'?'✅':'❌'} Рішення: ${data.status}. Модератор: ${data.moderatorEmail}. Коментар: ${data.moderatorComment || '—'}`;
+            }
+          }
+
+          listEl.appendChild(node);
+        });
+      });
+    }
+
+    function tsToStr(ts){
+      if(!ts) return '—';
+      const d = ts.toDate();
+      return d.toLocaleString();
+    }
+
+    function fill(node, key, val){
+      const el = node.querySelector(`[data-field="${key}"]`);
+      if(el) el.textContent = val;
+    }
+
+    async function moderate(id, status, comment){
+      if(!currentUser || !isAdmin) { alert('Тільки адміни можуть це робити'); return; }
+      try{
+        await updateDoc(doc(db, 'applications', id), {
+          status,
+          moderatorComment: comment || null,
+          moderatorEmail: currentUser.email,
+          decidedAt: serverTimestamp(),
+        });
+      }catch(e){
+        console.error(e);
+        alert('Не вдалось оновити статус. Перевір правила безпеки Firestore.');
+      }
+    }
+
+    // старт
+    renderAll();
+  </script>
+
+  <!--
+  ================= FIREBASE SECURITY RULES (встав у Firebase Console → Firestore rules) =================
+
+  rules_version = '2';
+  service cloud.firestore {
+    match /databases/{database}/documents {
+      match /applications/{docId} {
+        // Читати може будь-хто (щоб список був видимий)
+        allow read: if true;
+
+        // Створювати (подавати заявку) — дозволено всім
+        allow create: if request.resource.data.keys().hasAll([
+          'nick','pid','age','zone','status','submittedAt'
+        ]);
+
+        // Оновлювати/видаляти — лише адміни за email
+        allow update, delete: if request.auth != null && (
+          request.auth.token.email in [
+            '07sviatoslav08@gmail.com',
+            'b6553251@gmail.com'
+          ]
+        );
+      }
+    }
+  }
+
+  ПРИМІТКИ:
+  • Обов'язково увімкни Authentication → Sign-in method → Google.
+  • У config вище постав свої ключі firebaseConfig. Це працюватиме на GitHub Pages як повністю статичний сайт.
+  • За потреби можеш додати reCAPTCHA/App Check.
+  -->
+</body>
+</html>
