@@ -9,96 +9,128 @@
 body{background: linear-gradient(135deg,#0a0f1e,#121a33); color:#e9efff; font-family:sans-serif;}
 .bg-glass{background: rgba(255,255,255,0.08); backdrop-filter: blur(14px);}
 .pill{border-radius:999px;}
-.shine{position:relative; overflow:hidden;}
-.shine::after{content:'';position:absolute;inset:-250% -50%;background:linear-gradient(120deg,transparent 45%,rgba(255,255,255,.12) 50%,transparent 55%);transform:rotate(12deg);animation:shine 8s linear infinite;}
-@keyframes shine{0%{transform:translateX(-60%) rotate(12deg);}100%{transform:translateX(60%) rotate(12deg);}}
+.card{padding:1rem; border-radius:1rem; background:rgba(255,255,255,0.05); margin-bottom:1rem;}
+button{cursor:pointer;}
 </style>
 </head>
 <body class="min-h-screen p-4">
 <header class="mb-4">
 <h1 class="text-2xl font-bold">⚔️ Заявки на вступ у клан</h1>
-<p class="text-slate-300 text-sm">Всі заявки зберігаються на GitHub. Редагування лише за паролем.</p>
-<button id="newAppBtn" class="pill bg-blue-500/80 px-4 py-2 mt-2">Подати заявку</button>
-</header>
-<main>
-<section class="grid md:grid-cols-2 gap-4" id="list"></section>
-<div id="empty" class="text-slate-400 text-center py-10">Поки що заявок немає.</div>
-<div class="mt-6 text-center">
-<button id="editBtn" class="pill bg-emerald-500/80 px-4 py-2">Редагувати заявки</button>
+<p class="text-slate-300 text-sm">Будь-хто може залишити заявку. Редагування тільки за секретним паролем.</p>
+<div class="mt-2 flex gap-2">
+<button id="newAppBtn" class="pill bg-blue-500/80 px-4 py-2">Подати анкету</button>
+<button id="editBtn" class="pill bg-emerald-500/80 px-4 py-2">Редагувати анкети</button>
 </div>
-</main>
-<script>
-// ========== CONFIG ==========
-const GH_OWNER = 'YOUR_OWNER'; // твій GitHub username
-const GH_REPO = 'YOUR_REPO';   // твій репо
-const ISSUE_LABEL = 'application';
-const SECRET_PASS = 'SlotHim08831'; // пароль
+</header>
 
+<main>
+<div id="list"></div>
+</main>
+
+<script>
+const SECRET_PASS = 'SlotHim08831';
 let canEdit = false;
 
-document.getElementById('editBtn').addEventListener('click', ()=>{
-  const p = prompt('Введіть секретний пароль:');
-  if(p===SECRET_PASS){
-    canEdit=true; 
-    alert('Доступ до редагування увімкнено'); 
-    renderIssues();
-  } else { 
-    alert('Невірний пароль'); 
-  }
-});
+// Дані заявок у пам'яті
+let applications = [];
 
+// Створити нову заявку
 document.getElementById('newAppBtn').addEventListener('click', ()=>{
-  window.open(`https://github.com/${GH_OWNER}/${GH_REPO}/issues/new?labels=${encodeURIComponent(ISSUE_LABEL)}&template=join-clan.yml`,'_blank');
+    const app = {};
+    app.nickname = prompt("1. Нік у грі:");
+    if(!app.nickname) return;
+    app.id = prompt("2. ID:");
+    app.age = prompt("3. Вік:");
+    app.timezone = prompt("4. Часовий пояс / місто:");
+    app.dailyTime = prompt("5. Скільки часу проводиш у грі щодня:");
+    app.serverTime = prompt("6. Скільки часу граєш на сервері:");
+    app.prevClans = prompt("7. Попередні клани (якщо були):");
+    app.reasonLeave = prompt("8. Причина виходу з попереднього клану:");
+    app.reasonJoin = prompt("9. Чому хочеш вступити саме до нашого клану:");
+    app.helpClan = prompt("10. Чим готовий допомагати клану:");
+    app.discipline = prompt("11. Ставлення до дисципліни та правил:");
+    app.voice = prompt("12. Чи є мікрофон та Discord:");
+    app.attend = prompt("13. Чи готовий виходити на збори клану:");
+    app.rulesKnow = prompt("14. Наскільки добре знаєш правила серверу (1–10):");
+    app.skills = prompt("15. Які навички маєш у грі:");
+    app.followOrders = prompt("16. Чи готовий виконувати вказівки старших:");
+    app.vehicle = prompt("17. Чи є авто/бізнес, яким можеш допомагати:");
+    app.ban = prompt("18. Чи був бан/варн на сервері:");
+    app.team = prompt("19. Чи готовий працювати в команді:");
+    app.extra = prompt("20. Додаткова інформація про себе:");
+    app.status = "На розгляді";
+    app.comment = "";
+    applications.push(app);
+    renderApplications();
 });
 
-const listEl = document.getElementById('list');
-const emptyEl = document.getElementById('empty');
+// Редагування заявок
+document.getElementById('editBtn').addEventListener('click', ()=>{
+    const p = prompt("Введіть секретний пароль для редагування:");
+    if(p === SECRET_PASS){
+        canEdit = true;
+        alert("Доступ до редагування увімкнено");
+        renderApplications();
+    } else alert("Невірний пароль");
+});
 
-async function fetchIssues(){
-  const url = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/issues?state=all&labels=${encodeURIComponent(ISSUE_LABEL)}&per_page=100`;
-  const res = await fetch(url);
-  if(!res.ok){listEl.innerHTML='Помилка при отриманні заявок'; return;}
-  const data = await res.json();
-  const issues = data.filter(x=>!x.pull_request);
-  renderIssues(issues);
+// Відображення заявок
+function renderApplications(){
+    const list = document.getElementById('list');
+    list.innerHTML = "";
+    if(applications.length === 0){
+        list.innerHTML = "<p class='text-center text-slate-400 mt-4'>Поки що заявок немає.</p>";
+        return;
+    }
+    applications.forEach((app,i)=>{
+        const card = document.createElement('div');
+        card.className = "card";
+        card.innerHTML = `
+        <strong>${app.nickname}</strong> — ${app.status} <br>
+        <details>
+        <summary>Показати анкету</summary>
+        <p>1. Нік: ${app.nickname}</p>
+        <p>2. ID: ${app.id}</p>
+        <p>3. Вік: ${app.age}</p>
+        <p>4. Часовий пояс: ${app.timezone}</p>
+        <p>5. Щодня грає: ${app.dailyTime}</p>
+        <p>6. На сервері: ${app.serverTime}</p>
+        <p>7. Попередні клани: ${app.prevClans}</p>
+        <p>8. Причина виходу: ${app.reasonLeave}</p>
+        <p>9. Чому вступити: ${app.reasonJoin}</p>
+        <p>10. Допомога клану: ${app.helpClan}</p>
+        <p>11. Дисципліна: ${app.discipline}</p>
+        <p>12. Мікрофон/Discord: ${app.voice}</p>
+        <p>13. Готовий на збори: ${app.attend}</p>
+        <p>14. Правила (1–10): ${app.rulesKnow}</p>
+        <p>15. Навички: ${app.skills}</p>
+        <p>16. Виконання вказівок: ${app.followOrders}</p>
+        <p>17. Авто/бізнес: ${app.vehicle}</p>
+        <p>18. Бан/варн: ${app.ban}</p>
+        <p>19. Робота в команді: ${app.team}</p>
+        <p>20. Додаткова інформація: ${app.extra}</p>
+        <p>Коментар: ${app.comment}</p>
+        </details>
+        ${canEdit ? `<div class='mt-2 flex gap-2'>
+            <button onclick='approve(${i})' class='bg-green-500/80 px-3 py-1 pill'>Схвалити анкету</button>
+            <button onclick='reject(${i})' class='bg-red-500/80 px-3 py-1 pill'>Відхилити анкету</button>
+            <button onclick='addComment(${i})' class='bg-blue-500/80 px-3 py-1 pill'>Додати коментар</button>
+        </div>` : ''}
+        `;
+        list.appendChild(card);
+    });
 }
 
-function mdToHtml(md){
-  return md.replace(/\n/g,'<br>');
+// Функції для редагування
+function approve(i){applications[i].status="Схвалено"; renderApplications();}
+function reject(i){applications[i].status="Відхилено"; renderApplications();}
+function addComment(i){
+    const c = prompt("Введіть коментар:");
+    if(c) applications[i].comment = c;
+    renderApplications();
 }
 
-function statusFromLabels(labels){
-  const names = labels.map(l=>l.name);
-  if(names.includes('approved')) return 'approved';
-  if(names.includes('rejected')) return 'rejected';
-  return 'pending';
-}
-
-function renderIssues(issues){
-  if(!issues) return;
-  listEl.innerHTML='';
-  if(issues.length===0){ emptyEl.style.display='block'; return; } else { emptyEl.style.display='none'; }
-
-  issues.forEach(iss=>{
-    const st = statusFromLabels(iss.labels);
-    const card = document.createElement('div');
-    card.className='bg-glass p-4 rounded-2xl shadow shine';
-    card.innerHTML = `
-      <div class='flex justify-between'><h3 class='font-bold'>${iss.title||'Без назви'}</h3><span>${st==='approved'?'Прийнято':st==='rejected'?'Відхилено':'На розгляді'}</span></div>
-      <div class='text-xs text-slate-300 mt-1'>Створено: ${new Date(iss.created_at).toLocaleString()}</div>
-      <details class='mt-2'><summary class='text-slate-200'>Показати деталі анкети</summary><div class='text-sm mt-2'>${mdToHtml(iss.body||'—')}</div></details>
-      <div class='mt-3 flex gap-2'>
-        <a href='${iss.html_url}' target='_blank' class='pill bg-glass px-3 py-2 border border-white/10 text-sm'>Відкрити в GitHub</a>
-        <a href='${iss.html_url}' target='_blank' class='pill px-3 py-2 text-sm bg-emerald-500/80 hover:bg-emerald-500 ${canEdit?'':'hidden'}'>Прийняти</a>
-        <a href='${iss.html_url}' target='_blank' class='pill px-3 py-2 text-sm bg-rose-500/80 hover:bg-rose-500 ${canEdit?'':'hidden'}'>Відхилити</a>
-      </div>
-    `;
-    listEl.appendChild(card);
-  });
-}
-
-fetchIssues();
-setInterval(fetchIssues,60000);
+renderApplications();
 </script>
 </body>
 </html>
