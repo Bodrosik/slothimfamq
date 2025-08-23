@@ -5,21 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Система підвищень</title>
 <style>
-  /* Фон */
+  /* 🔥 Анімований чорний фон */
   body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background: url('https://cdn.discordapp.com/attachments/1404565577648832545/1408370902055522366/фон.jpg') no-repeat center center fixed;
-    background-size: cover;
     color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
+    background: linear-gradient(270deg, #000000, #111111, #222222, #000000);
+    background-size: 800% 800%;
+    animation: gradientShift 15s ease infinite;
   }
 
-  /* Заголовок неон */
+  @keyframes gradientShift {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+  }
+
+  /* 🔴 Заголовок неон */
   h1 {
     margin-top: 50px;
     font-size: clamp(24px, 8vw, 60px);
@@ -33,7 +40,7 @@
     text-align: center;
   }
 
-  /* Блок з текстом */
+  /* 📜 Блок з текстом */
   .content {
     background: rgba(0,0,0,0.7);
     border: 3px solid crimson;
@@ -45,7 +52,7 @@
     line-height: 1.6;
   }
 
-  /* Футер */
+  /* 🔻 Футер */
   .footer {
     margin-top: auto;
     margin-bottom: 20px;
@@ -54,7 +61,7 @@
     text-align: center;
   }
 
-  /* Адаптивність */
+  /* 📱 Адаптивність */
   @media (max-width: 600px) {
     .content {
       padding: 15px 20px;
