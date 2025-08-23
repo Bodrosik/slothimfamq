@@ -18,6 +18,7 @@ body{background: linear-gradient(135deg,#0a0f1e,#121a33); color:#e9efff; font-fa
 <header class="mb-4">
 <h1 class="text-2xl font-bold">⚔️ Заявки на вступ у клан</h1>
 <p class="text-slate-300 text-sm">Всі заявки зберігаються на GitHub. Редагування лише за паролем.</p>
+<button id="newAppBtn" class="pill bg-blue-500/80 px-4 py-2 mt-2">Подати заявку</button>
 </header>
 <main>
 <section class="grid md:grid-cols-2 gap-4" id="list"></section>
@@ -31,7 +32,7 @@ body{background: linear-gradient(135deg,#0a0f1e,#121a33); color:#e9efff; font-fa
 const GH_OWNER = 'YOUR_OWNER'; // твій GitHub username
 const GH_REPO = 'YOUR_REPO';   // твій репо
 const ISSUE_LABEL = 'application';
-const SECRET_PASS = 'SlotHim08831'; // новий пароль
+const SECRET_PASS = 'SlotHim08831'; // пароль
 
 let canEdit = false;
 
@@ -44,6 +45,10 @@ document.getElementById('editBtn').addEventListener('click', ()=>{
   } else { 
     alert('Невірний пароль'); 
   }
+});
+
+document.getElementById('newAppBtn').addEventListener('click', ()=>{
+  window.open(`https://github.com/${GH_OWNER}/${GH_REPO}/issues/new?labels=${encodeURIComponent(ISSUE_LABEL)}&template=join-clan.yml`,'_blank');
 });
 
 const listEl = document.getElementById('list');
