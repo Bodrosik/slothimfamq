@@ -1,388 +1,134 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>Фотоальбом — albom.html</title>
-  <meta name="description" content="Гарний фотоальбом з ефектом перегортання сторінок. Працює на телефоні та планшеті." />
+  <title>Фотоальбом</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg1: 245 245 255; /* тло */
-      --ink: 18 20 40;    /* текст */
-      --brand: 88 101 242;/* акцент */
-      --glass: 255 255 255; /* скло */
-      --shadow: 16 22 42; 
+      --bg1:#0f0c29; --bg2:#302b63; --bg3:#24243e;
+      --glass: rgba(255,255,255,.07);
+      --text:#f0f4ff; --muted:#c2c8dd;
+      --shadow: 0 8px 25px rgba(0,0,0,.4);
+      --radius: 16px;
     }
-    *{box-sizing:border-box}
+    *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%}
     body{
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color: rgb(var(--ink));
-      background: radial-gradient(1200px 800px at 20% -10%, rgba(120,130,255,.25), transparent 60%),
-                  radial-gradient(1000px 700px at 120% 110%, rgba(255,120,200,.22), transparent 60%),
-                  linear-gradient(180deg, rgb(242 244 255), rgb(236 239 255));
+      font-family:Inter, sans-serif;
+      background: linear-gradient(-45deg, var(--bg1), var(--bg2), var(--bg3), #1b2735);
+      background-size: 400% 400%;
+      animation: gradientMove 18s ease infinite;
+      color:var(--text);
       overflow:hidden;
     }
-    .wrap{
-      position:relative;
-      height:100dvh; width:100%;
-      display:flex; flex-direction:column; gap:12px;
-      align-items:center; justify-content:center;
-      padding: clamp(8px, 2vw, 24px);
+    @keyframes gradientMove {
+      0% {background-position:0% 50%}
+      50% {background-position:100% 50%}
+      100% {background-position:0% 50%}
     }
+
     header{
-      position:absolute; top:8px; left:0; right:0;
-      display:flex; align-items:center; justify-content:space-between;
-      gap:8px; padding: 8px clamp(10px, 3vw, 22px);
+      padding:12px; text-align:center; font-size:22px; font-weight:800; letter-spacing:.5px;
+      backdrop-filter:blur(8px); background:rgba(0,0,0,.3);
     }
-    .title{
-      display:flex; align-items:center; gap:10px; padding:10px 14px; border-radius:18px;
-      background: linear-gradient( to bottom right, rgba(var(--glass), .75), rgba(var(--glass), .45) );
-      box-shadow: 0 10px 30px rgba(var(--shadow), .12), inset 0 1px 0 rgba(255,255,255,.35);
-      backdrop-filter: blur(12px) saturate(1.2);
-    }
-    .title h1{font: 800 18px/1 Inter, sans-serif; margin:0}
-    .subtitle{font: 600 12px/1.2 Inter, sans-serif; opacity:.66}
 
-    .controls{
-      display:flex; gap:8px; align-items:center;
+    .stage{
+      height:100%; display:flex; align-items:center; justify-content:center;
     }
-    .btn{ 
-      border:0; cursor:pointer; user-select:none;
-      padding:10px 14px; border-radius:14px;
-      background: linear-gradient( to bottom right, rgba(var(--glass), .75), rgba(var(--glass), .45) );
-      box-shadow: 0 8px 22px rgba(var(--shadow), .14), inset 0 1px 0 rgba(255,255,255,.35);
-      backdrop-filter: blur(10px);
-      font-weight: 700; letter-spacing:.3px;
-      transition: transform .2s ease, box-shadow .2s ease;
-    }
-    .btn:active{ transform: translateY(1px) scale(.99)}
-    .btn[disabled]{opacity:.5; cursor:not-allowed}
 
-    /* КНИГА */
-    .book-area{
-      position:relative; width:min(100vw, 980px); height:min(80vh, 680px);
-      display:flex; align-items:center; justify-content:center;
-    }
     .book{
-      position:relative; width:min(100%, 900px); height:100%;
-      perspective: 2000px;
+      position:relative; width:90%; max-width:900px; height:80%; perspective:1500px;
     }
-    .pages{ position:absolute; inset:0; display:flex; }
-
     .page{
-      position:relative; width:50%; height:100%;
-      background: linear-gradient( to bottom right, rgba(var(--glass), .82), rgba(var(--glass), .56) );
-      box-shadow: 0 25px 60px rgba(var(--shadow), .18), inset 0 1px 0 rgba(255,255,255,.5);
-      backdrop-filter: blur(10px) saturate(1.2);
-      overflow:hidden; transform-origin: left center; /* ліва половина перегортається */
-      transition: transform .8s cubic-bezier(.22,.61,.36,1), box-shadow .8s;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.35);
+      position:absolute; inset:0; background:var(--glass);
+      border-radius:var(--radius); box-shadow:var(--shadow);
+      transform-origin:left center; backface-visibility:hidden;
+      transition: transform 1s ease;
+      display:flex; flex-direction:column; overflow:hidden;
     }
-    .page.right{ transform-origin: right center; }
+    .page.flipped{transform:rotateY(-180deg);}
 
-    /* Стан перегортання */
-    .page.flip-left{ transform: rotateY(-180deg); box-shadow: 0 6px 18px rgba(var(--shadow), .12) }
-    .page.flip-right{ transform: rotateY(180deg);  box-shadow: 0 6px 18px rgba(var(--shadow), .12) }
-
-    .paper{ position:absolute; inset:0; display:grid; place-items:center; padding:14px }
-    .photo{
-      position:relative; width:100%; height:100%; border-radius:14px; overflow:hidden;
-      display:grid; place-items:center; 
-      background:
-        repeating-linear-gradient(45deg, rgba(0,0,0,.03) 0 10px, rgba(255,255,255,.03) 10px 20px),
-        linear-gradient(180deg, rgba(255,255,255,.6), rgba(255,255,255,.2));
+    .grid{
+      flex:1; display:grid; grid-template-columns:repeat(5,1fr); grid-template-rows:repeat(2,1fr);
+      gap:10px; padding:20px;
     }
-    .photo img{ width:100%; height:100%; object-fit:contain; display:block; }
-    .empty{
-      font: 600 22px/1.35 Inter, system-ui; color: rgb(var(--ink)/.6);
-      text-align:center; padding:0 18px;
+    .cell{
+      border-radius:12px; background:rgba(255,255,255,.05); display:flex; align-items:center; justify-content:center;
+      font-size:14px; color:var(--muted); border:1px dashed rgba(255,255,255,.2);
     }
-    .badge{ position:absolute; top:10px; right:10px; font: 700 11px/1 Inter; padding:6px 9px; border-radius:999px; background: rgba(0,0,0,.5); color:#fff; }
-    .caption{ position:absolute; bottom:10px; left:50%; transform:translateX(-50%);
-      max-width:92%; text-align:center; font: 600 12px/1.2 Inter; color: rgb(var(--ink)/.7);
-      background: rgba(255,255,255,.65); padding:6px 10px; border-radius:12px; backdrop-filter: blur(6px); }
-
-    /* Клік-зони */
-    .hotzone{
-      position:absolute; inset:0; display:grid; grid-template-columns: 1fr 1fr; pointer-events:auto;
+    .caption{
+      padding:10px; font-size:14px; text-align:center; background:rgba(0,0,0,.2);
     }
-    .hotzone > div{ height:100%; }
-    .hot-prev{ cursor:w-resize }
-    .hot-next{ cursor:e-resize }
 
-    /* Низ */
-    footer{ position:absolute; bottom:8px; left:0; right:0; display:flex; gap:10px; align-items:center; justify-content:center; padding: 10px }
-    .pager{ font: 700 12px/1 Inter; opacity:.7 }
-    .thumbs{ display:flex; gap:8px; overflow:auto; max-width:92vw; padding:6px 10px }
-    .thumb{
-      width:56px; height:38px; border-radius:10px; overflow:hidden; flex:0 0 auto;
-      background:rgba(255,255,255,.5); display:grid; place-items:center; font-size:11px; font-weight:700; opacity:.8;
-      border:1px solid rgba(255,255,255,.5); cursor:pointer; transition:transform .2s, opacity .2s;
-    }
-    .thumb.active{ outline:2px solid rgb(var(--brand)); opacity:1; transform:scale(1.02) }
+    .controls{position:absolute; inset:0; display:flex; justify-content:space-between; align-items:center; padding:20px; pointer-events:none}
+    .btn{pointer-events:auto; border:none; border-radius:50%; width:48px; height:48px; background:rgba(255,255,255,.15); color:white; font-size:20px; cursor:pointer; transition:.3s}
+    .btn:hover{background:rgba(255,255,255,.25); transform:scale(1.05)}
 
-    /* Адаптивність */
-    @media (max-width: 900px){ .book-area{ height: 74vh } }
-    @media (max-width: 720px){ .book-area{ height: 72vh } }
-    @media (max-width: 640px){ .book-area{ height: 70vh } .title h1{font-size:16px} }
-
-    /* Темна тема (опційно) */
-    .dark{
-      --bg1: 14 16 26; --ink: 242 244 252; --glass: 22 24 38; --shadow: 0 0 0; 
-      background: radial-gradient(1200px 800px at 20% -10%, rgba(80,90,220,.25), transparent 60%),
-                  radial-gradient(1000px 700px at 120% 110%, rgba(200,90,200,.22), transparent 60%),
-                  linear-gradient(180deg, rgb(20 22 34), rgb(14 16 26));
-    }
-    .dark .caption{ background: rgba(0,0,0,.42); color: #f6f7ff }
-    .dark .title, .dark .btn, .dark .page{ border:1px solid rgba(255,255,255,.06) }
+    footer{position:absolute; bottom:10px; width:100%; text-align:center; font-size:12px; color:var(--muted)}
   </style>
 </head>
 <body>
-  <div class="wrap" id="app">
-    <header>
-      <div class="title">
-        <div style="display:flex; flex-direction:column">
-          <h1>Мій Фотоальбом</h1>
-          <div class="subtitle">Перегортай сторінки як у справжній книзі</div>
-        </div>
-      </div>
-      <div class="controls">
-        <label class="btn" for="fileInput">Додати фото (локально)</label>
-        <input id="fileInput" type="file" accept="image/*" multiple hidden>
-        <button class="btn" id="themeBtn" title="Перемкнути тему">Тема</button>
-        <a class="btn" href="#help" id="helpBtn">Як додати фото в код</a>
-      </div>
-    </header>
-
-    <main class="book-area">
-      <div class="book" id="book">
-        <div class="pages" id="pages">
-          <!-- Сторінки JS згенерує сам -->
-        </div>
-        <div class="hotzone" aria-hidden="true">
-          <div class="hot-prev" id="hotPrev"></div>
-          <div class="hot-next" id="hotNext"></div>
-        </div>
-      </div>
-    </main>
-
-    <footer>
-      <button class="btn" id="prevBtn">← Назад</button>
-      <div class="pager" id="pager">Сторінка 1 / 1</div>
-      <button class="btn" id="nextBtn">Вперед →</button>
-    </footer>
-
-    <div class="thumbs" id="thumbs"></div>
-  </div>
-
-  <!-- Підказка як додавати фото у коді -->
-  <template id="helpTpl">
-    <div style="position:fixed; inset:0; display:grid; place-items:center; background:rgba(0,0,0,.45); z-index:50">
-      <div style="max-width:860px; width:92vw; background:white; color:#111; border-radius:18px; padding:18px 18px 12px; box-shadow: 0 20px 60px rgba(0,0,0,.35);">
-        <h2 style="margin:6px 0 8px; font:800 20px Inter">Як додати фото в альбом (постійно)</h2>
-        <ol style="margin:0 0 12px 18px; padding:0; font: 500 14px/1.5 Inter">
-          <li>Закинь зображення у твій репозиторій поруч із цим файлом <code>albom.html</code> (або в папку <code>images/</code>).</li>
-          <li>У коді знайди масив <code>IMAGES</code> і впиши туди посилання на файли, наприклад: <code>"images/foto1.jpg"</code>, <code>"cat.png"</code>, або повні URL.</li>
-          <li>Збережи файл і онови сторінку. Готово. На GitHub Pages адреса буде <code>https://твій-юзер.github.io/твій-репо/albom.html</code>.</li>
-        </ol>
-        <button id="closeHelp" class="btn" style="margin:8px 0 10px">Закрити</button>
-      </div>
+  <header>Мій Фотоальбом</header>
+  <div class="stage">
+    <div class="book" id="book"></div>
+    <div class="controls">
+      <button class="btn" id="prevBtn">⟨</button>
+      <button class="btn" id="nextBtn">⟩</button>
     </div>
-  </template>
+  </div>
+  <footer>Свайпай або тисни кнопки для перегортання сторінок</footer>
 
   <script>
-  // >>>>>>> 1) ДОДАЙ СВОЇ ФОТО ТУТ <<<<<<<
-  // Впиши свої шляхи/URL. Приклад нижче. Можеш видалити приклади.
-  const IMAGES = [
-    // Приклади (працюватимуть, якщо є інтернет):
-    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1600",
-    "https://images.unsplash.com/photo-1529336953121-a9d1b3c5a7da?w=1600",
-    "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1600",
-    "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=1600",
-    // Додай свої: "images/foto1.jpg", "images/foto2.png", "cat.png", ...
-  ];
+    const book = document.getElementById('book');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    let index = 0;
+    const TOTAL_PAGES = 5;
 
-  // Якщо не вистачає фото на сторінку — пишемо "ПУСТО"
-  const EMPTY_TEXT = "ПУСТО · тут ще нічого немає";
-
-  // Стан
-  let current = 0; // індекс лівої сторінки (0 = перша)
-  const state = {
-    pages: [], // масив елементів сторінок
-    dark: false
-  };
-
-  const pagesEl = document.getElementById('pages');
-  const pagerEl = document.getElementById('pager');
-  const thumbsEl = document.getElementById('thumbs');
-
-  // 2) Побудова сторінок (книга із 2 сторінок на розворот)
-  function buildBook(){
-    pagesEl.innerHTML = '';
-    state.pages = [];
-
-    // Кількість сторінок = довжина IMAGES, але мінімум 2, парна кількість
-    const total = Math.max(2, Math.max(IMAGES.length, 2));
-    const totalEven = total % 2 === 0 ? total : total + 1;
-
-    for(let i=0;i<totalEven;i++){
-      const side = i % 2 === 0 ? 'left' : 'right';
-      const page = document.createElement('section');
-      page.className = 'page ' + (side === 'right' ? 'right' : '');
-
-      const paper = document.createElement('div');
-      paper.className = 'paper';
-
-      const card = document.createElement('div');
-      card.className = 'photo';
-
-      const imgUrl = IMAGES[i] || null;
-      if(imgUrl){
-        const img = document.createElement('img');
-        img.loading = 'lazy';
-        img.alt = 'Фото ' + (i+1);
-        img.src = imgUrl;
-        card.appendChild(img);
-        const cap = document.createElement('div');
-        cap.className = 'caption';
-        cap.textContent = 'Фото ' + (i+1);
-        card.appendChild(cap);
-      } else {
-        const empty = document.createElement('div');
-        empty.className = 'empty';
-        empty.textContent = EMPTY_TEXT;
-        card.appendChild(empty);
+    function buildBook(){
+      book.innerHTML = '';
+      for(let i=0;i<TOTAL_PAGES;i++){
+        const page = document.createElement('div');
+        page.className = 'page';
+        page.style.setProperty('--i', i);
+        const grid = document.createElement('div');
+        grid.className = 'grid';
+        for(let j=0;j<10;j++){
+          const cell = document.createElement('div');
+          cell.className = 'cell';
+          cell.innerText = 'Пусто';
+          grid.appendChild(cell);
+        }
+        const caption = document.createElement('div');
+        caption.className = 'caption';
+        caption.innerText = `Сторінка ${i+1}`;
+        page.appendChild(grid);
+        page.appendChild(caption);
+        book.appendChild(page);
       }
-
-      const badge = document.createElement('div');
-      badge.className = 'badge';
-      badge.textContent = (i+1);
-      card.appendChild(badge);
-
-      paper.appendChild(card);
-      page.appendChild(paper);
-      pagesEl.appendChild(page);
-      state.pages.push(page);
+      updateUI();
     }
 
-    buildThumbs();
-    updatePager();
-    applyFlip();
-  }
-
-  function buildThumbs(){
-    thumbsEl.innerHTML = '';
-    for(let i=0;i<state.pages.length;i++){
-      const t = document.createElement('button');
-      t.className = 'thumb';
-      t.title = 'До сторінки ' + (i+1);
-      if(IMAGES[i]){
-        const img = document.createElement('img');
-        img.src = IMAGES[i]; img.alt = 'thumb ' + (i+1); img.style.width='100%'; img.style.height='100%'; img.style.objectFit='cover';
-        t.appendChild(img);
-      } else {
-        t.textContent = (i+1);
-      }
-      t.addEventListener('click', ()=>{ goTo(i - (i%2)); }); // перейти на розворот
-      thumbsEl.appendChild(t);
+    function updateUI(){
+      const pages = [...book.querySelectorAll('.page')];
+      pages.forEach((p,i)=>{
+        p.style.zIndex = TOTAL_PAGES - i;
+        p.classList.toggle('flipped', i < index);
+      });
     }
-    highlightThumbs();
-  }
 
-  function highlightThumbs(){
-    const all = Array.from(thumbsEl.children);
-    all.forEach((el,i)=>{
-      el.classList.toggle('active', i===current || i===current+1);
-    })
-  }
+    function next(){ if(index<TOTAL_PAGES-1){ index++; updateUI(); } }
+    function prev(){ if(index>0){ index--; updateUI(); } }
 
-  // 3) Перегортання
-  function applyFlip(){
-    // всі сторінки лівіші за current — перегорнуті вліво
-    state.pages.forEach((p, i)=>{
-      p.classList.remove('flip-left', 'flip-right');
-      if(i < current){ p.classList.add('flip-left'); }
-      if(i > current+1){ p.classList.add('flip-right'); }
-    });
-    highlightThumbs();
-  }
+    nextBtn.addEventListener('click', next);
+    prevBtn.addEventListener('click', prev);
+    window.addEventListener('keydown', e=>{if(e.key==='ArrowRight') next(); if(e.key==='ArrowLeft') prev();});
 
-  function next(){
-    if(current + 2 < state.pages.length){ current += 2; applyFlip(); updatePager(); }
-  }
-  function prev(){
-    if(current - 2 >= 0){ current -= 2; applyFlip(); updatePager(); }
-  }
-  function goTo(leftIndex){
-    if(leftIndex % 2 !== 0) leftIndex--; // гарантія лівої
-    leftIndex = Math.max(0, Math.min(leftIndex, state.pages.length-2));
-    current = leftIndex; applyFlip(); updatePager();
-  }
-
-  function updatePager(){
-    const total = state.pages.length;
-    pagerEl.textContent = `Сторінки ${current+1}–${current+2} / ${total}`;
-    document.getElementById('prevBtn').disabled = current===0;
-    document.getElementById('nextBtn').disabled = current+2>=total;
-  }
-
-  // 4) Локальне додавання фото через input (не зберігається на GitHub, лише в твоєму браузері)
-  const fileInput = document.getElementById('fileInput');
-  fileInput.addEventListener('change', async (e)=>{
-    const files = Array.from(e.target.files || []);
-    if(!files.length) return;
-    // читаємо як dataURL та додаємо в кінець IMAGES
-    for(const f of files){
-      if(!f.type.startsWith('image/')) continue;
-      const dataUrl = await new Promise(res=>{ const r = new FileReader(); r.onload=()=>res(r.result); r.readAsDataURL(f); });
-      IMAGES.push(dataUrl);
-    }
     buildBook();
-    goTo(Math.max(0, state.pages.length- (files.length%2===0? files.length : files.length+1)));
-  });
-
-  // 5) Клік-зони та кнопки
-  document.getElementById('nextBtn').addEventListener('click', next);
-  document.getElementById('prevBtn').addEventListener('click', prev);
-  document.getElementById('hotNext').addEventListener('click', next);
-  document.getElementById('hotPrev').addEventListener('click', prev);
-
-  // 6) Жести свайпу на телефоні
-  (function enableSwipe(){
-    let startX=0, isTouch=false;
-    const area = document.getElementById('book');
-    area.addEventListener('touchstart', (e)=>{ isTouch=true; startX=e.touches[0].clientX; }, {passive:true});
-    area.addEventListener('touchend', (e)=>{
-      if(!isTouch) return; const endX=(e.changedTouches[0]||{}).clientX||startX; const dx=endX-startX; if(Math.abs(dx)>40){ if(dx<0) next(); else prev(); } isTouch=false; 
-    }, {passive:true});
-  })();
-
-  // 7) Тема
-  const themeBtn = document.getElementById('themeBtn');
-  themeBtn.addEventListener('click', ()=>{
-    document.body.classList.toggle('dark');
-  });
-
-  // 8) Help модалка
-  const helpBtn = document.getElementById('helpBtn');
-  helpBtn.addEventListener('click', (e)=>{
-    e.preventDefault();
-    const tpl = document.getElementById('helpTpl');
-    const node = tpl.content.cloneNode(true);
-    document.body.appendChild(node);
-    document.getElementById('closeHelp').addEventListener('click', ()=>{
-      document.body.removeChild(document.body.lastElementChild);
-    });
-  });
-
-  // Init
-  buildBook();
   </script>
 </body>
 </html>
