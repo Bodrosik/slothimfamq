@@ -1,131 +1,134 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>Фотоальбом</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #89f7fe, #66a6ff);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      overflow-x: hidden;
+    :root{
+      --bg1:#0f0c29; --bg2:#302b63; --bg3:#24243e;
+      --glass: rgba(255,255,255,.07);
+      --text:#f0f4ff; --muted:#c2c8dd;
+      --shadow: 0 8px 25px rgba(0,0,0,.4);
+      --radius: 16px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:Inter, sans-serif;
+      background: linear-gradient(-45deg, var(--bg1), var(--bg2), var(--bg3), #1b2735);
+      background-size: 400% 400%;
+      animation: gradientMove 18s ease infinite;
+      color:var(--text);
+      overflow:hidden;
+    }
+    @keyframes gradientMove {
+      0% {background-position:0% 50%}
+      50% {background-position:100% 50%}
+      100% {background-position:0% 50%}
     }
 
-    h1 {
-      color: white;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
-      margin-bottom: 20px;
+    header{
+      padding:12px; text-align:center; font-size:22px; font-weight:800; letter-spacing:.5px;
+      backdrop-filter:blur(8px); background:rgba(0,0,0,.3);
     }
 
-    .album-page {
-      width: 90%;
-      max-width: 700px;
-      aspect-ratio: 1 / 1;
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-      backdrop-filter: blur(10px);
-      padding: 20px;
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-      gap: 15px;
-      animation: fadeIn 0.7s ease;
+    .stage{
+      height:100%; display:flex; align-items:center; justify-content:center;
     }
 
-    .cell {
-      background: rgba(255,255,255,0.25);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      color: white;
-      text-align: center;
-      padding: 5px;
-      transition: transform 0.3s, background 0.3s;
+    .book{
+      position:relative; width:90%; max-width:900px; height:80%; perspective:1500px;
+    }
+    .page{
+      position:absolute; inset:0; background:var(--glass);
+      border-radius:var(--radius); box-shadow:var(--shadow);
+      transform-origin:left center; backface-visibility:hidden;
+      transition: transform 1s ease;
+      display:flex; flex-direction:column; overflow:hidden;
+    }
+    .page.flipped{transform:rotateY(-180deg);}
+
+    .grid{
+      flex:1; display:grid; grid-template-columns:repeat(5,1fr); grid-template-rows:repeat(2,1fr);
+      gap:10px; padding:20px;
+    }
+    .cell{
+      border-radius:12px; background:rgba(255,255,255,.05); display:flex; align-items:center; justify-content:center;
+      font-size:14px; color:var(--muted); border:1px dashed rgba(255,255,255,.2);
+    }
+    .caption{
+      padding:10px; font-size:14px; text-align:center; background:rgba(0,0,0,.2);
     }
 
-    .cell:hover {
-      transform: scale(1.05);
-      background: rgba(255,255,255,0.4);
-    }
+    .controls{position:absolute; inset:0; display:flex; justify-content:space-between; align-items:center; padding:20px; pointer-events:none}
+    .btn{pointer-events:auto; border:none; border-radius:50%; width:48px; height:48px; background:rgba(255,255,255,.15); color:white; font-size:20px; cursor:pointer; transition:.3s}
+    .btn:hover{background:rgba(255,255,255,.25); transform:scale(1.05)}
 
-    .controls {
-      margin-top: 20px;
-      display: flex;
-      gap: 15px;
-    }
-
-    button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 12px;
-      background: white;
-      color: #333;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-
-    button:hover {
-      background: #f1f1f1;
-      transform: translateY(-2px);
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0; transform: scale(0.95);}
-      to {opacity: 1; transform: scale(1);}
-    }
+    footer{position:absolute; bottom:10px; width:100%; text-align:center; font-size:12px; color:var(--muted)}
   </style>
 </head>
 <body>
-  <h1>📖 Фотоальбом SLOTHIM</h1>
-
-  <div id="album" class="album-page"></div>
-
-  <div class="controls">
-    <button onclick="prevPage()">⬅ Назад</button>
-    <button onclick="nextPage()">Вперед ➡</button>
+  <header>Мій Фотоальбом</header>
+  <div class="stage">
+    <div class="book" id="book"></div>
+    <div class="controls">
+      <button class="btn" id="prevBtn">⟨</button>
+      <button class="btn" id="nextBtn">⟩</button>
+    </div>
   </div>
+  <footer>Свайпай або тисни кнопки для перегортання сторінок</footer>
 
   <script>
-    const totalPages = 5;
-    let currentPage = 1;
+    const book = document.getElementById('book');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    let index = 0;
+    const TOTAL_PAGES = 5;
 
-    function renderPage(page) {
-      const album = document.getElementById('album');
-      album.innerHTML = '';
-      for (let i = 0; i < 10; i++) {
-        const cell = document.createElement('div');
-        cell.className = 'cell';
-        cell.innerText = 'Тут поки що нічого немає';
-        album.appendChild(cell);
+    function buildBook(){
+      book.innerHTML = '';
+      for(let i=0;i<TOTAL_PAGES;i++){
+        const page = document.createElement('div');
+        page.className = 'page';
+        page.style.setProperty('--i', i);
+        const grid = document.createElement('div');
+        grid.className = 'grid';
+        for(let j=0;j<10;j++){
+          const cell = document.createElement('div');
+          cell.className = 'cell';
+          cell.innerText = 'Пусто';
+          grid.appendChild(cell);
+        }
+        const caption = document.createElement('div');
+        caption.className = 'caption';
+        caption.innerText = `Сторінка ${i+1}`;
+        page.appendChild(grid);
+        page.appendChild(caption);
+        book.appendChild(page);
       }
+      updateUI();
     }
 
-    function nextPage() {
-      if (currentPage < totalPages) {
-        currentPage++;
-        renderPage(currentPage);
-      }
+    function updateUI(){
+      const pages = [...book.querySelectorAll('.page')];
+      pages.forEach((p,i)=>{
+        p.style.zIndex = TOTAL_PAGES - i;
+        p.classList.toggle('flipped', i < index);
+      });
     }
 
-    function prevPage() {
-      if (currentPage > 1) {
-        currentPage--;
-        renderPage(currentPage);
-      }
-    }
+    function next(){ if(index<TOTAL_PAGES-1){ index++; updateUI(); } }
+    function prev(){ if(index>0){ index--; updateUI(); } }
 
-    renderPage(currentPage);
+    nextBtn.addEventListener('click', next);
+    prevBtn.addEventListener('click', prev);
+    window.addEventListener('keydown', e=>{if(e.key==='ArrowRight') next(); if(e.key==='ArrowLeft') prev();});
+
+    buildBook();
   </script>
 </body>
 </html>
