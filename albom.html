@@ -1,133 +1,34 @@
-
+<!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>Фотоальбом</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg1:#0f0c29; --bg2:#302b63; --bg3:#24243e;
-      --glass: rgba(255,255,255,.07);
-      --text:#f0f4ff; --muted:#c2c8dd;
-      --shadow: 0 8px 25px rgba(0,0,0,.4);
-      --radius: 16px;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-    body{
-      font-family:Inter, sans-serif;
-      background: linear-gradient(-45deg, var(--bg1), var(--bg2), var(--bg3), #1b2735);
-      background-size: 400% 400%;
-      animation: gradientMove 18s ease infinite;
-      color:var(--text);
-      overflow:hidden;
-    }
-    @keyframes gradientMove {
-      0% {background-position:0% 50%}
-      50% {background-position:100% 50%}
-      100% {background-position:0% 50%}
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>СКОРО</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #111; /* чорний фон */
+    color: #ff0000; /* червоний текст */
+    font-family: Arial, sans-serif;
+  }
 
-    header{
-      padding:12px; text-align:center; font-size:22px; font-weight:800; letter-spacing:.5px;
-      backdrop-filter:blur(8px); background:rgba(0,0,0,.3);
-    }
-
-    .stage{
-      height:100%; display:flex; align-items:center; justify-content:center;
-    }
-
-    .book{
-      position:relative; width:90%; max-width:900px; height:80%; perspective:1500px;
-    }
-    .page{
-      position:absolute; inset:0; background:var(--glass);
-      border-radius:var(--radius); box-shadow:var(--shadow);
-      transform-origin:left center; backface-visibility:hidden;
-      transition: transform 1s ease;
-      display:flex; flex-direction:column; overflow:hidden;
-    }
-    .page.flipped{transform:rotateY(-180deg);}
-
-    .grid{
-      flex:1; display:grid; grid-template-columns:repeat(5,1fr); grid-template-rows:repeat(2,1fr);
-      gap:10px; padding:20px;
-    }
-    .cell{
-      border-radius:12px; background:rgba(255,255,255,.05); display:flex; align-items:center; justify-content:center;
-      font-size:14px; color:var(--muted); border:1px dashed rgba(255,255,255,.2);
-    }
-    .caption{
-      padding:10px; font-size:14px; text-align:center; background:rgba(0,0,0,.2);
-    }
-
-    .controls{position:absolute; inset:0; display:flex; justify-content:space-between; align-items:center; padding:20px; pointer-events:none}
-    .btn{pointer-events:auto; border:none; border-radius:50%; width:48px; height:48px; background:rgba(255,255,255,.15); color:white; font-size:20px; cursor:pointer; transition:.3s}
-    .btn:hover{background:rgba(255,255,255,.25); transform:scale(1.05)}
-
-    footer{position:absolute; bottom:10px; width:100%; text-align:center; font-size:12px; color:var(--muted)}
-  </style>
+  h1 {
+    font-size: clamp(50px, 20vw, 200px); /* адаптивний великий текст */
+    text-align: center;
+    text-shadow:
+      0 0 10px #ff0000,
+      0 0 20px #ff0000,
+      0 0 40px #ff0000,
+      0 0 80px #ff0000;
+  }
+</style>
 </head>
 <body>
-  <header>Фотоальбом SLOTHIM</header>
-  <div class="stage">
-    <div class="book" id="book"></div>
-    <div class="controls">
-      <button class="btn" id="prevBtn">⟨</button>
-      <button class="btn" id="nextBtn">⟩</button>
-    </div>
-  </div>
-  <footer>Свайпай або тисни кнопки для перегортання сторінок</footer>
-
-  <script>
-    const book = document.getElementById('book');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    let index = 0;
-    const TOTAL_PAGES = 5;
-
-    function buildBook(){
-      book.innerHTML = '';
-      for(let i=0;i<TOTAL_PAGES;i++){
-        const page = document.createElement('div');
-        page.className = 'page';
-        page.style.setProperty('--i', i);
-        const grid = document.createElement('div');
-        grid.className = 'grid';
-        for(let j=0;j<10;j++){
-          const cell = document.createElement('div');
-          cell.className = 'cell';
-          cell.innerText = 'Пусто';
-          grid.appendChild(cell);
-        }
-        const caption = document.createElement('div');
-        caption.className = 'caption';
-        caption.innerText = `Сторінка ${i+1}`;
-        page.appendChild(grid);
-        page.appendChild(caption);
-        book.appendChild(page);
-      }
-      updateUI();
-    }
-
-    function updateUI(){
-      const pages = [...book.querySelectorAll('.page')];
-      pages.forEach((p,i)=>{
-        p.style.zIndex = TOTAL_PAGES - i;
-        p.classList.toggle('flipped', i < index);
-      });
-    }
-
-    function next(){ if(index<TOTAL_PAGES-1){ index++; updateUI(); } }
-    function prev(){ if(index>0){ index--; updateUI(); } }
-
-    nextBtn.addEventListener('click', next);
-    prevBtn.addEventListener('click', prev);
-    window.addEventListener('keydown', e=>{if(e.key==='ArrowRight') next(); if(e.key==='ArrowLeft') prev();});
-
-    buildBook();
-  </script>
+  <h1>СКОРО</h1>
 </body>
+</html>
