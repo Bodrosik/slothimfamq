@@ -16,7 +16,7 @@ button{cursor:pointer;}
 <body class="min-h-screen p-4">
 <header class="mb-4">
 <h1 class="text-2xl font-bold">⚔️ Заявки на вступ у клан</h1>
-<p class="text-slate-300 text-sm">Будь-хто може залишити заявку. Редагування тільки за секретним паролем.</p>
+<p class="text-slate-300 text-sm">Будь-хто може залишити заявку. Редагування лише за секретним паролем.</p>
 <div class="mt-2 flex gap-2">
 <button id="newAppBtn" class="pill bg-blue-500/80 px-4 py-2">Подати анкету</button>
 <button id="editBtn" class="pill bg-emerald-500/80 px-4 py-2">Редагувати анкети</button>
@@ -25,110 +25,75 @@ button{cursor:pointer;}
 
 <main>
 <div id="list"></div>
+<div id="empty" class="text-center text-slate-400 py-10">Поки що заявок немає.</div>
 </main>
 
 <script>
 const SECRET_PASS = 'SlotHim08831';
-let canEdit = false;
+let canEdit=false;
 
-// Дані заявок у пам'яті
-let applications = [];
+// Завантаження заявок з localStorage
+let applications = JSON.parse(localStorage.getItem('applications')||'[]');
 
-// Створити нову заявку
-document.getElementById('newAppBtn').addEventListener('click', ()=>{
-    const app = {};
-    app.nickname = prompt("1. Нік у грі:");
-    if(!app.nickname) return;
-    app.id = prompt("2. ID:");
-    app.age = prompt("3. Вік:");
-    app.timezone = prompt("4. Часовий пояс / місто:");
-    app.dailyTime = prompt("5. Скільки часу проводиш у грі щодня:");
-    app.serverTime = prompt("6. Скільки часу граєш на сервері:");
-    app.prevClans = prompt("7. Попередні клани (якщо були):");
-    app.reasonLeave = prompt("8. Причина виходу з попереднього клану:");
-    app.reasonJoin = prompt("9. Чому хочеш вступити саме до нашого клану:");
-    app.helpClan = prompt("10. Чим готовий допомагати клану:");
-    app.discipline = prompt("11. Ставлення до дисципліни та правил:");
-    app.voice = prompt("12. Чи є мікрофон та Discord:");
-    app.attend = prompt("13. Чи готовий виходити на збори клану:");
-    app.rulesKnow = prompt("14. Наскільки добре знаєш правила серверу (1–10):");
-    app.skills = prompt("15. Які навички маєш у грі:");
-    app.followOrders = prompt("16. Чи готовий виконувати вказівки старших:");
-    app.vehicle = prompt("17. Чи є авто/бізнес, яким можеш допомагати:");
-    app.ban = prompt("18. Чи був бан/варн на сервері:");
-    app.team = prompt("19. Чи готовий працювати в команді:");
-    app.extra = prompt("20. Додаткова інформація про себе:");
-    app.status = "На розгляді";
-    app.comment = "";
-    applications.push(app);
-    renderApplications();
+function saveApps(){ localStorage.setItem('applications', JSON.stringify(applications)); }
+function renderApplications(){
+  const list = document.getElementById('list');
+  list.innerHTML="";
+  if(applications.length===0){ document.getElementById('empty').style.display='block'; return; } 
+  else document.getElementById('empty').style.display='none';
+
+  applications.forEach((app,i)=>{
+    const card = document.createElement('div');
+    card.className='card';
+    card.innerHTML = `<strong>${app.nickname}</strong> — ${app.status||'На розгляді'}<br>
+      <details><summary>Показати анкету</summary>
+      <pre>${JSON.stringify(app,null,2)}</pre></details>
+      ${canEdit?`<div class='mt-2 flex gap-2'>
+        <button onclick='approve(${i})' class='bg-green-500/80 px-3 py-1 pill'>Схвалити</button>
+        <button onclick='reject(${i})' class='bg-red-500/80 px-3 py-1 pill'>Відхилити</button>
+        <button onclick='addComment(${i})' class='bg-blue-500/80 px-3 py-1 pill'>Коментар</button>
+      </div>`:''}`;
+    list.appendChild(card);
+  });
+}
+
+function approve(i){ applications[i].status="Схвалено"; saveApps(); renderApplications(); }
+function reject(i){ applications[i].status="Відхилено"; saveApps(); renderApplications(); }
+function addComment(i){ const c=prompt("Коментар:"); if(c) { applications[i].comment=c; saveApps(); renderApplications(); } }
+
+// Подати анкету
+document.getElementById('newAppBtn').addEventListener('click',()=>{
+  const app={};
+  app.nickname=prompt("1. Нік у грі:"); if(!app.nickname) return;
+  app.id=prompt("2. ID:");
+  app.age=prompt("3. Вік:");
+  app.timezone=prompt("4. Часовий пояс / місто:");
+  app.dailyTime=prompt("5. Скільки часу проводиш у грі щодня:");
+  app.serverTime=prompt("6. Скільки часу граєш на сервері:");
+  app.prevClans=prompt("7. Попередні клани (якщо були):");
+  app.reasonLeave=prompt("8. Причина виходу з попереднього клану:");
+  app.reasonJoin=prompt("9. Чому хочеш вступити саме до нашого клану:");
+  app.helpClan=prompt("10. Чим готовий допомагати клану:");
+  app.discipline=prompt("11. Ставлення до дисципліни та правил:");
+  app.voice=prompt("12. Чи є мікрофон та Discord:");
+  app.attend=prompt("13. Чи готовий виходити на збори клану:");
+  app.rulesKnow=prompt("14. Наскільки добре знаєш правила серверу (1–10):");
+  app.skills=prompt("15. Які навички маєш у грі:");
+  app.followOrders=prompt("16. Чи готовий виконувати вказівки старших:");
+  app.vehicle=prompt("17. Чи є авто/бізнес, яким можеш допомагати:");
+  app.ban=prompt("18. Чи був бан/варн на сервері:");
+  app.team=prompt("19. Чи готовий працювати в команді:");
+  app.extra=prompt("20. Додаткова інформація:");
+  app.status="На розгляді"; app.comment="";
+  applications.push(app); saveApps(); renderApplications();
 });
 
 // Редагування заявок
-document.getElementById('editBtn').addEventListener('click', ()=>{
-    const p = prompt("Введіть секретний пароль для редагування:");
-    if(p === SECRET_PASS){
-        canEdit = true;
-        alert("Доступ до редагування увімкнено");
-        renderApplications();
-    } else alert("Невірний пароль");
+document.getElementById('editBtn').addEventListener('click',()=>{
+  const p=prompt("Введіть секретний пароль:");
+  if(p===SECRET_PASS){ canEdit=true; alert("Доступ увімкнено"); renderApplications(); }
+  else alert("Невірний пароль");
 });
-
-// Відображення заявок
-function renderApplications(){
-    const list = document.getElementById('list');
-    list.innerHTML = "";
-    if(applications.length === 0){
-        list.innerHTML = "<p class='text-center text-slate-400 mt-4'>Поки що заявок немає.</p>";
-        return;
-    }
-    applications.forEach((app,i)=>{
-        const card = document.createElement('div');
-        card.className = "card";
-        card.innerHTML = `
-        <strong>${app.nickname}</strong> — ${app.status} <br>
-        <details>
-        <summary>Показати анкету</summary>
-        <p>1. Нік: ${app.nickname}</p>
-        <p>2. ID: ${app.id}</p>
-        <p>3. Вік: ${app.age}</p>
-        <p>4. Часовий пояс: ${app.timezone}</p>
-        <p>5. Щодня грає: ${app.dailyTime}</p>
-        <p>6. На сервері: ${app.serverTime}</p>
-        <p>7. Попередні клани: ${app.prevClans}</p>
-        <p>8. Причина виходу: ${app.reasonLeave}</p>
-        <p>9. Чому вступити: ${app.reasonJoin}</p>
-        <p>10. Допомога клану: ${app.helpClan}</p>
-        <p>11. Дисципліна: ${app.discipline}</p>
-        <p>12. Мікрофон/Discord: ${app.voice}</p>
-        <p>13. Готовий на збори: ${app.attend}</p>
-        <p>14. Правила (1–10): ${app.rulesKnow}</p>
-        <p>15. Навички: ${app.skills}</p>
-        <p>16. Виконання вказівок: ${app.followOrders}</p>
-        <p>17. Авто/бізнес: ${app.vehicle}</p>
-        <p>18. Бан/варн: ${app.ban}</p>
-        <p>19. Робота в команді: ${app.team}</p>
-        <p>20. Додаткова інформація: ${app.extra}</p>
-        <p>Коментар: ${app.comment}</p>
-        </details>
-        ${canEdit ? `<div class='mt-2 flex gap-2'>
-            <button onclick='approve(${i})' class='bg-green-500/80 px-3 py-1 pill'>Схвалити анкету</button>
-            <button onclick='reject(${i})' class='bg-red-500/80 px-3 py-1 pill'>Відхилити анкету</button>
-            <button onclick='addComment(${i})' class='bg-blue-500/80 px-3 py-1 pill'>Додати коментар</button>
-        </div>` : ''}
-        `;
-        list.appendChild(card);
-    });
-}
-
-// Функції для редагування
-function approve(i){applications[i].status="Схвалено"; renderApplications();}
-function reject(i){applications[i].status="Відхилено"; renderApplications();}
-function addComment(i){
-    const c = prompt("Введіть коментар:");
-    if(c) applications[i].comment = c;
-    renderApplications();
-}
 
 renderApplications();
 </script>
