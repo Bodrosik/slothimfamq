@@ -5,23 +5,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SLOTHIM</title>
 <style>
+  :root {
+    --bg-gradient: linear-gradient(rgba(0,0,0,0.7), rgba(150,0,0,0.6)), 
+      url("https://cdn.discordapp.com/attachments/1404565577648832545/1408370900545568778/IMG_4850.jpg") repeat-x top;
+    --text-color: white;
+    --btn-bg: rgba(0, 0, 0, 0.7);
+    --btn-color: red;
+    --border-color: red;
+  }
+
+  body.light {
+    --bg-gradient: linear-gradient(rgba(255,255,255,0.8), rgba(255,200,200,0.6)), 
+      url("https://cdn.discordapp.com/attachments/1404565577648832545/1408370900545568778/IMG_4850.jpg") repeat-x top;
+    --text-color: black;
+    --btn-bg: rgba(255, 255, 255, 0.8);
+    --btn-color: darkred;
+    --border-color: darkred;
+  }
+
   body {
     margin: 0;
     font-family: 'Arial', sans-serif;
     min-height: 100vh;
-    color: white;
+    color: var(--text-color);
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
     overflow-x: hidden;
-
-    /* Фото + червоний градієнт + горизонтальне повторення */
-    background: 
-      linear-gradient(rgba(0,0,0,0.7), rgba(150,0,0,0.6)), 
-      url("https://cdn.discordapp.com/attachments/1404565577648832545/1408370900545568778/IMG_4850.jpg?ex=68a97f1c&is=68a82d9c&hm=d8f6e918f51b4f04bc38f3e78b8159fbf4523165b3b32e0f53f665fcd723f7b5") repeat-x top;
+    background: var(--bg-gradient);
     background-size: auto 100%; 
     animation: backgroundMove 60s linear infinite;
+    transition: 0.5s ease;
   }
 
   @keyframes backgroundMove {
@@ -40,25 +55,22 @@
     font-size: 5em;
     font-weight: bold;
     text-transform: uppercase;
-    color: #0a0a0a;
+    color: var(--text-color);
     text-shadow:
       0 0 5px #111,
       0 0 10px #222,
-      0 0 15px #333,
-      0 0 25px #444,
-      0 0 40px #555;
+      0 0 15px #333;
     text-align: center;
     margin: 20px 0;
-    -webkit-text-stroke: 1px black;
   }
 
   .description-container {
     margin: 20px;
     padding: 20px;
-    border: 2px solid #ff0000;
+    border: 2px solid var(--border-color);
     border-radius: 15px;
     max-width: 800px;
-    background: rgba(0, 0, 0, 0.7);
+    background: var(--btn-bg);
     animation-delay: 1.5s;
   }
 
@@ -70,10 +82,10 @@
 
   .description-text {
     font-size: 1.5em;
-    color: white;
+    color: var(--text-color);
     white-space: pre-wrap;
     overflow: hidden;
-    border-right: .15em solid red;
+    border-right: .15em solid var(--border-color);
     width: 0;
     animation: typing 4s steps(80) forwards 2s;
   }
@@ -94,9 +106,9 @@
     font-size: 1.1em;
     font-weight: bold;
     text-transform: uppercase;
-    background: rgba(0, 0, 0, 0.7);
-    color: red;
-    border: 2px solid red;
+    background: var(--btn-bg);
+    color: var(--btn-color);
+    border: 2px solid var(--border-color);
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
@@ -104,17 +116,12 @@
     justify-content: center;
     text-align: center;
     border-radius: 10px;
-    text-decoration: none; /* для <a> */
+    text-decoration: none;
   }
-
-  .btn:nth-child(1) { animation-delay: 2.5s; animation: explodeAnim 0.5s forwards; }
-  .btn:nth-child(2) { animation-delay: 2.7s; animation: explodeAnim 0.5s forwards; }
-  .btn:nth-child(3) { animation-delay: 2.9s; animation: explodeAnim 0.5s forwards; }
-  .btn:nth-child(4) { animation-delay: 3.1s; animation: explodeAnim 0.5s forwards; }
 
   .btn:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 15px red;
+    box-shadow: 0 0 15px var(--border-color);
   }
 
   footer {
@@ -128,7 +135,27 @@
     border-radius: 8px;
   }
 
-  /* Адаптивність під мобільні телефони та планшети */
+  /* 🔘 Кнопка перемикання теми */
+  .theme-toggle {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 10px 20px;
+    background: var(--btn-bg);
+    color: var(--btn-color);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: 0.3s ease;
+  }
+
+  .theme-toggle:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px var(--border-color);
+  }
+
+  /* Адаптивність */
   @media (max-width: 768px) {
     h1 { font-size: 3.5em; }
     .description-text { font-size: 1.2em; }
@@ -143,6 +170,9 @@
 </style>
 </head>
 <body>
+
+  <!-- 🔘 Кнопка перемикання теми -->
+  <button class="theme-toggle" onclick="toggleTheme()">🌓 Тема</button>
 
   <h1>SLOTHIM</h1>
 
@@ -163,6 +193,12 @@
   </div>
 
   <footer>© 2025 SLOTHIM. Усі права захищено</footer>
+
+<script>
+  function toggleTheme() {
+    document.body.classList.toggle("light");
+  }
+</script>
 
 </body>
 </html>
