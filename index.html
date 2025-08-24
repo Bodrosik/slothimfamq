@@ -1,129 +1,140 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SLOTHIM</title>
-<style>
-  body {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #000, #400, #000);
-    background-size: 400% 400%;
-    animation: bgMove 10s infinite alternate;
-    font-family: 'Arial', sans-serif;
-    overflow: hidden;
-    color: #fff;
-  }
+  <meta charset="UTF-8">
+  <title>SLOTHIM</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #000000, #1a0000, #330000);
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+      overflow-x: hidden;
+    }
 
-  @keyframes bgMove {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 100% 50%; }
-  }
+    /* 3D текст */
+    h1 {
+      font-size: 60px;
+      font-weight: bold;
+      color: #ff1a1a;
+      text-shadow: 2px 2px 0px #660000,
+                   4px 4px 0px #330000,
+                   6px 6px 0px #000000;
+      margin-bottom: 10px;
+      white-space: nowrap;
+      border: 3px solid #ff1a1a;
+      padding: 10px 20px;
+      border-radius: 10px;
+      animation: glow 2s infinite alternate;
+    }
 
-  /* 🔥 Головний текст */
-  h1 {
-    font-size: 3.8em;
-    font-weight: bold;
-    text-align: center;
-    text-transform: uppercase;
-    color: #ff0000;
-    text-shadow: 0 0 15px #ff0000, 0 0 30px #aa0000;
-    margin-bottom: 20px;
-  }
+    @keyframes glow {
+      from { text-shadow: 2px 2px 5px #ff0000; }
+      to { text-shadow: 4px 4px 15px #ff3333; }
+    }
 
-  /* ✨ Ефект друкарської машинки */
-  .typing {
-    font-size: 1.8em;
-    color: #fff;
-    border-right: 2px solid #ff0000;
-    white-space: nowrap;
-    overflow: hidden;
-    width: 0;
-    animation: typing 5s steps(40) forwards, blink 0.7s infinite;
-  }
+    /* Анімований підпис */
+    .subtitle {
+      font-size: 26px;
+      margin-bottom: 20px;
+      color: #fff;
+      text-shadow: 1px 1px 3px #ff0000;
+      border: 2px solid #660000;
+      padding: 10px;
+      border-radius: 8px;
+      display: inline-block;
+      animation: typing 6s steps(40, end) infinite alternate;
+      white-space: nowrap;
+      overflow: hidden;
+    }
 
-  @keyframes typing {
-    from { width: 0; }
-    to { width: 100%; }
-  }
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
 
-  @keyframes blink {
-    50% { border-color: transparent; }
-  }
+    /* Таблиця "Про нас" */
+    table {
+      border-collapse: collapse;
+      margin: 20px 0;
+      border: 3px solid #ff1a1a;
+      background: rgba(20, 0, 0, 0.8);
+      box-shadow: 0 0 15px #ff0000;
+    }
 
-  /* 🔘 Кнопки */
-  .buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
-    margin-top: 40px;
-  }
+    td {
+      padding: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 1px 1px 3px black, 2px 2px 6px #ff3333;
+    }
 
-  .btn {
-    width: 250px;
-    height: 60px;
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #fff;
-    background: rgba(0,0,0,0.7);
-    border: 2px solid #ff0000;
-    border-radius: 12px;
-    cursor: pointer;
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    transition: 0.3s ease;
-    box-shadow: 0 0 15px #ff0000, inset 0 0 8px #ff0000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+    /* Кнопки */
+    .button-container {
+      display: flex;
+      gap: 20px;
+      margin-top: 20px;
+      border: 3px solid #ff1a1a;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #ff0000;
+    }
 
-  .btn:hover {
-    background: #ff0000;
-    color: #000;
-    transform: scale(1.05);
-    box-shadow: 0 0 25px #ff0000, 0 0 50px #ff0000;
-  }
+    .btn {
+      background: black;
+      border: 2px solid #ff1a1a;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 15px 25px;
+      width: 160px;
+      height: 60px;
+      border-radius: 5px;
+      cursor: pointer;
+      text-transform: uppercase;
+      box-shadow: 0 0 10px #ff0000;
+      transition: all 0.3s;
+    }
 
-  /* 📱 Адаптивність */
-  @media (max-width: 600px) {
-    h1 { font-size: 2.8em; }
-    .typing { font-size: 1.2em; }
-    .btn { width: 200px; height: 55px; font-size: 1em; }
-  }
+    .btn:hover {
+      background: #ff1a1a;
+      color: black;
+      box-shadow: 0 0 20px #ff3333;
+    }
 
-  /* 📌 Футер */
-  footer {
-    position: absolute;
-    bottom: 15px;
-    text-align: center;
-    font-size: 1em;
-    color: #aaa;
-    text-shadow: 0 0 5px #ff0000;
-  }
-</style>
+    footer {
+      position: absolute;
+      bottom: 10px;
+      font-size: 16px;
+      color: #888;
+    }
+  </style>
 </head>
 <body>
-
   <h1>SLOTHIM</h1>
+  <div class="subtitle">Ми Slothim — сила, суворі правила</div>
 
-  <div class="typing">Ми SLOTHIM — сила, суворі правила!</div>
+  <table>
+    <tr>
+      <td>Ми — команда Slothim. Дотримуємось порядку, маємо суворі правила і власну систему розвитку. 
+      Кожен учасник проходить відбір і з часом може стати частиною старшого складу.</td>
+    </tr>
+  </table>
 
-  <div class="buttons">
-    <a href="systema.html" class="btn">Система підвищення</a>
-    <a href="sklad.html" class="btn">Старший склад</a>
-    <a href="anketa.html" class="btn">Анкета на вступ</a>
-    <a href="htomi.html" class="btn">Хто ми</a>
+  <div class="button-container">
+    <button class="btn">Система підвищення</button>
+    <button class="btn">Старший склад</button>
+    <button class="btn">Анкета</button>
+    <button class="btn">Хто ми</button>
   </div>
 
-  <footer>© 2025 SLOTHIM. Усі права захищені ☯</footer>
-
+  <footer>© Усі права захищені ☠️</footer>
 </body>
 </html>
