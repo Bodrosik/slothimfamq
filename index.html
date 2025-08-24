@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SLOTHIM</title>
 <style>
-  /* 🌌 Фон */
   body {
     margin: 0;
     height: 100vh;
@@ -13,83 +12,91 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: radial-gradient(circle at center, #0ff, #006, #000);
+    background: linear-gradient(135deg, #000, #400, #000);
+    background-size: 400% 400%;
+    animation: bgMove 10s infinite alternate;
     font-family: 'Arial', sans-serif;
     overflow: hidden;
     color: #fff;
   }
 
-  /* ✨ Анімація фону */
-  body::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(#0ff, #f0f, #0ff);
-    animation: rotate 15s linear infinite;
-    z-index: -1;
+  @keyframes bgMove {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
   }
 
-  @keyframes rotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  /* 🌟 Заголовок */
+  /* 🔥 Головний текст */
   h1 {
-    font-size: 3.5em;
+    font-size: 3.8em;
     font-weight: bold;
-    text-transform: uppercase;
     text-align: center;
-    letter-spacing: 5px;
-    color: #0ff;
-    text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
-    animation: glow 2s ease-in-out infinite alternate;
-    margin-bottom: 40px;
+    text-transform: uppercase;
+    color: #ff0000;
+    text-shadow: 0 0 15px #ff0000, 0 0 30px #aa0000;
+    margin-bottom: 20px;
   }
 
-  @keyframes glow {
-    from { text-shadow: 0 0 10px #0ff, 0 0 20px #0ff; }
-    to { text-shadow: 0 0 20px #0ff, 0 0 40px #0ff, 0 0 60px #0ff; }
+  /* ✨ Ефект друкарської машинки */
+  .typing {
+    font-size: 1.8em;
+    color: #fff;
+    border-right: 2px solid #ff0000;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+    animation: typing 5s steps(40) forwards, blink 0.7s infinite;
+  }
+
+  @keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+  @keyframes blink {
+    50% { border-color: transparent; }
   }
 
   /* 🔘 Кнопки */
   .buttons {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
     align-items: center;
+    margin-top: 40px;
   }
 
   .btn {
-    padding: 15px 40px;
+    width: 250px;
+    height: 60px;
     font-size: 1.2em;
     font-weight: bold;
     color: #fff;
-    background: rgba(0,0,0,0.6);
-    border: 2px solid #0ff;
+    background: rgba(0,0,0,0.7);
+    border: 2px solid #ff0000;
     border-radius: 12px;
     cursor: pointer;
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 2px;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 10px #0ff, inset 0 0 10px #0ff;
+    transition: 0.3s ease;
+    box-shadow: 0 0 15px #ff0000, inset 0 0 8px #ff0000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .btn:hover {
-    background: #0ff;
+    background: #ff0000;
     color: #000;
-    box-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
-    transform: scale(1.1);
+    transform: scale(1.05);
+    box-shadow: 0 0 25px #ff0000, 0 0 50px #ff0000;
   }
 
-  /* ⚡ Адаптивність */
+  /* 📱 Адаптивність */
   @media (max-width: 600px) {
-    h1 { font-size: 2.5em; }
-    .btn { font-size: 1em; padding: 12px 30px; }
+    h1 { font-size: 2.8em; }
+    .typing { font-size: 1.2em; }
+    .btn { width: 200px; height: 55px; font-size: 1em; }
   }
 
   /* 📌 Футер */
@@ -99,13 +106,15 @@
     text-align: center;
     font-size: 1em;
     color: #aaa;
-    text-shadow: 0 0 5px #0ff;
+    text-shadow: 0 0 5px #ff0000;
   }
 </style>
 </head>
 <body>
 
   <h1>SLOTHIM</h1>
+
+  <div class="typing">Ми SLOTHIM — сила, суворі правила!</div>
 
   <div class="buttons">
     <a href="systema.html" class="btn">Система підвищення</a>
