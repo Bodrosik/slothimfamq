@@ -1,121 +1,120 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SLOTHIM</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      background: linear-gradient(135deg, #000000, #1a1a1a, #0d0d0d);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-      font-family: 'Arial Black', sans-serif;
-      overflow: hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SLOTHIM</title>
+<style>
+  /* 🌌 Фон */
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at center, #0ff, #006, #000);
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+    color: #fff;
+  }
 
-    h1 {
-      font-size: 90px;
-      font-weight: bold;
-      text-transform: uppercase;
-      background: linear-gradient(90deg, #ff0080, #ff8c00, #40e0d0);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: glow 3s infinite alternate;
-      margin: 0;
-    }
+  /* ✨ Анімація фону */
+  body::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(#0ff, #f0f, #0ff);
+    animation: rotate 15s linear infinite;
+    z-index: -1;
+  }
 
-    @keyframes glow {
-      from { text-shadow: 0 0 10px #ff0080; }
-      to { text-shadow: 0 0 30px #40e0d0, 0 0 50px #ff8c00; }
-    }
+  @keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 
-    .slogan {
-      font-size: 26px;
-      font-weight: bold;
-      margin-top: 10px;
-      color: white;
-      text-shadow: 2px 2px 6px #000, 0 0 15px #ff0080;
-      animation: fadeIn 3s infinite alternate;
-    }
+  /* 🌟 Заголовок */
+  h1 {
+    font-size: 3.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 5px;
+    color: #0ff;
+    text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
+    animation: glow 2s ease-in-out infinite alternate;
+    margin-bottom: 40px;
+  }
 
-    @keyframes fadeIn {
-      from { opacity: 0.4; }
-      to { opacity: 1; }
-    }
+  @keyframes glow {
+    from { text-shadow: 0 0 10px #0ff, 0 0 20px #0ff; }
+    to { text-shadow: 0 0 20px #0ff, 0 0 40px #0ff, 0 0 60px #0ff; }
+  }
 
-    .about {
-      margin-top: 40px;
-      padding: 20px;
-      border: 3px solid #ff0080;
-      border-radius: 12px;
-      background: rgba(20, 20, 20, 0.85);
-      font-size: 22px;
-      text-align: center;
-      text-shadow: 2px 2px 4px #000;
-      transform: perspective(500px) rotateX(5deg);
-      max-width: 600px;
-    }
+  /* 🔘 Кнопки */
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
 
-    .buttons {
-      margin-top: 40px;
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
+  .btn {
+    padding: 15px 40px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #fff;
+    background: rgba(0,0,0,0.6);
+    border: 2px solid #0ff;
+    border-radius: 12px;
+    cursor: pointer;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px #0ff, inset 0 0 10px #0ff;
+  }
 
-    .btn {
-      padding: 20px 40px;
-      font-size: 22px;
-      font-weight: bold;
-      text-transform: uppercase;
-      background: linear-gradient(90deg, #ff0080, #ff8c00, #40e0d0);
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      color: #fff;
-      box-shadow: 0 0 15px #000, 0 0 20px #ff0080;
-      transition: transform 0.3s, box-shadow 0.3s;
-      flex: 1 1 200px;
-      max-width: 250px;
-      text-align: center;
-    }
+  .btn:hover {
+    background: #0ff;
+    color: #000;
+    box-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
+    transform: scale(1.1);
+  }
 
-    .btn:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 25px #ff8c00, 0 0 35px #40e0d0;
-    }
+  /* ⚡ Адаптивність */
+  @media (max-width: 600px) {
+    h1 { font-size: 2.5em; }
+    .btn { font-size: 1em; padding: 12px 30px; }
+  }
 
-    footer {
-      position: absolute;
-      bottom: 10px;
-      font-size: 16px;
-      color: #aaa;
-      text-shadow: 1px 1px 3px #000;
-    }
-  </style>
+  /* 📌 Футер */
+  footer {
+    position: absolute;
+    bottom: 15px;
+    text-align: center;
+    font-size: 1em;
+    color: #aaa;
+    text-shadow: 0 0 5px #0ff;
+  }
+</style>
 </head>
 <body>
-  <h1>SLOTHIM</h1>
-  <div class="slogan">Ми SLOTHIM — сила, суворі правила</div>
 
-  <div class="about">
-    <p>Slothim — це спільнота людей, яких об’єднує дисципліна, повага та сила. Ми створюємо власний шлях і дотримуємось суворих правил, які роблять нас єдиними.</p>
-  </div>
+  <h1>SLOTHIM</h1>
 
   <div class="buttons">
-    <button class="btn">Система підвищення</button>
-    <button class="btn">Старший склад</button>
-    <button class="btn">Анкета на вступ</button>
-    <button class="btn">Хто ми</button>
+    <a href="systema.html" class="btn">Система підвищення</a>
+    <a href="sklad.html" class="btn">Старший склад</a>
+    <a href="anketa.html" class="btn">Анкета на вступ</a>
+    <a href="htomi.html" class="btn">Хто ми</a>
   </div>
 
-  <footer>© Усі права захищені ⚡</footer>
+  <footer>© 2025 SLOTHIM. Усі права захищені ☯</footer>
+
 </body>
 </html>
