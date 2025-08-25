@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Заявка на вступ</title>
+  <style>
+    :root {
+      --gap: 14px;
+      --radius: 12px;
+    }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      margin: 0;
+      background: #0b0f1a;
+      color: #e6e9ef;
+    }
+    header {
+      padding: 22px 18px;
+      background: linear-gradient(135deg, #111a2b, #0e1626 60%, #0b0f1a);
+      position: sticky; top: 0; z-index: 5;
+      border-bottom: 1px solid #1b2436;
+    }
+    h1 { margin: 0 0 6px; font-size: 22px; }
+    .sub { opacity: .8; font-size: 14px; }
+
+    main { max-width: 1000px; margin: 22px auto; padding: 0 14px 40px; }
+
+    .card {
+      background: #111827;
+      border: 1px solid #1f2a44;
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    .grid { display: grid; gap: var(--gap); }
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 760px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    label { font-size: 14px; opacity: .95; display:block; margin-bottom: 6px; }
+    input, textarea, select {
+      width: 100%; border-radius: 10px; border: 1px solid #273352;
+      background: #0f1726; color: #e6e9ef; padding: 10px 12px; outline: none;
+    }
+    textarea { min-height: 110px; resize: vertical; }
+
+    .row { display: flex; gap: var(--gap); flex-wrap: wrap; align-items: center; }
+    .btn {
+      border: 1px solid #2a3a64; background: #1a2540; color: #e6e9ef;
+      padding: 10px 14px; border-radius: 10px; cursor: pointer; font-weight: 600;
+      transition: .15s transform ease, .15s background ease, .15s border ease;
+      user-select: none;
+    }
+    .btn.primary { background: #2a6efb; border-color: #2a6efb; color: #fff; }
+    .btn.success { background: #20a062; border-color: #1c8a55; }
+    .btn.danger  { background: #d33b46; border-color: #b6313a; }
+    .btn.ghost   { background: transparent; }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+    .hint { font-size: 13px; opacity: .8; }
+    .muted { opacity: .7; }
+    .tag {
+      display: inline-block; padding: 2px 8px; border-radius: 999px;
+      font-size: 12px; border: 1px solid #314168; background:#141d31; margin-right:6px;
+    }
+    .status-pill { padding: 3px 9px; border-radius: 999px; font-size:12px; border:1px solid; }
+    .status-pending { border-color:#6a6f7a; color:#cbd5e1; }
+    .status-approved { border-color:#1c8a55; color:#86efac; }
+    .status-rejected { border-color:#b6313a; color:#fecaca; }
+
+    .item {
+      border: 1px solid #223054; border-radius: 12px; padding: 12px;
+      background: #0f1730; display: grid; gap: 8px;
+    }
+    .item-head { display:flex; align-items:center; justify-content: space-between; gap:10px; }
+    .item-meta { font-size: 13px; opacity: .85; display:flex; gap:10px; flex-wrap:wrap; }
+    .item-actions { display:flex; gap:8px; flex-wrap:wrap; }
+    .comment-box { display:flex; gap:8px; flex-wrap:wrap; }
+    .sep { height: 1px; background: #1b2745; margin: 8px 0; }
+
+    code.inline {
+      background:#0d1426; padding:2px 6px; border-radius:6px; border:1px solid #1d2950; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Заявка на вступ</h1>
+    <div class="sub">Подавай анкету. Модератори перевіряють і ставлять статус.</div>
+  </header>
+
+  <main class="grid" style="gap:22px;">
+    <!-- SUBMIT FORM -->
+    <section class="card">
+      <h2 style="margin:0 0 12px;">Подати анкету</h2>
+      <form id="appForm" class="grid grid-2">
+        <div>
+          <label>Нікнейм</label>
+          <input required name="nickname" placeholder="Напр., Zayno" maxlength="30">
+        </div>
+        <div>
+          <label>Вік</label>
+          <input required name="age" type="number" min="5" max="120" placeholder="12">
+        </div>
+        <div>
+          <label>Discord</label>
+          <input name="discord" placeholder="наприклад, zayno#1234 або @handle" maxlength="50">
+        </div>
+        <div>
+          <label>Контакт (опц.)</label>
+          <input name="contact" placeholder="телега/емейл (опціонально)" maxlength="80">
+        </div>
+        <div style="grid-column:1 / -1;">
+          <label>Про себе / чому хочеш вступити</label>
+          <textarea required name="about" placeholder="Коротко опиши себе і причину вступу"></textarea>
+        </div>
+        <div class="row">
+          <button class="btn primary" type="submit">Надіслати</button>
+          <span class="hint">Після відправки заявка з’явиться внизу у списку.</span>
+        </div>
+      </form>
+    </section>
+
+    <!-- MOD LOGIN -->
+    <section class="card">
+      <h2 style="margin:0 0 12px;">Вхід модератора</h2>
+      <div class="grid grid-2">
+        <div>
+          <label>Пароль модератора</label>
+          <input id="modPasswordInput" type="password" placeholder="секретний пароль">
+        </div>
+        <div>
+          <label>GitHub токен (contents:write)</label>
+          <input id="tokenInput" type="password" placeholder="ввести токен (безпечно — не зберігається)">
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <button id="loginBtn" class="btn">Увійти</button>
+        <span class="hint">Без токена зміни збережуться лише локально (демо-режим).</span>
+      </div>
+    </section>
+
+    <!-- LIST -->
+    <section class="card">
+      <div class="row" style="justify-content: space-between;">
+        <h2 style="margin:0;">Заявки</h2>
+        <div class="row">
+          <span class="tag" id="storageModeTag">Mode: loading…</span>
+          <button class="btn ghost" id="refreshBtn">Оновити</button>
+          <button class="btn ghost" id="exportBtn">Експорт JSON</button>
+        </div>
+      </div>
+      <div id="list" class="grid" style="margin-top:12px;"></div>
+    </section>
+  </main>
+
+  <script>
+    // ==== SETTINGS ====
+    const GITHUB_OWNER = "YOUR_GH_OWNER";     // <-- зміни
+    const GITHUB_REPO  = "YOUR_REPO_NAME";    // <-- зміни
+    const BRANCH       = "main";              // або "master"
+    const DATA_PATH    = "data/applications.json"; // файл у репо
+
+    const MOD_PASSWORD = "CHANGE_ME"; // <-- ЗАДАЙ свій секретний пароль модератора
+    let   GITHUB_TOKEN = ""; // <-- можеш залишити пустим і вводити токен у формі входу
+
+    // ==== STATE ====
+    let STATE = {
+      applications: [],
+      sha: null,                 // SHA файлу в GitHub (для оновлення)
+      isModerator: false,
+      runtimeToken: "",          // токен, введений у формі (не зберігається)
+      storageMode: "github-read",// github-read | github-write | local
+    };
+
+    // ==== HELPERS ====
+    const $ = (sel) => document.querySelector(sel);
+    const listEl = $("#list");
+    const storageTag = $("#storageModeTag");
+
+    function uid() {
+      return "id_" + Math.random().toString(36).slice(2) + Date.now().toString(36);
+    }
+    function nowISO() { return new Date().toISOString(); }
+
+    function setStorageMode(mode) {
+      STATE.storageMode = mode;
+      storageTag.textContent = "Mode: " + mode;
+    }
+
+    function saveLocal() {
+      localStorage.setItem("applications.json", JSON.stringify(STATE.applications));
+      setStorageMode(STATE.isModerator && (STATE.runtimeToken || GITHUB_TOKEN) ? "github-write (offline)" : "local");
+    }
+
+    function downloadFile(name, text) {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([text], {type:'application/json'}));
+      a.download = name;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    // ==== GITHUB API ====
+    const GH_BASE = "https://api.github.com";
+    async function ghGetContent() {
+      const url = `${GH_BASE}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${DATA_PATH}?ref=${BRANCH}`;
+      const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" }});
+      if (res.status === 404) return { notFound: true };
+      if (!res.ok) throw new Error("GitHub GET failed: " + res.status);
+      const data = await res.json();
+      const content = atob(data.content.replace(/\n/g, ""));
+      return { content, sha: data.sha };
+    }
+
+    async function ghPutContent(newContent, message) {
+      const token = STATE.runtimeToken || GITHUB_TOKEN;
+      if (!token) throw new Error("No GitHub token provided");
+      const url = `${GH_BASE}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${DATA_PATH}`;
+      const body = {
+        message,
+        content: btoa(unescape(encodeURIComponent(newContent))),
+        branch: BRANCH
+      };
+      if (STATE.sha) body.sha = STATE.sha;
+      const res = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Accept": "application/vnd.github+json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(body)
+      });
+      if (!res.ok) {
+        const txt = await res.text();
+        throw new Error("GitHub PUT failed: " + res.status + " " + txt);
+      }
+      const data = await res.json();
+      STATE.sha = data.content?.sha || null;
+      return data;
+    }
+
+    async function loadData() {
+      try {
+        const gh = await ghGetContent();
+        if (gh.notFound) {
+          // якщо файлу нема — дивимося локальне або створюємо порожній
+          const local = localStorage.getItem("applications.json");
+          STATE.applications = local ? JSON.parse(local) : [];
+          STATE.sha = null;
+          setStorageMode("github-read (file not found) → local");
+        } else {
+          STATE.applications = JSON.parse(gh.content || "[]");
+          STATE.sha = gh.sha;
+          setStorageMode("github-read");
+        }
+      } catch (e) {
+        console.warn(e);
+        const local = localStorage.getItem("applications.json");
+        STATE.applications = local ? JSON.parse(local) : [];
+        STATE.sha = null;
+        setStorageMode("local");
+      }
+      renderList();
+    }
+
+    async function persist(message) {
+      const json = JSON.stringify(STATE.applications, null, 2);
+      try {
+        if (STATE.isModerator && (STATE.runtimeToken || GITHUB_TOKEN)) {
+          await ghPutContent(json, message);
+          setStorageMode("github-write");
+        } else {
+          saveLocal();
+        }
+      } catch (e) {
+        console.warn(e);
+        // падаємо в локальний режим, але не ламаємось
+        saveLocal();
+        alert("Не вдалось записати у GitHub. Дані збережено локально. Деталі в консолі.");
+      }
+      renderList();
+    }
+
+    // ==== RENDER ====
+    function renderList() {
+      listEl.innerHTML = "";
+      if (!STATE.applications.length) {
+        listEl.innerHTML = `<div class="muted">Поки що заявок нема. Будь першим!</div>`;
+        return;
+      }
+
+      // нові зверху
+      const apps = [...STATE.applications].sort((a,b) => (b.createdAt||"").localeCompare(a.createdAt||""));
+
+      for (const app of apps) {
+        const item = document.createElement("div");
+        item.className = "item";
+
+        const status = app.status || "pending";
+        const statusClass = status === "approved" ? "status-approved"
+                         : status === "rejected" ? "status-rejected" : "status-pending";
+
+        item.innerHTML = `
+          <div class="item-head">
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+              <strong>${escapeHtml(app.nickname)}</strong>
+              <span class="item-meta">
+                <span><span class="muted">Вік:</span> ${escapeHtml(String(app.age||"-"))}</span>
+                ${app.discord ? `<span><span class="muted">Discord:</span> ${escapeHtml(app.discord)}</span>` : ""}
+                ${app.contact ? `<span><span class="muted">Контакт:</span> ${escapeHtml(app.contact)}</span>` : ""}
+                <span class="muted">ID: <code class="inline">${app.id}</code></span>
+                <span class="status-pill ${statusClass}">${status}</span>
+              </span>
+            </div>
+            <span class="muted" title="${app.createdAt||""}">${timeago(app.createdAt)}</span>
+          </div>
+          <div>${nl2br(escapeHtml(app.about||""))}</div>
+          ${app.modComment ? `<div class="sep"></div><div class="muted"><b>Коментар модератора:</b> ${nl2br(escapeHtml(app.modComment))}</div>` : ""}
+        `;
+
+        // Actions for moderator
+        if (STATE.isModerator) {
+          const actions = document.createElement("div");
+          actions.className = "item-actions";
+          const approveBtn = btn("Схвалити", "success");
+          const rejectBtn  = btn("Відхилити", "danger");
+
+          approveBtn.onclick = () => updateStatus(app.id, "approved");
+          rejectBtn.onclick  = () => updateStatus(app.id, "rejected");
+
+          const commentWrap = document.createElement("div");
+          commentWrap.className = "comment-box";
+          const commentInput = document.createElement("input");
+          commentInput.placeholder = "Коментар модератора…";
+          commentInput.value = app.modComment || "";
+          const saveCmt = btn("Зберегти коментар", "primary");
+          saveCmt.onclick = () => setComment(app.id, commentInput.value);
+
+          actions.appendChild(approveBtn);
+          actions.appendChild(rejectBtn);
+          commentWrap.appendChild(commentInput);
+          commentWrap.appendChild(saveCmt);
+
+          item.appendChild(document.createElement("div")).className = "sep";
+          item.appendChild(actions);
+          item.appendChild(commentWrap);
+        }
+
+        listEl.appendChild(item);
+      }
+    }
+
+    function btn(text, type) {
+      const b = document.createElement("button");
+      b.className = "btn " + (type||"");
+      b.textContent = text;
+      return b;
+    }
+
+    // ==== ACTIONS ====
+    function updateStatus(id, status) {
+      const idx = STATE.applications.findIndex(a => a.id === id);
+      if (idx === -1) return;
+      STATE.applications[idx].status = status;
+      STATE.applications[idx].updatedAt = nowISO();
+      persist(`moderation: set status ${status} for ${id}`);
+    }
+
+    function setComment(id, text) {
+      const idx = STATE.applications.findIndex(a => a.id === id);
+      if (idx === -1) return;
+      STATE.applications[idx].modComment = text || "";
+      STATE.applications[idx].updatedAt = nowISO();
+      persist(`moderation: set comment for ${id}`);
+    }
+
+    // ==== FORM HANDLERS ====
+    $("#appForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const app = {
+        id: uid(),
+        nickname: (fd.get("nickname")||"").trim(),
+        age: Number(fd.get("age")||""),
+        discord: (fd.get("discord")||"").trim(),
+        contact: (fd.get("contact")||"").trim(),
+        about: (fd.get("about")||"").trim(),
+        status: "pending",
+        createdAt: nowISO(),
+        updatedAt: nowISO()
+      };
+      if (!app.nickname || !app.age || !app.about) {
+        alert("Заповни обов’язкові поля.");
+        return;
+      }
+      STATE.applications.push(app);
+      await persist(`submit: ${app.nickname} (${app.id})`);
+      e.target.reset();
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    });
+
+    $("#loginBtn").addEventListener("click", () => {
+      const pass = $("#modPasswordInput").value;
+      const token = $("#tokenInput").value.trim();
+      if (pass !== MOD_PASSWORD) {
+        alert("Невірний пароль модератора.");
+        return;
+      }
+      STATE.isModerator = true;
+      if (token) STATE.runtimeToken = token; // не зберігаємо
+      renderList();
+      alert("Вхід виконано. Тепер можна модерувати.");
+    });
+
+    $("#refreshBtn").addEventListener("click", () => loadData());
+    $("#exportBtn").addEventListener("click", () => {
+      downloadFile("applications-export.json", JSON.stringify(STATE.applications, null, 2));
+    });
+
+    // ==== UTIL ====
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+    }
+    function nl2br(s) { return String(s).replace(/\n/g, "<br>"); }
+    function timeago(iso) {
+      if (!iso) return "";
+      const diff = (Date.now() - new Date(iso).getTime()) / 1000;
+      if (diff < 60) return "щойно";
+      if (diff < 3600) return Math.floor(diff/60) + " хв тому";
+      if (diff < 86400) return Math.floor(diff/3600) + " год тому";
+      return new Date(iso).toLocaleString();
+    }
+
+    // ==== BOOT ====
+    (async function init() {
+      // спробуємо завантажити з GitHub; якщо не вийде — локально
+      await loadData();
+      // якщо у сховищі нема файлу, а модератор вже ввів токен — при першому збереженні створимо файл
+    })();
+  </script>
+</body>
+</html>
