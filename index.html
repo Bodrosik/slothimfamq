@@ -81,20 +81,23 @@
       opacity:0; transform: translateY(10px);
       animation: fadeUp .9s .25s ease-out forwards;
       text-align:center;
+      animation: fadeInFrame 1s forwards;
     }
+    @keyframes fadeInFrame{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)}}
+
     .frame-text{
       font-size: 18px;
       font-weight:700;
       color:red;
       line-height:1.6;
       opacity:0;
-      animation: fadeUpText 1s 0.6s ease forwards;
+      animation: fadeUpText 1s 0.6s ease forwards, glowText 1.5s infinite alternate;
+      text-shadow: 0 0 4px #ff1a1a, 0 0 8px #ff1a1a;
     }
-
-    @keyframes fadeUp{to{opacity:1; transform:translateY(0)}}
     @keyframes fadeUpText{to{opacity:1; transform:translateY(0)}}
+    @keyframes glowText{from{text-shadow:0 0 4px #ff1a1a,0 0 8px #ff1a1a;} to{text-shadow:0 0 12px #ff1a1a,0 0 24px #ff1a1a;}}
 
-    /* Менші кнопки */
+    /* Менші кнопки з світінням */
     .btn-grid{
       margin-top: 15px;
       display:grid;
@@ -115,12 +118,14 @@
       font-size:11px;
       cursor:pointer;
       text-decoration:none;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.35), inset 0 0 8px rgba(255,0,0,0.08);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.35), inset 0 0 8px rgba(255,0,0,0.08), 0 0 6px red;
       transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
       user-select:none;
+      animation: glowBtn 2s infinite alternate;
     }
-    .nav-btn:hover{ transform: translateY(-1px); background: rgba(0,0,0,0.75); box-shadow: 0 4px 12px rgba(0,0,0,0.5), 0 0 12px rgba(255,0,0,0.25); }
+    .nav-btn:hover{ transform: translateY(-1px); background: rgba(0,0,0,0.75); box-shadow: 0 4px 12px rgba(0,0,0,0.5), 0 0 16px red; }
     .nav-btn:active{ transform: translateY(0); }
+    @keyframes glowBtn{from{box-shadow:0 2px 8px rgba(0,0,0,0.35), inset 0 0 8px rgba(255,0,0,0.08),0 0 4px red;} to{box-shadow:0 2px 8px rgba(0,0,0,0.35), inset 0 0 8px rgba(255,0,0,0.08),0 0 12px red;}}
 
     footer{
       width:100%; display:flex; justify-content:center; padding: 10px 16px; margin: 14px 0 18px;
