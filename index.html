@@ -70,7 +70,6 @@
       to{ text-shadow: 1px 1px 0 #111,2px 2px 0 #111,3px 3px 0 #111,4px 4px 0 #111,6px 6px 12px rgba(0,0,0,0.6),0 0 18px var(--accent),0 0 40px var(--accent); }
     }
 
-    /* Окрема рамка для тексту з анімацією */
     .text-frame{
       width:min(90%, 600px);
       background:black;
@@ -97,11 +96,10 @@
     }
     @keyframes textGlow{from{text-shadow:0 0 6px red,0 0 12px #ff1a1a;} to{text-shadow:0 0 14px red,0 0 28px #ff1a1a;}}
 
-    /* Менші кнопки з світінням */
     .btn-grid{
       display:grid;
       grid-template-columns: repeat(2, 1fr);
-      gap:10px;
+      gap:12px;
       width:min(90%, 400px);
     }
     .nav-btn{
@@ -111,17 +109,19 @@
       border-radius:16px;
       background: rgba(0,0,0,0.65);
       color:white;
-      font-size:11px;
+      font-size:14px;
       font-weight:700;
-      padding:4px;
+      padding:6px;
       cursor:pointer;
       box-shadow:0 2px 6px rgba(0,0,0,0.4),0 0 6px red;
-      animation: btnGlow 2s infinite alternate;
+      animation: btnGlow 2s infinite alternate, btnBounce 2s infinite alternate;
       text-decoration:none;
       text-align:center;
+      transition: transform .2s;
     }
-    .nav-btn:hover{box-shadow:0 4px 12px rgba(0,0,0,0.5),0 0 14px red; transform:translateY(-1px);}
+    .nav-btn:hover{transform: translateY(-3px); box-shadow:0 4px 12px rgba(0,0,0,0.5),0 0 14px red;}
     @keyframes btnGlow{from{box-shadow:0 2px 6px rgba(0,0,0,0.4),0 0 6px red;} to{box-shadow:0 2px 6px rgba(0,0,0,0.4),0 0 14px red;}}
+    @keyframes btnBounce{from{transform: translateY(0);} to{transform: translateY(-2px);}}
 
     footer{
       width:100%; display:flex; justify-content:center; padding:10px 16px;
