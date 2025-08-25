@@ -29,9 +29,7 @@
         linear-gradient(rgba(0,0,0,0.7), rgba(150,0,0,0.6)),
         url("https://cdn.discordapp.com/attachments/1404565577648832545/1408370900545568778/IMG_4850.jpg?ex=68a97f1c&is=68a82d9c&hm=d8f6e918f51b4f04bc38f3e78b8159fbf4523165b3b32e0f53f665fcd723f7b5") no-repeat center center fixed;
       background-size: cover;
-      animation: bgMove 60s linear infinite;
     }
-    @keyframes bgMove{0%{background-position-x:0}100%{background-position-x:-1000px}}
 
     .hero{
       width:100%;
@@ -65,25 +63,27 @@
       transform: translateY(10px) scale(0.98);
       animation: brandIn 1.2s ease-out forwards, neonPulse 2.2s ease-in-out infinite alternate;
     }
+
     @keyframes brandIn{to{opacity:1; transform: translateY(0) scale(1)}}
     @keyframes neonPulse{
       from{ text-shadow: 1px 1px 0 #111,2px 2px 0 #111,3px 3px 0 #111,4px 4px 0 #111,6px 6px 12px rgba(0,0,0,0.6),0 0 6px var(--accent),0 0 12px var(--accent); }
-      to{   text-shadow: 1px 1px 0 #111,2px 2px 0 #111,3px 3px 0 #111,4px 4px 0 #111,6px 6px 12px rgba(0,0,0,0.6),0 0 18px var(--accent),0 0 40px var(--accent); }
+      to{ text-shadow: 1px 1px 0 #111,2px 2px 0 #111,3px 3px 0 #111,4px 4px 0 #111,6px 6px 12px rgba(0,0,0,0.6),0 0 18px var(--accent),0 0 40px var(--accent); }
     }
 
+    /* Рамка для тексту */
     .frame{
-      width:min(100%, 980px);
+      width:min(90%, 600px);
       background: black;
       border: 3px solid red;
       border-radius: 18px;
-      padding: 20px 30px;
+      padding: 25px 20px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.45), inset 0 0 24px rgba(255,0,0,0.15);
       opacity:0; transform: translateY(10px);
       animation: fadeUp .9s .25s ease-out forwards;
       text-align:center;
     }
     .frame-text{
-      font-size: clamp(16px, 2vw, 20px);
+      font-size: 18px;
       font-weight:700;
       color:red;
       line-height:1.6;
@@ -94,10 +94,11 @@
     @keyframes fadeUp{to{opacity:1; transform:translateY(0)}}
     @keyframes fadeUpText{to{opacity:1; transform:translateY(0)}}
 
+    /* Менші кнопки */
     .btn-grid{
-      margin-top: 20px;
+      margin-top: 15px;
       display:grid;
-      gap:10px;
+      gap:8px;
       grid-template-columns: repeat(2, 1fr);
     }
 
@@ -110,15 +111,15 @@
       background: rgba(0,0,0,0.65);
       color:white;
       font-weight:700; text-transform:uppercase; text-align:center;
-      padding:4px;
-      font-size:12px;
+      padding:3px;
+      font-size:11px;
       cursor:pointer;
       text-decoration:none;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.35), inset 0 0 10px rgba(255,0,0,0.08);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.35), inset 0 0 8px rgba(255,0,0,0.08);
       transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
       user-select:none;
     }
-    .nav-btn:hover{ transform: translateY(-2px); background: rgba(0,0,0,0.75); box-shadow: 0 6px 16px rgba(0,0,0,0.5), 0 0 16px rgba(255,0,0,0.25); }
+    .nav-btn:hover{ transform: translateY(-1px); background: rgba(0,0,0,0.75); box-shadow: 0 4px 12px rgba(0,0,0,0.5), 0 0 12px rgba(255,0,0,0.25); }
     .nav-btn:active{ transform: translateY(0); }
 
     footer{
@@ -142,7 +143,7 @@
         <a class="nav-btn" href="#who">Хто ми</a>
         <a class="nav-btn" href="#staff">Старший склад</a>
         <a class="nav-btn" href="#join">Анкета на вступ</a>
-        <a class="nav-btn" href="#">Інше</a>
+        <a class="nav-btn" href="#promotion">Система підвищення</a>
       </nav>
     </div>
   </header>
