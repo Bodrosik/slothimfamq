@@ -2,153 +2,205 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Заявка на вступ</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>⚔️ Форма для вступу в клан</title>
   <style>
     :root {
-      --gap: 14px;
+      --bg: #0b0f1a;
+      --card: #111827;
+      --muted: #9aa4b2;
+      --line: #223054;
+      --accent: #2a6efb;
+      --ok: #16a34a;
+      --bad: #dc2626;
+      --text: #e6e9ef;
+      --pill: #314168;
       --radius: 12px;
+      --gap: 14px;
     }
-    body {
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-      margin: 0;
-      background: #0b0f1a;
-      color: #e6e9ef;
-    }
-    header {
-      padding: 22px 18px;
-      background: linear-gradient(135deg, #111a2b, #0e1626 60%, #0b0f1a);
-      position: sticky; top: 0; z-index: 5;
-      border-bottom: 1px solid #1b2436;
-    }
-    h1 { margin: 0 0 6px; font-size: 22px; }
-    .sub { opacity: .8; font-size: 14px; }
-
-    main { max-width: 1000px; margin: 22px auto; padding: 0 14px 40px; }
-
-    .card {
-      background: #111827;
-      border: 1px solid #1f2a44;
-      border-radius: var(--radius);
-      padding: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
-    }
-    .grid { display: grid; gap: var(--gap); }
-    .grid-2 { grid-template-columns: 1fr 1fr; }
-    @media (max-width: 760px) { .grid-2 { grid-template-columns: 1fr; } }
-
-    label { font-size: 14px; opacity: .95; display:block; margin-bottom: 6px; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif; background: var(--bg); color: var(--text); }
+    header { position: sticky; top:0; z-index:5; padding:20px 16px; background: linear-gradient(135deg,#10182a,#0c1222 60%,#0b0f1a); border-bottom:1px solid #1b2745; }
+    h1 { margin:0 0 6px; font-size:22px; }
+    .sub { color: var(--muted); font-size:14px; }
+    main { max-width: 1080px; margin: 18px auto 40px; padding: 0 14px; display:grid; gap:18px; }
+    .card { background: var(--card); border:1px solid var(--line); border-radius: var(--radius); padding: 16px; box-shadow: 0 12px 28px rgba(0,0,0,.28); }
+    .grid { display:grid; gap: var(--gap); }
+    .g2 { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 820px){ .g2 { grid-template-columns: 1fr; } }
+    label { font-size:14px; color:#d7deea; display:block; margin-bottom:6px; }
     input, textarea, select {
-      width: 100%; border-radius: 10px; border: 1px solid #273352;
-      background: #0f1726; color: #e6e9ef; padding: 10px 12px; outline: none;
+      width:100%; border-radius:10px; border:1px solid #273352; background:#0f1726; color:var(--text);
+      padding:10px 12px; outline:none;
     }
-    textarea { min-height: 110px; resize: vertical; }
+    textarea { min-height: 90px; resize: vertical; }
 
-    .row { display: flex; gap: var(--gap); flex-wrap: wrap; align-items: center; }
+    .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .right { justify-content:flex-end; }
     .btn {
-      border: 1px solid #2a3a64; background: #1a2540; color: #e6e9ef;
-      padding: 10px 14px; border-radius: 10px; cursor: pointer; font-weight: 600;
-      transition: .15s transform ease, .15s background ease, .15s border ease;
-      user-select: none;
+      border:1px solid #2a3a64; background:#1a2540; color:var(--text);
+      padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:600; transition:.15s transform ease, .15s background ease;
+      user-select:none;
     }
-    .btn.primary { background: #2a6efb; border-color: #2a6efb; color: #fff; }
-    .btn.success { background: #20a062; border-color: #1c8a55; }
-    .btn.danger  { background: #d33b46; border-color: #b6313a; }
-    .btn.ghost   { background: transparent; }
     .btn:hover { transform: translateY(-1px); }
-    .btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+    .btn:disabled { opacity:.6; cursor:not-allowed; transform:none; }
+    .primary { background: var(--accent); border-color: var(--accent); color:#fff; }
+    .success { background: var(--ok); border-color:#148b40; }
+    .danger  { background: var(--bad); border-color:#b51f1f; }
+    .ghost   { background: transparent; }
 
-    .hint { font-size: 13px; opacity: .8; }
-    .muted { opacity: .7; }
-    .tag {
-      display: inline-block; padding: 2px 8px; border-radius: 999px;
-      font-size: 12px; border: 1px solid #314168; background:#141d31; margin-right:6px;
-    }
-    .status-pill { padding: 3px 9px; border-radius: 999px; font-size:12px; border:1px solid; }
-    .status-pending { border-color:#6a6f7a; color:#cbd5e1; }
-    .status-approved { border-color:#1c8a55; color:#86efac; }
-    .status-rejected { border-color:#b6313a; color:#fecaca; }
+    .muted { color: var(--muted); }
+    .tag { display:inline-block; border:1px solid var(--pill); background:#141d31; padding:2px 8px; border-radius:999px; font-size:12px; }
 
-    .item {
-      border: 1px solid #223054; border-radius: 12px; padding: 12px;
-      background: #0f1730; display: grid; gap: 8px;
-    }
-    .item-head { display:flex; align-items:center; justify-content: space-between; gap:10px; }
-    .item-meta { font-size: 13px; opacity: .85; display:flex; gap:10px; flex-wrap:wrap; }
-    .item-actions { display:flex; gap:8px; flex-wrap:wrap; }
-    .comment-box { display:flex; gap:8px; flex-wrap:wrap; }
-    .sep { height: 1px; background: #1b2745; margin: 8px 0; }
+    .item { border:1px solid var(--line); background:#0f1730; border-radius:12px; padding:12px; display:grid; gap:10px; }
+    .item-head { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+    .item-meta { display:flex; gap:8px; align-items:center; flex-wrap:wrap; font-size:13px; color:#cbd5e1; }
+    .sep { height:1px; background:#1b2745; margin:6px 0; }
+
+    .status { padding:3px 9px; border-radius:999px; font-size:12px; border:1px solid; }
+    .pending { border-color:#6b7280; color:#e5e7eb; }
+    .approved { border-color:#1c8a55; color:#86efac; }
+    .rejected { border-color:#b6313a; color:#fecaca; }
+
+    details summary { cursor:pointer; list-style:none; }
+    details summary::-webkit-details-marker { display:none; }
+    summary .twist { display:inline-block; width:1em; text-align:center; transition: transform .2s; }
+    details[open] summary .twist { transform: rotate(90deg); }
 
     code.inline {
-      background:#0d1426; padding:2px 6px; border-radius:6px; border:1px solid #1d2950; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      background:#0d1426; padding:2px 6px; border-radius:6px;
+      border:1px solid #1d2950; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
     }
+
+    .comment-box { display:flex; gap:8px; flex-wrap:wrap; }
+    .comment-box input { flex:1 1 240px; }
   </style>
 </head>
 <body>
   <header>
-    <h1>Заявка на вступ</h1>
-    <div class="sub">Подавай анкету. Модератори перевіряють і ставлять статус.</div>
+    <h1>⚔️ Форма для вступу в клан</h1>
+    <div class="sub">Подавай анкету. Модератор (пароль: <code class="inline">SlotHim0089</code>) може схвалити/відхилити й лишити коментар.</div>
   </header>
 
-  <main class="grid" style="gap:22px;">
+  <main class="grid">
     <!-- SUBMIT FORM -->
     <section class="card">
-      <h2 style="margin:0 0 12px;">Подати анкету</h2>
-      <form id="appForm" class="grid grid-2">
+      <h2 style="margin:0 0 10px;">Подати анкету</h2>
+      <form id="form" class="grid g2">
         <div>
-          <label>Нікнейм</label>
-          <input required name="nickname" placeholder="Напр., Zayno" maxlength="30">
+          <label>👤 1. Нік у грі</label>
+          <input name="nick" required maxlength="40" placeholder="Напр., Slothim">
         </div>
         <div>
-          <label>Вік</label>
-          <input required name="age" type="number" min="5" max="120" placeholder="12">
+          <label>🆔 2. ID</label>
+          <input name="gameId" required maxlength="40" placeholder="Ваш ігровий ID">
         </div>
         <div>
-          <label>Discord</label>
-          <input name="discord" placeholder="наприклад, zayno#1234 або @handle" maxlength="50">
+          <label>🎂 3. Вік</label>
+          <input name="age" type="number" min="5" max="120" required placeholder="12">
         </div>
         <div>
-          <label>Контакт (опц.)</label>
-          <input name="contact" placeholder="телега/емейл (опціонально)" maxlength="80">
+          <label>🌍 4. Часовий пояс / місто</label>
+          <input name="tzCity" required placeholder="UTC+3 / Київ">
+        </div>
+        <div>
+          <label>⏰ 5. Скільки часу проводиш у грі щодня</label>
+          <input name="daily" required placeholder="Напр., 2–4 години">
+        </div>
+        <div>
+          <label>📅 6. Скільки часу граєш на сервері</label>
+          <input name="serverTime" required placeholder="Напр., 1 тиждень / 3 місяці">
+        </div>
+        <div>
+          <label>🏰 7. Попередні клани (якщо були)</label>
+          <input name="prevClans" placeholder="—">
+        </div>
+        <div>
+          <label>🚪 8. Причина виходу з попереднього клану</label>
+          <input name="leaveReason" placeholder="—">
         </div>
         <div style="grid-column:1 / -1;">
-          <label>Про себе / чому хочеш вступити</label>
-          <textarea required name="about" placeholder="Коротко опиши себе і причину вступу"></textarea>
+          <label>✨ 9. Чому хочеш вступити саме до нашого клану</label>
+          <textarea name="whyUs" required></textarea>
         </div>
+        <div style="grid-column:1 / -1;">
+          <label>💪 10. Чим готовий допомагати клану (актив, ресурси, івенти, економіка)</label>
+          <textarea name="help" required></textarea>
+        </div>
+        <div>
+          <label>📏 11. Ставлення до дисципліни та правил</label>
+          <input name="discipline" required placeholder="Напр., дотримуюсь суворо">
+        </div>
+        <div>
+          <label>🎙️ 12. Чи є мікрофон та Discord</label>
+          <input name="micDiscord" required placeholder="Так/Ні; ваш Discord @нік">
+        </div>
+        <div>
+          <label>📢 13. Чи готовий виходити на збори клану</label>
+          <input name="meetings" required placeholder="Так/Ні/За домовленістю">
+        </div>
+        <div>
+          <label>📖 14. Наскільки добре знаєш правила серверу (1–10)</label>
+          <input name="rules" type="number" min="1" max="10" required placeholder="7">
+        </div>
+        <div style="grid-column:1 / -1;">
+          <label>🎯 15. Які навички маєш у грі (стрільба, водіння, економіка тощо)</label>
+          <textarea name="skills" required></textarea>
+        </div>
+        <div>
+          <label>🛡️ 16. Чи готовий виконувати вказівки старших</label>
+          <input name="followOrders" required placeholder="Так/Ні/Залежить">
+        </div>
+        <div>
+          <label>🚗 17. Чи є авто/бізнес, яким можеш допомагати</label>
+          <input name="assets" placeholder="—">
+        </div>
+        <div>
+          <label>⚠️ 18. Чи був бан/варн на сервері (якщо так – за що)</label>
+          <input name="bans" placeholder="—">
+        </div>
+        <div>
+          <label>🤝 19. Чи готовий працювати в команді</label>
+          <input name="teamwork" required placeholder="Так/Ні">
+        </div>
+        <div style="grid-column:1 / -1;">
+          <label>📝 20. Додаткова інформація про себе</label>
+          <textarea name="extra"></textarea>
+        </div>
+
         <div class="row">
           <button class="btn primary" type="submit">Надіслати</button>
-          <span class="hint">Після відправки заявка з’явиться внизу у списку.</span>
+          <span class="muted">Після відправки заявка з’явиться нижче у списку.</span>
         </div>
       </form>
     </section>
 
     <!-- MOD LOGIN -->
     <section class="card">
-      <h2 style="margin:0 0 12px;">Вхід модератора</h2>
-      <div class="grid grid-2">
-        <div>
-          <label>Пароль модератора</label>
-          <input id="modPasswordInput" type="password" placeholder="секретний пароль">
-        </div>
-        <div>
-          <label>GitHub токен (contents:write)</label>
-          <input id="tokenInput" type="password" placeholder="ввести токен (безпечно — не зберігається)">
-        </div>
+      <h2 style="margin:0 0 10px;">Вхід модератора</h2>
+      <div class="row">
+        <input id="modPass" type="password" placeholder="Пароль модератора (SlotHim0089)">
+        <button id="modLogin" class="btn">Увійти</button>
+        <span class="tag" id="modeTag">Mode: local-only</span>
       </div>
-      <div class="row" style="margin-top:10px;">
-        <button id="loginBtn" class="btn">Увійти</button>
-        <span class="hint">Без токена зміни збережуться лише локально (демо-режим).</span>
+      <div class="row" style="margin-top:8px;">
+        <button id="exportBtn" class="btn ghost">Експорт JSON</button>
+        <label class="btn ghost" style="cursor:pointer;">
+          Імпорт JSON
+          <input id="importInput" type="file" accept="application/json" style="display:none;">
+        </label>
+        <button id="reloadRemote" class="btn ghost">Оновити з GitHub</button>
+        <span class="muted">Порада: експортни <code class="inline">applications.json</code> і закинь у <code class="inline">/data/</code> репо → всі побачать.</span>
       </div>
     </section>
 
     <!-- LIST -->
     <section class="card">
-      <div class="row" style="justify-content: space-between;">
+      <div class="row" style="justify-content:space-between;">
         <h2 style="margin:0;">Заявки</h2>
         <div class="row">
-          <span class="tag" id="storageModeTag">Mode: loading…</span>
-          <button class="btn ghost" id="refreshBtn">Оновити</button>
-          <button class="btn ghost" id="exportBtn">Експорт JSON</button>
+          <input id="search" placeholder="Пошук за ніком/ID" />
+          <button id="clearAll" class="btn ghost">Очистити локальні</button>
         </div>
       </div>
       <div id="list" class="grid" style="margin-top:12px;"></div>
@@ -156,276 +208,36 @@
   </main>
 
   <script>
-    // ==== SETTINGS ====
-    const GITHUB_OWNER = "YOUR_GH_OWNER";     // <-- зміни
-    const GITHUB_REPO  = "YOUR_REPO_NAME";    // <-- зміни
-    const BRANCH       = "main";              // або "master"
-    const DATA_PATH    = "data/applications.json"; // файл у репо
+    // ========= CONFIG =========
+    const MOD_PASSWORD = "SlotHim0089";
+    const REMOTE_JSON_URL = "./data/applications.json"; // опціонально: якщо закинете файл у репо
 
-    const MOD_PASSWORD = "CHANGE_ME"; // <-- ЗАДАЙ свій секретний пароль модератора
-    let   GITHUB_TOKEN = ""; // <-- можеш залишити пустим і вводити токен у формі входу
-
-    // ==== STATE ====
+    // ========= STATE =========
     let STATE = {
-      applications: [],
-      sha: null,                 // SHA файлу в GitHub (для оновлення)
       isModerator: false,
-      runtimeToken: "",          // токен, введений у формі (не зберігається)
-      storageMode: "github-read",// github-read | github-write | local
+      applications: [], // масив об'єктів
     };
 
-    // ==== HELPERS ====
-    const $ = (sel) => document.querySelector(sel);
+    // ========= HELPERS =========
+    const $ = s => document.querySelector(s);
     const listEl = $("#list");
-    const storageTag = $("#storageModeTag");
+    const modeTag = $("#modeTag");
 
-    function uid() {
-      return "id_" + Math.random().toString(36).slice(2) + Date.now().toString(36);
-    }
+    function uid() { return "id_" + Math.random().toString(36).slice(2) + Date.now().toString(36); }
     function nowISO() { return new Date().toISOString(); }
-
-    function setStorageMode(mode) {
-      STATE.storageMode = mode;
-      storageTag.textContent = "Mode: " + mode;
-    }
-
-    function saveLocal() {
-      localStorage.setItem("applications.json", JSON.stringify(STATE.applications));
-      setStorageMode(STATE.isModerator && (STATE.runtimeToken || GITHUB_TOKEN) ? "github-write (offline)" : "local");
-    }
-
-    function downloadFile(name, text) {
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(new Blob([text], {type:'application/json'}));
-      a.download = name;
-      a.click();
-      URL.revokeObjectURL(a.href);
-    }
-
-    // ==== GITHUB API ====
-    const GH_BASE = "https://api.github.com";
-    async function ghGetContent() {
-      const url = `${GH_BASE}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${DATA_PATH}?ref=${BRANCH}`;
-      const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" }});
-      if (res.status === 404) return { notFound: true };
-      if (!res.ok) throw new Error("GitHub GET failed: " + res.status);
-      const data = await res.json();
-      const content = atob(data.content.replace(/\n/g, ""));
-      return { content, sha: data.sha };
-    }
-
-    async function ghPutContent(newContent, message) {
-      const token = STATE.runtimeToken || GITHUB_TOKEN;
-      if (!token) throw new Error("No GitHub token provided");
-      const url = `${GH_BASE}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${DATA_PATH}`;
-      const body = {
-        message,
-        content: btoa(unescape(encodeURIComponent(newContent))),
-        branch: BRANCH
-      };
-      if (STATE.sha) body.sha = STATE.sha;
-      const res = await fetch(url, {
-        method: "PUT",
-        headers: {
-          "Accept": "application/vnd.github+json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify(body)
-      });
-      if (!res.ok) {
-        const txt = await res.text();
-        throw new Error("GitHub PUT failed: " + res.status + " " + txt);
-      }
-      const data = await res.json();
-      STATE.sha = data.content?.sha || null;
-      return data;
-    }
-
-    async function loadData() {
+    function saveLocal() { localStorage.setItem("clan_applications", JSON.stringify(STATE.applications)); }
+    function loadLocal() {
       try {
-        const gh = await ghGetContent();
-        if (gh.notFound) {
-          // якщо файлу нема — дивимося локальне або створюємо порожній
-          const local = localStorage.getItem("applications.json");
-          STATE.applications = local ? JSON.parse(local) : [];
-          STATE.sha = null;
-          setStorageMode("github-read (file not found) → local");
-        } else {
-          STATE.applications = JSON.parse(gh.content || "[]");
-          STATE.sha = gh.sha;
-          setStorageMode("github-read");
-        }
-      } catch (e) {
-        console.warn(e);
-        const local = localStorage.getItem("applications.json");
-        STATE.applications = local ? JSON.parse(local) : [];
-        STATE.sha = null;
-        setStorageMode("local");
-      }
-      renderList();
+        const raw = localStorage.getItem("clan_applications");
+        STATE.applications = raw ? JSON.parse(raw) : [];
+      } catch { STATE.applications = []; }
     }
-
-    async function persist(message) {
-      const json = JSON.stringify(STATE.applications, null, 2);
-      try {
-        if (STATE.isModerator && (STATE.runtimeToken || GITHUB_TOKEN)) {
-          await ghPutContent(json, message);
-          setStorageMode("github-write");
-        } else {
-          saveLocal();
-        }
-      } catch (e) {
-        console.warn(e);
-        // падаємо в локальний режим, але не ламаємось
-        saveLocal();
-        alert("Не вдалось записати у GitHub. Дані збережено локально. Деталі в консолі.");
-      }
-      renderList();
-    }
-
-    // ==== RENDER ====
-    function renderList() {
-      listEl.innerHTML = "";
-      if (!STATE.applications.length) {
-        listEl.innerHTML = `<div class="muted">Поки що заявок нема. Будь першим!</div>`;
-        return;
-      }
-
-      // нові зверху
-      const apps = [...STATE.applications].sort((a,b) => (b.createdAt||"").localeCompare(a.createdAt||""));
-
-      for (const app of apps) {
-        const item = document.createElement("div");
-        item.className = "item";
-
-        const status = app.status || "pending";
-        const statusClass = status === "approved" ? "status-approved"
-                         : status === "rejected" ? "status-rejected" : "status-pending";
-
-        item.innerHTML = `
-          <div class="item-head">
-            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-              <strong>${escapeHtml(app.nickname)}</strong>
-              <span class="item-meta">
-                <span><span class="muted">Вік:</span> ${escapeHtml(String(app.age||"-"))}</span>
-                ${app.discord ? `<span><span class="muted">Discord:</span> ${escapeHtml(app.discord)}</span>` : ""}
-                ${app.contact ? `<span><span class="muted">Контакт:</span> ${escapeHtml(app.contact)}</span>` : ""}
-                <span class="muted">ID: <code class="inline">${app.id}</code></span>
-                <span class="status-pill ${statusClass}">${status}</span>
-              </span>
-            </div>
-            <span class="muted" title="${app.createdAt||""}">${timeago(app.createdAt)}</span>
-          </div>
-          <div>${nl2br(escapeHtml(app.about||""))}</div>
-          ${app.modComment ? `<div class="sep"></div><div class="muted"><b>Коментар модератора:</b> ${nl2br(escapeHtml(app.modComment))}</div>` : ""}
-        `;
-
-        // Actions for moderator
-        if (STATE.isModerator) {
-          const actions = document.createElement("div");
-          actions.className = "item-actions";
-          const approveBtn = btn("Схвалити", "success");
-          const rejectBtn  = btn("Відхилити", "danger");
-
-          approveBtn.onclick = () => updateStatus(app.id, "approved");
-          rejectBtn.onclick  = () => updateStatus(app.id, "rejected");
-
-          const commentWrap = document.createElement("div");
-          commentWrap.className = "comment-box";
-          const commentInput = document.createElement("input");
-          commentInput.placeholder = "Коментар модератора…";
-          commentInput.value = app.modComment || "";
-          const saveCmt = btn("Зберегти коментар", "primary");
-          saveCmt.onclick = () => setComment(app.id, commentInput.value);
-
-          actions.appendChild(approveBtn);
-          actions.appendChild(rejectBtn);
-          commentWrap.appendChild(commentInput);
-          commentWrap.appendChild(saveCmt);
-
-          item.appendChild(document.createElement("div")).className = "sep";
-          item.appendChild(actions);
-          item.appendChild(commentWrap);
-        }
-
-        listEl.appendChild(item);
-      }
-    }
-
-    function btn(text, type) {
-      const b = document.createElement("button");
-      b.className = "btn " + (type||"");
-      b.textContent = text;
-      return b;
-    }
-
-    // ==== ACTIONS ====
-    function updateStatus(id, status) {
-      const idx = STATE.applications.findIndex(a => a.id === id);
-      if (idx === -1) return;
-      STATE.applications[idx].status = status;
-      STATE.applications[idx].updatedAt = nowISO();
-      persist(`moderation: set status ${status} for ${id}`);
-    }
-
-    function setComment(id, text) {
-      const idx = STATE.applications.findIndex(a => a.id === id);
-      if (idx === -1) return;
-      STATE.applications[idx].modComment = text || "";
-      STATE.applications[idx].updatedAt = nowISO();
-      persist(`moderation: set comment for ${id}`);
-    }
-
-    // ==== FORM HANDLERS ====
-    $("#appForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const fd = new FormData(e.target);
-      const app = {
-        id: uid(),
-        nickname: (fd.get("nickname")||"").trim(),
-        age: Number(fd.get("age")||""),
-        discord: (fd.get("discord")||"").trim(),
-        contact: (fd.get("contact")||"").trim(),
-        about: (fd.get("about")||"").trim(),
-        status: "pending",
-        createdAt: nowISO(),
-        updatedAt: nowISO()
-      };
-      if (!app.nickname || !app.age || !app.about) {
-        alert("Заповни обов’язкові поля.");
-        return;
-      }
-      STATE.applications.push(app);
-      await persist(`submit: ${app.nickname} (${app.id})`);
-      e.target.reset();
-      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-    });
-
-    $("#loginBtn").addEventListener("click", () => {
-      const pass = $("#modPasswordInput").value;
-      const token = $("#tokenInput").value.trim();
-      if (pass !== MOD_PASSWORD) {
-        alert("Невірний пароль модератора.");
-        return;
-      }
-      STATE.isModerator = true;
-      if (token) STATE.runtimeToken = token; // не зберігаємо
-      renderList();
-      alert("Вхід виконано. Тепер можна модерувати.");
-    });
-
-    $("#refreshBtn").addEventListener("click", () => loadData());
-    $("#exportBtn").addEventListener("click", () => {
-      downloadFile("applications-export.json", JSON.stringify(STATE.applications, null, 2));
-    });
-
-    // ==== UTIL ====
     function escapeHtml(s) {
       return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
     }
-    function nl2br(s) { return String(s).replace(/\n/g, "<br>"); }
-    function timeago(iso) {
-      if (!iso) return "";
+    function nl2br(s){ return String(s).replace(/\n/g,"<br>"); }
+    function timeago(iso){
+      if(!iso) return "";
       const diff = (Date.now() - new Date(iso).getTime()) / 1000;
       if (diff < 60) return "щойно";
       if (diff < 3600) return Math.floor(diff/60) + " хв тому";
@@ -433,11 +245,273 @@
       return new Date(iso).toLocaleString();
     }
 
-    // ==== BOOT ====
-    (async function init() {
-      // спробуємо завантажити з GitHub; якщо не вийде — локально
-      await loadData();
-      // якщо у сховищі нема файлу, а модератор вже ввів токен — при першому збереженні створимо файл
+    function toCSV(items){
+      const keys = Object.keys(items[0]||{});
+      const esc = v => `"${String(v??"").replace(/"/g,'""')}"`;
+      return [keys.join(","), ...items.map(o => keys.map(k => esc(o[k])).join(","))].join("\n");
+    }
+
+    function download(name, text, type="application/json"){
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([text], {type}));
+      a.download = name;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    // ========= RENDER =========
+    function renderList(filter=""){
+      listEl.innerHTML = "";
+      const q = filter.trim().toLowerCase();
+      let apps = [...STATE.applications].sort((a,b)=>(b.createdAt||"").localeCompare(a.createdAt||""));
+      if (q) apps = apps.filter(a =>
+        (a.nick||"").toLowerCase().includes(q) ||
+        (a.gameId||"").toLowerCase().includes(q)
+      );
+
+      if (!apps.length){
+        listEl.innerHTML = `<div class="muted">Поки що нема заявок.</div>`;
+        return;
+      }
+
+      for (const app of apps){
+        const status = app.status || "pending";
+        const statusClass = status==="approved" ? "approved" : status==="rejected" ? "rejected" : "pending";
+
+        const wrap = document.createElement("div");
+        wrap.className = "item";
+
+        const head = document.createElement("div");
+        head.className = "item-head";
+        head.innerHTML = `
+          <div class="item-meta">
+            <strong>${escapeHtml(app.nick||"(без ніку)")}</strong>
+            <span>🆔 ${escapeHtml(app.gameId||"-")}</span>
+            <span>🎂 ${escapeHtml(String(app.age||"-"))}</span>
+            <span class="status ${statusClass}">${status}</span>
+            <span class="muted" title="${app.createdAt||""}">${timeago(app.createdAt)}</span>
+          </div>
+          <div class="row">
+            <button class="btn ghost" data-action="toggle">Переглянути</button>
+          </div>
+        `;
+
+        const details = document.createElement("details");
+        const sum = document.createElement("summary");
+        sum.innerHTML = `<span class="twist">▶</span> Деталі`;
+        details.appendChild(sum);
+
+        const fieldsHtml = `
+          <div class="grid" style="gap:8px; margin-top:8px;">
+            <div><b>🌍 4.</b> ${escapeHtml(app.tzCity||"")}</div>
+            <div><b>⏰ 5.</b> ${escapeHtml(app.daily||"")}</div>
+            <div><b>📅 6.</b> ${escapeHtml(app.serverTime||"")}</div>
+            <div><b>🏰 7.</b> ${escapeHtml(app.prevClans||"")}</div>
+            <div><b>🚪 8.</b> ${escapeHtml(app.leaveReason||"")}</div>
+            <div><b>✨ 9.</b> ${nl2br(escapeHtml(app.whyUs||""))}</div>
+            <div><b>💪 10.</b> ${nl2br(escapeHtml(app.help||""))}</div>
+            <div><b>📏 11.</b> ${escapeHtml(app.discipline||"")}</div>
+            <div><b>🎙️ 12.</b> ${escapeHtml(app.micDiscord||"")}</div>
+            <div><b>📢 13.</b> ${escapeHtml(app.meetings||"")}</div>
+            <div><b>📖 14.</b> ${escapeHtml(app.rules||"")}</div>
+            <div><b>🎯 15.</b> ${nl2br(escapeHtml(app.skills||""))}</div>
+            <div><b>🛡️ 16.</b> ${escapeHtml(app.followOrders||"")}</div>
+            <div><b>🚗 17.</b> ${escapeHtml(app.assets||"")}</div>
+            <div><b>⚠️ 18.</b> ${escapeHtml(app.bans||"")}</div>
+            <div><b>🤝 19.</b> ${escapeHtml(app.teamwork||"")}</div>
+            <div><b>📝 20.</b> ${nl2br(escapeHtml(app.extra||""))}</div>
+          </div>
+        `;
+        const inner = document.createElement("div");
+        inner.style.marginTop = "10px";
+        inner.innerHTML = fieldsHtml;
+
+        if (app.modComment){
+          const sep = document.createElement("div");
+          sep.className = "sep";
+          const cm = document.createElement("div");
+          cm.innerHTML = `<span class="muted"><b>Коментар модератора:</b></span><br>${nl2br(escapeHtml(app.modComment))}`;
+          inner.appendChild(sep);
+          inner.appendChild(cm);
+        }
+
+        details.appendChild(inner);
+
+        wrap.appendChild(head);
+        wrap.appendChild(details);
+
+        // moderation controls
+        if (STATE.isModerator){
+          const sep = document.createElement("div"); sep.className = "sep";
+          const actions = document.createElement("div"); actions.className = "row";
+          const approve = document.createElement("button"); approve.className = "btn success"; approve.textContent = "Схвалити";
+          const reject = document.createElement("button"); reject.className = "btn danger"; reject.textContent = "Відхилити";
+          const commentBox = document.createElement("div"); commentBox.className = "comment-box";
+          const cInput = document.createElement("input"); cInput.placeholder = "Залишити коментар…"; cInput.value = app.modComment || "";
+          const saveC = document.createElement("button"); saveC.className = "btn primary"; saveC.textContent = "Зберегти коментар";
+
+          approve.onclick = () => setStatus(app.id, "approved");
+          reject.onclick  = () => setStatus(app.id, "rejected");
+          saveC.onclick   = () => setComment(app.id, cInput.value);
+
+          actions.appendChild(approve);
+          actions.appendChild(reject);
+          commentBox.appendChild(cInput);
+          commentBox.appendChild(saveC);
+
+          wrap.appendChild(sep);
+          wrap.appendChild(actions);
+          wrap.appendChild(commentBox);
+        }
+
+        head.querySelector('[data-action="toggle"]').onclick = () => {
+          details.open = !details.open;
+        };
+
+        listEl.appendChild(wrap);
+      }
+    }
+
+    // ========= MUTATIONS =========
+    function setStatus(id, status){
+      const i = STATE.applications.findIndex(a => a.id === id);
+      if (i === -1) return;
+      STATE.applications[i].status = status;
+      STATE.applications[i].updatedAt = nowISO();
+      saveLocal();
+      renderList($("#search").value||"");
+    }
+    function setComment(id, text){
+      const i = STATE.applications.findIndex(a => a.id === id);
+      if (i === -1) return;
+      STATE.applications[i].modComment = text || "";
+      STATE.applications[i].updatedAt = nowISO();
+      saveLocal();
+      renderList($("#search").value||"");
+    }
+
+    // ========= EVENTS =========
+    $("#form").addEventListener("submit", e => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const app = {
+        id: uid(),
+        createdAt: nowISO(),
+        updatedAt: nowISO(),
+        status: "pending",
+        // fields:
+        nick: fd.get("nick")?.toString().trim(),
+        gameId: fd.get("gameId")?.toString().trim(),
+        age: Number(fd.get("age")||""),
+        tzCity: fd.get("tzCity")?.toString().trim(),
+        daily: fd.get("daily")?.toString().trim(),
+        serverTime: fd.get("serverTime")?.toString().trim(),
+        prevClans: fd.get("prevClans")?.toString().trim(),
+        leaveReason: fd.get("leaveReason")?.toString().trim(),
+        whyUs: fd.get("whyUs")?.toString().trim(),
+        help: fd.get("help")?.toString().trim(),
+        discipline: fd.get("discipline")?.toString().trim(),
+        micDiscord: fd.get("micDiscord")?.toString().trim(),
+        meetings: fd.get("meetings")?.toString().trim(),
+        rules: Number(fd.get("rules")||""),
+        skills: fd.get("skills")?.toString().trim(),
+        followOrders: fd.get("followOrders")?.toString().trim(),
+        assets: fd.get("assets")?.toString().trim(),
+        bans: fd.get("bans")?.toString().trim(),
+        teamwork: fd.get("teamwork")?.toString().trim(),
+        extra: fd.get("extra")?.toString().trim(),
+        modComment: ""
+      };
+
+      // прості перевірки
+      if (!app.nick || !app.gameId || !app.age || !app.tzCity || !app.daily || !app.serverTime || !app.whyUs || !app.help || !app.discipline || !app.micDiscord || !app.meetings || !app.rules || !app.skills || !app.followOrders || !app.teamwork){
+        alert("Будь ласка, заповни обов'язкові поля.");
+        return;
+      }
+
+      STATE.applications.push(app);
+      saveLocal();
+      e.target.reset();
+      renderList($("#search").value||"");
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    });
+
+    $("#modLogin").addEventListener("click", () => {
+      const pass = $("#modPass").value;
+      if (pass !== MOD_PASSWORD){ alert("Невірний пароль."); return; }
+      STATE.isModerator = true;
+      modeTag.textContent = "Mode: local-only (moderator)";
+      renderList($("#search").value||"");
+      alert("Готово. Можеш модерувати заявки.");
+    });
+
+    $("#exportBtn").addEventListener("click", () => {
+      const json = JSON.stringify(STATE.applications, null, 2);
+      download("applications.json", json, "application/json");
+      // підказка: також можна CSV
+      // download("applications.csv", toCSV(STATE.applications), "text/csv");
+    });
+
+    $("#importInput").addEventListener("change", async (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const text = await file.text();
+      try {
+        const data = JSON.parse(text);
+        if (!Array.isArray(data)) throw new Error("JSON має бути масивом");
+        if (!confirm("Імпортувати і замінити локальні заявки?")) return;
+        STATE.applications = data;
+        saveLocal();
+        renderList($("#search").value||"");
+        alert("Імпортовано.");
+      } catch (err){
+        alert("Помилка імпорту JSON: " + err.message);
+      } finally {
+        e.target.value = "";
+      }
+    });
+
+    $("#reloadRemote").addEventListener("click", async () => {
+      try {
+        const res = await fetch(REMOTE_JSON_URL, {cache:"no-store"});
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const data = await res.json();
+        if (!Array.isArray(data)) throw new Error("Очікував масив заявок");
+        if (!confirm("Замінити локальні заявки даними з GitHub?")) return;
+        STATE.applications = data;
+        saveLocal();
+        renderList($("#search").value||"");
+        alert("Оновлено з GitHub.");
+      } catch (e){
+        alert("Не вдалося завантажити data/applications.json. Можливо, файл ще не залитий.");
+      }
+    });
+
+    $("#search").addEventListener("input", (e) => renderList(e.target.value));
+    $("#clearAll").addEventListener("click", () => {
+      if (!confirm("Очистити ВСІ локальні заявки в цьому браузері?")) return;
+      STATE.applications = [];
+      saveLocal();
+      renderList($("#search").value||"");
+    });
+
+    // ========= BOOT =========
+    (async function init(){
+      loadLocal();
+      // якщо у репо вже є спільний файл — підтягнемо як базу (тільки якщо локально пусто)
+      if (!STATE.applications.length){
+        try {
+          const res = await fetch(REMOTE_JSON_URL, {cache:"no-store"});
+          if (res.ok){
+            const data = await res.json();
+            if (Array.isArray(data)){
+              STATE.applications = data;
+              saveLocal();
+            }
+          }
+        } catch {}
+      }
+      renderList();
     })();
   </script>
 </body>
