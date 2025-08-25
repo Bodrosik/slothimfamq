@@ -18,6 +18,7 @@
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       min-height:100vh;
+      width:100%;
       color:var(--text);
       display:flex;
       flex-direction:column;
@@ -26,8 +27,8 @@
       overflow-x:hidden;
       background:
         linear-gradient(rgba(0,0,0,0.7), rgba(150,0,0,0.6)),
-        url("https://cdn.discordapp.com/attachments/1404565577648832545/1408370900545568778/IMG_4850.jpg?ex=68a97f1c&is=68a82d9c&hm=d8f6e918f51b4f04bc38f3e78b8159fbf4523165b3b32e0f53f665fcd723f7b5") repeat-x top; 
-      background-size: auto 100%;
+        url("https://cdn.discordapp.com/attachments/1404565577648832545/1408370900545568778/IMG_4850.jpg?ex=68a97f1c&is=68a82d9c&hm=d8f6e918f51b4f04bc38f3e78b8159fbf4523165b3b32e0f53f665fcd723f7b5") no-repeat center center fixed;
+      background-size: cover;
       animation: bgMove 60s linear infinite;
     }
     @keyframes bgMove{0%{background-position-x:0}100%{background-position-x:-1000px}}
@@ -70,7 +71,6 @@
       to{   text-shadow: 1px 1px 0 #111,2px 2px 0 #111,3px 3px 0 #111,4px 4px 0 #111,6px 6px 12px rgba(0,0,0,0.6),0 0 18px var(--accent),0 0 40px var(--accent); }
     }
 
-    /* Змінена рамка для тексту */
     .frame{
       width:min(100%, 980px);
       background: black;
@@ -83,7 +83,7 @@
       text-align:center;
     }
     .frame-text{
-      font-size: clamp(18px, 2.5vw, 24px);
+      font-size: clamp(16px, 2vw, 20px);
       font-weight:700;
       color:red;
       line-height:1.6;
@@ -94,7 +94,6 @@
     @keyframes fadeUp{to{opacity:1; transform:translateY(0)}}
     @keyframes fadeUpText{to{opacity:1; transform:translateY(0)}}
 
-    /* Менші кнопки */
     .btn-grid{
       margin-top: 20px;
       display:grid;
@@ -111,15 +110,15 @@
       background: rgba(0,0,0,0.65);
       color:white;
       font-weight:700; text-transform:uppercase; text-align:center;
-      padding:6px;
-      font-size:14px;
+      padding:4px;
+      font-size:12px;
       cursor:pointer;
       text-decoration:none;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.35), inset 0 0 12px rgba(255,0,0,0.08);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.35), inset 0 0 10px rgba(255,0,0,0.08);
       transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
       user-select:none;
     }
-    .nav-btn:hover{ transform: translateY(-2px); background: rgba(0,0,0,0.75); box-shadow: 0 8px 20px rgba(0,0,0,0.5), 0 0 20px rgba(255,0,0,0.25); }
+    .nav-btn:hover{ transform: translateY(-2px); background: rgba(0,0,0,0.75); box-shadow: 0 6px 16px rgba(0,0,0,0.5), 0 0 16px rgba(255,0,0,0.25); }
     .nav-btn:active{ transform: translateY(0); }
 
     footer{
