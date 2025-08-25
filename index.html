@@ -4,10 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SLOTHIM — Головна</title>
-  <meta name="description" content="Офіційна головна сторінка SLOTHIM. Хто ми, система підвищення, старший склад та анкета на вступ." />
   <style>
     :root{
-      --accent:#ff1a1a; /* червоний */
+      --accent:#ff1a1a;
       --accent-soft:#c41212;
       --bg-overlay: rgba(0,0,0,0.7);
       --text:#fff;
@@ -30,11 +29,9 @@
         url("https://cdn.discordapp.com/attachments/1404565577648832545/1408370900545568778/IMG_4850.jpg?ex=68a97f1c&is=68a82d9c&hm=d8f6e918f51b4f04bc38f3e78b8159fbf4523165b3b32e0f53f665fcd723f7b5") repeat-x top; 
       background-size: auto 100%;
       animation: bgMove 60s linear infinite;
-      scroll-behavior:smooth;
     }
     @keyframes bgMove{0%{background-position-x:0}100%{background-position-x:-1000px}}
 
-    /* HERO */
     .hero{
       width:100%;
       max-width:1200px;
@@ -47,15 +44,13 @@
       text-align:center;
     }
 
-    /* 3D SLOTHIM */
     .brand{
       margin:0;
       line-height:0.9;
       font-weight:900;
       letter-spacing:2px;
       font-size: clamp(40px, 10vw, 140px);
-      color:#000; /* чорний текст */
-      /* 3D екструд + неонове світіння */
+      color:#000;
       text-shadow:
         1px 1px 0 #111,
         2px 2px 0 #111,
@@ -75,7 +70,6 @@
       to{   text-shadow: 1px 1px 0 #111,2px 2px 0 #111,3px 3px 0 #111,4px 4px 0 #111,6px 6px 12px rgba(0,0,0,0.6),0 0 18px var(--accent),0 0 40px var(--accent); }
     }
 
-    /* Рамка з фразами */
     .frame{
       width:min(100%, 980px);
       background: var(--bg-overlay);
@@ -88,33 +82,28 @@
     }
     @keyframes fadeUp{to{opacity:1; transform:translateY(0)}}
 
-    .tagline{
-      font-size: clamp(16px, 3.5vw, 26px);
+    .frame-text{
+      font-size: clamp(16px, 3.5vw, 24px);
       font-weight:700;
       letter-spacing: .5px;
-      line-height:1.4;
+      line-height:1.6;
       text-shadow: 0 0 8px rgba(0,0,0,.8);
-      display:flex; gap:.5ch; justify-content:center; align-items:center; flex-wrap:wrap;
+      opacity:0;
+      animation: fadeUpText 1s 0.6s ease forwards;
     }
-    .tagline .bullet{color: var(--accent); font-weight:900}
-    .tagline .rotator{display:inline-block; min-width: 12ch; border-bottom: 2px solid var(--accent-soft); padding-bottom:2px}
-    .fade{animation: fade .5s ease}
-    @keyframes fade{from{opacity:.1; transform:translateY(6px)} to{opacity:1; transform:translateY(0)}}
+    @keyframes fadeUpText{to{opacity:1; transform:translateY(0)}}
 
-    /* Квадратні кнопки */
     .btn-grid{
-      margin-top: clamp(14px, 2.5vw, 22px);
+      margin-top: 25px;
       display:grid;
       gap:12px;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(2, 1fr);
     }
-    @media (max-width: 1100px){ .btn-grid{ grid-template-columns: repeat(2, 1fr);} }
-    @media (max-width: 520px){ .btn-grid{ grid-template-columns: repeat(2, 1fr);} }
 
     .nav-btn{
       position:relative;
       display:grid; place-items:center;
-      aspect-ratio: 1 / 1; /* квадрати */
+      aspect-ratio: 1 / 1;
       border:2px solid var(--accent);
       border-radius: 16px;
       background: rgba(0,0,0,0.65);
@@ -127,119 +116,37 @@
       transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
       user-select:none;
     }
-    .nav-btn:focus{ outline: none; box-shadow: 0 0 0 3px #fff4; }
     .nav-btn:hover{ transform: translateY(-3px); background: rgba(0,0,0,0.75); box-shadow: 0 10px 28px rgba(0,0,0,0.5), 0 0 24px rgba(255,0,0,0.25); }
     .nav-btn:active{ transform: translateY(0); }
-
-    .nav-btn small{ display:block; opacity:.85; font-weight:700; letter-spacing:.5px }
-
-    /* Контентні секції */
-    .section{
-      width:min(100%, 980px);
-      background: rgba(0,0,0,0.6);
-      border: 1.5px solid var(--accent-soft);
-      border-radius: 14px;
-      padding: clamp(16px, 3vw, 26px);
-      margin: 18px auto;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
-    }
-    .section h2{
-      margin:0 0 8px 0; font-size: clamp(22px, 4.5vw, 32px); color: var(--accent);
-      text-shadow: 0 0 10px rgba(255,0,0,0.35);
-    }
-    .section p, .section li{ font-size: clamp(14px, 2.6vw, 18px); line-height:1.6 }
-    .section ul{ margin: 8px 0 0 18px }
 
     footer{
       width:100%; display:flex; justify-content:center; padding: 10px 16px; margin: 14px 0 18px;
     }
     .footer-box{
-      position:relative; text-align:center; font-size:14px; color:#ccc; background: rgba(0,0,0,0.55);
+      text-align:center; font-size:14px; color:#ccc; background: rgba(0,0,0,0.55);
       padding: 6px 14px; border-radius: 10px; border: 1px solid #333;
     }
     .footer-box b{color:#ddd}
   </style>
 </head>
 <body>
-  <header class="hero" aria-label="SLOTHIM hero">
-    <h1 class="brand" aria-label="SLOTHIM">SLOTHIM</h1>
+  <header class="hero">
+    <h1 class="brand">SLOTHIM</h1>
 
-    <div class="frame" aria-live="polite">
-      <p class="tagline">
-        <span class="bullet">●</span> <span>ми сила</span>
-        <span class="bullet">●</span> <span class="rotator" id="rotator">серйозні правила</span>
-        <span class="bullet">●</span> <span>дисципліна</span>
-      </p>
+    <div class="frame">
+      <p class="frame-text">Ми суворий клан, сувора дисципліна.<br>Заходь, якщо готовий до суворої гри.</p>
 
-      <nav class="btn-grid" aria-label="Головна навігація">
-        <a class="nav-btn" href="#who"><span>Хто ми</span></a>
-        <a class="nav-btn" href="#ranks"><span>Система<br/><small>підвищнення</small></span></a>
-        <a class="nav-btn" href="#staff"><span>Старший склад</span></a>
-        <a class="nav-btn" href="#join"><span>Анкета на вступ</span></a>
+      <nav class="btn-grid">
+        <a class="nav-btn" href="#who">Хто ми</a>
+        <a class="nav-btn" href="#staff">Старший склад</a>
+        <a class="nav-btn" href="#join">Анкета на вступ</a>
+        <a class="nav-btn" href="#">Інше</a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section id="who" class="section">
-      <h2>Хто ми?</h2>
-      <p>Ми — організований ігровий клан SLOTHIM. Наш пріоритет — сильна команда, прозора економіка та дисципліна. Розвиваємо внутрішню систему посад і винагород, ведемо дипломатію та завжди тримаємо слово.</p>
-    </section>
-
-    <section id="ranks" class="section">
-      <h2>Система підвищнення</h2>
-      <ul>
-        <li><b>Молодший</b> — старт для новачків.</li>
-        <li><b>Місцевий</b> — після виконання умов активності.</li>
-        <li><b>Старший</b> — підвищена відповідальність.</li>
-        <li><b>Модератор</b> — за стабільність та відданість.</li>
-      </ul>
-      <p>Підвищення базується на активності, дисципліні та внеску в клан.</p>
-    </section>
-
-    <section id="staff" class="section">
-      <h2>Старший склад</h2>
-      <p>Тут буде список керівників, кураторів напрямів та відповідальних осіб. Ви можете замінити цей текст своїми даними.</p>
-      <ul>
-        <li>Керівник клану — <i>Нікнейм</i></li>
-        <li>Заступник — <i>Нікнейм</i></li>
-        <li>Квест-менеджер — <i>Нікнейм</i></li>
-        <li>Механік автопарку — <i>Нікнейм</i></li>
-      </ul>
-    </section>
-
-    <section id="join" class="section">
-      <h2>Анкета на вступ</h2>
-      <p>Заповніть анкету, і ми зв’яжемось з вами. Можете замінити посилання на вашу Google Form чи іншу платформу.</p>
-      <p><a class="nav-btn" style="display:inline-grid; padding:16px; aspect-ratio:auto;" href="#" target="_blank" rel="noopener">Відкрити анкету</a></p>
-    </section>
-  </main>
-
   <footer>
     <div class="footer-box">© 2025 <b>SLOTHIM</b>. Усі права захищено</div>
   </footer>
-
-  <script>
-    // Простий ротатор фраз у рамці
-    (function(){
-      const phrases = [
-        'серйозні правила',
-        'взаємоповага',
-        'чітка ієрархія',
-        'сильна економіка',
-        'дисципліна'
-      ];
-      const el = document.getElementById('rotator');
-      if(!el) return;
-      let i = 0;
-      setInterval(()=>{
-        i = (i+1) % phrases.length;
-        el.classList.remove('fade');
-        void el.offsetWidth; // перезапустити анімацію
-        el.textContent = phrases[i];
-        el.classList.add('fade');
-      }, 2000);
-    })();
-  </script>
 </body>
 </html>
