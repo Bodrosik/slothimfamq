@@ -114,14 +114,16 @@
       padding:6px;
       cursor:pointer;
       box-shadow:0 2px 6px rgba(0,0,0,0.4),0 0 6px red;
-      animation: btnGlow 2s infinite alternate, btnBounce 1s infinite alternate, btnPulse 1.5s infinite alternate;
+      animation: btnGlow 2s infinite alternate, btnPulse 1.5s infinite alternate;
       text-decoration:none;
       text-align:center;
-      transition: transform .2s;
+      transition: transform .2s, box-shadow .2s;
     }
-    .nav-btn:hover{transform: translateY(-4px); box-shadow:0 6px 14px rgba(0,0,0,0.6),0 0 20px red;}
+    .nav-btn:hover{
+      transform: scale(1.1) translateY(-5px);
+      box-shadow:0 8px 20px rgba(0,0,0,0.6),0 0 28px red, 0 0 40px var(--accent);
+    }
     @keyframes btnGlow{from{box-shadow:0 2px 6px rgba(0,0,0,0.4),0 0 6px red;} to{box-shadow:0 2px 6px rgba(0,0,0,0.4),0 0 14px red;}}
-    @keyframes btnBounce{from{transform: translateY(0);} to{transform: translateY(-4px);}}
     @keyframes btnPulse{0%{transform:scale(1);}50%{transform:scale(1.05);}100%{transform:scale(1);}}
 
     footer{
