@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Офісний Клан</title>
+<title>Реєстрація</title>
 
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -11,61 +11,129 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
 <style>
-/* === Загальний стиль === */
-body {margin:0;padding:0;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f4f6f8;color:#222;}
-.container {max-width:1200px;margin:0 auto;padding:40px;}
-h1 {text-align:center;color:#1f4e78;margin-bottom:50px;}
-button {padding:15px 30px;border:none;border-radius:8px;background:#1f4e78;color:white;font-size:18px;cursor:pointer;margin:10px;}
-button:hover{background:#145290;}
-.buttons{text-align:center;margin-top:50px;}
+/* === Загальний офісний стиль === */
+body {
+  margin:0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f9f9f9;
+  color: #222;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 50px 20px;
+  text-align: center;
+}
+h1 {
+  font-size: 36px;
+  margin-bottom: 40px;
+  color: #1a3c6e;
+}
+button {
+  background-color: #1a3c6e;
+  color: #fff;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 10px;
+}
+button:hover {
+  background-color: #145290;
+}
 
-/* === Модальне вікно === */
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);justify-content:center;align-items:center;}
-.modal-content{background:#fff;padding:30px;border-radius:12px;max-width:600px;width:90%;max-height:90%;overflow-y:auto;position:relative;}
-.close{position:absolute;top:10px;right:15px;font-size:24px;cursor:pointer;color:#333;}
-form label{display:block;margin-top:10px;font-weight:bold;}
-form input, form textarea{width:100%;padding:10px;margin-top:5px;border-radius:6px;border:1px solid #ccc;font-size:16px;}
-form button{width:100%;margin-top:20px;}
+/* === Модальне вікно форми === */
+.modal {
+  display: none;
+  position: fixed;
+  top:0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  background:#fff;
+  padding:30px;
+  border-radius:12px;
+  width:90%;
+  max-width:500px;
+  max-height:90%;
+  overflow-y:auto;
+  text-align:left;
+  position:relative;
+}
+.close {
+  position:absolute;
+  top:10px;
+  right:15px;
+  font-size:24px;
+  cursor:pointer;
+  color:#333;
+}
+form label {
+  display:block;
+  margin-top:10px;
+  font-weight:bold;
+}
+form input, form textarea {
+  width:100%;
+  padding:10px;
+  margin-top:5px;
+  border-radius:6px;
+  border:1px solid #ccc;
+  font-size:16px;
+}
+form button {
+  width:100%;
+  margin-top:20px;
+}
 
 /* === Панель адміністратора === */
-.admin-panel{display:none;margin-top:40px;}
-.admin-panel h2{text-align:center;color:#1f4e78;}
-table{width:100%;border-collapse:collapse;margin-top:20px;}
-table,th,td{border:1px solid #ccc;}
-th,td{padding:10px;text-align:left;}
+.admin-panel {
+  display:none;
+  margin-top:50px;
+}
+.admin-panel h2 {
+  color:#1a3c6e;
+  margin-bottom:20px;
+}
+table {
+  width:100%;
+  border-collapse: collapse;
+}
+table, th, td {
+  border:1px solid #ccc;
+}
+th, td {
+  padding:10px;
+  text-align:left;
+}
 
 /* === Адаптивність === */
 @media(max-width:768px){
-.modal-content{padding:20px;}
-button{width:90%;font-size:16px;}
+  button{width:90%; font-size:16px;}
+  .modal-content{padding:20px;}
 }
 </style>
 </head>
 <body>
 
 <div class="container">
-<h1>Офісний Клан ⚔️</h1>
+<h1>Реєстрація на сайті</h1>
 
-<div class="buttons">
-  <button id="openFormBtn">Зареєструватися</button>
-</div>
+<button id="openFormBtn">Зареєструватися</button>
 
 <!-- Модальне вікно форми -->
 <div class="modal" id="formModal">
   <div class="modal-content">
     <span class="close" id="closeModal">&times;</span>
-    <h2>Форма заявки на вступ ⚔️</h2>
-    <form id="clanForm">
-      <label>Email (для реєстрації):</label><input type="email" name="email" required>
-      <label>👤 Нік у грі:</label><input type="text" name="nickname" required>
-      <label>🆔 ID:</label><input type="text" name="id" required>
-      <label>🎂 Вік:</label><input type="number" name="age" required>
-      <label>🌍 Місто / часовий пояс:</label><input type="text" name="timezone" required>
-      <label>⏰ Час у грі щодня:</label><input type="text" name="daily_time" required>
-      <label>📅 Час на сервері:</label><input type="text" name="server_time" required>
-      <label>✨ Чому хочеш вступити:</label><textarea name="reason_to_join" required></textarea>
-      <label>💪 Чим допомагаєш клану:</label><textarea name="contribution" required></textarea>
-      <button type="submit">Надіслати заявку</button>
+    <h2>Форма реєстрації</h2>
+    <form id="regForm">
+      <label>Email:</label><input type="email" name="email" required>
+      <label>Нік:</label><input type="text" name="nickname" required>
+      <label>Додаткові дані:</label><textarea name="info" placeholder="Наприклад, ваш досвід..." ></textarea>
+      <button type="submit">Надіслати</button>
     </form>
   </div>
 </div>
@@ -74,7 +142,7 @@ button{width:90%;font-size:16px;}
 <div class="admin-panel" id="adminPanel">
 <h2>Адмін-панель</h2>
 <table id="applicationsTable">
-<tr><th>Email</th><th>Нік</th><th>ID</th><th>Вік</th><th>Місто</th><th>Час у грі</th><th>Причина</th><th>Допомога</th><th>Дії</th></tr>
+<tr><th>Email</th><th>Нік</th><th>Інфо</th><th>Дії</th></tr>
 </table>
 </div>
 
@@ -112,34 +180,29 @@ function loginAdmin(){const provider=new firebase.auth.GoogleAuthProvider();auth
 loginAdmin();
 
 // === Відправка форми ===
-document.getElementById("clanForm").addEventListener("submit", function(e){
+document.getElementById("regForm").addEventListener("submit", function(e){
   e.preventDefault();
   const data={}; new FormData(this).forEach((v,k)=>data[k]=v); data.timestamp=Date.now();
-  db.ref("applications").push(data)
-    .then(()=>{alert("Заявка надіслана!"); this.reset(); modal.style.display="none";})
+  db.ref("registrations").push(data)
+    .then(()=>{alert("Реєстрація успішна!"); this.reset(); modal.style.display="none";})
     .catch(err=>alert("Помилка: "+err));
 });
 
 // === Завантаження заявок для адміна ===
 function loadApplications(){
   const table = document.getElementById("applicationsTable");
-  db.ref("applications").on("value", snapshot=>{
-    table.innerHTML=`<tr><th>Email</th><th>Нік</th><th>ID</th><th>Вік</th><th>Місто</th><th>Час у грі</th><th>Причина</th><th>Допомога</th><th>Дії</th></tr>`;
+  db.ref("registrations").on("value", snapshot=>{
+    table.innerHTML=`<tr><th>Email</th><th>Нік</th><th>Інфо</th><th>Дії</th></tr>`;
     snapshot.forEach(child=>{
       const app=child.val();
       const row=table.insertRow();
       row.insertCell(0).innerText=app.email;
       row.insertCell(1).innerText=app.nickname;
-      row.insertCell(2).innerText=app.id;
-      row.insertCell(3).innerText=app.age;
-      row.insertCell(4).innerText=app.timezone;
-      row.insertCell(5).innerText=app.daily_time;
-      row.insertCell(6).innerText=app.reason_to_join;
-      row.insertCell(7).innerText=app.contribution;
-      const actionCell=row.insertCell(8);
+      row.insertCell(2).innerText=app.info;
+      const actionCell=row.insertCell(3);
       const delBtn=document.createElement("button");
       delBtn.innerText="Видалити";
-      delBtn.onclick=()=>db.ref("applications/"+child.key).remove();
+      delBtn.onclick=()=>db.ref("registrations/"+child.key).remove();
       actionCell.appendChild(delBtn);
     });
   });
