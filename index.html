@@ -1,101 +1,146 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Офісний портал</title>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Форма вступу в клан ⚔️</title>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+<style>
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; color: #222; margin:0; padding:0;}
+.container { max-width:900px; margin:50px auto; background:#fff; border-radius:12px; padding:30px; box-shadow:0 4px 15px rgba(0,0,0,0.1);}
+h1 {text-align:center; color:#1f4e78; margin-bottom:30px;}
+form label {display:block; margin-top:15px; font-weight:bold;}
+form input, form textarea {width:100%; padding:10px; margin-top:5px; border-radius:6px; border:1px solid #ccc; font-size:16px;}
+button {margin-top:25px; padding:12px 20px; border:none; border-radius:6px; background-color:#1f4e78; color:white; font-size:18px; cursor:pointer; width:100%;}
+button:hover {background-color:#145290;}
+.note {font-size:14px; color:#555; margin-top:5px;}
+.admin-panel {display:none; margin-top:40px;}
+.admin-panel h2 {text-align:center; color:#1f4e78;}
+table {width:100%; border-collapse:collapse; margin-top:20px;}
+table, th, td {border:1px solid #ccc;}
+th, td {padding:10px; text-align:left;}
+</style>
 </head>
 <body>
-  <!-- Шапка -->
-  <header>
-    <div class="logo">CORP</div>
-    <nav>
-      <a href="#home">Головна</a>
-      <a href="#services">Сервіси</a>
-      <a href="#report">Звіт</a>
-      <a href="#form">Форма</a>
-    </nav>
-    <button id="themeToggle">🌙</button>
-  </header>
 
-  <!-- Головний блок -->
-  <section class="hero" id="home">
-    <h1>ОФІСНИЙ ПОРТАЛ</h1>
-    <p>Сучасний корпоративний дизайн для роботи і презентацій</p>
-    <div class="hero-buttons">
-      <a href="#services" class="btn">До сервісів</a>
-      <a href="#form" class="btn secondary">Заповнити форму</a>
-    </div>
-  </section>
+<div class="container">
+<h1>Форма вступу в клан ⚔️</h1>
 
-  <!-- Сервіси -->
-  <section class="services" id="services">
-    <h2>Наші модулі</h2>
-    <div class="cards">
-      <div class="card">
-        <h3>📁 Документи</h3>
-        <p>Управління файлами та звітами компанії.</p>
-      </div>
-      <div class="card">
-        <h3>📊 Аналітика</h3>
-        <p>Візуалізація даних, таблиці та KPI.</p>
-      </div>
-      <div class="card">
-        <h3>👥 Персонал</h3>
-        <p>Список співробітників та їхні ролі.</p>
-      </div>
-    </div>
-  </section>
+<!-- Форма для всіх -->
+<form id="clanForm">
+<label>👤 1. Нік у грі:</label><input type="text" name="nickname" required>
+<label>🆔 2. ID:</label><input type="text" name="id" required>
+<label>🎂 3. Вік:</label><input type="number" name="age" required>
+<label>🌍 4. Часовий пояс / місто:</label><input type="text" name="timezone" required>
+<label>⏰ 5. Скільки часу проводиш у грі щодня:</label><input type="text" name="daily_time" required>
+<label>📅 6. Скільки часу граєш на сервері:</label><input type="text" name="server_time" required>
+<label>🏰 7. Попередні клани (якщо були):</label><input type="text" name="previous_clans">
+<label>🚪 8. Причина виходу з попереднього клану:</label><textarea name="leave_reason"></textarea>
+<label>✨ 9. Чому хочеш вступити саме до нашого клану:</label><textarea name="reason_to_join" required></textarea>
+<label>💪 10. Чим готовий допомагати клану:</label><textarea name="contribution" required></textarea>
+<label>📏 11. Ставлення до дисципліни та правил:</label><textarea name="discipline" required></textarea>
+<label>🎙️ 12. Чи є мікрофон та Discord:</label><input type="text" name="voice_discord" required>
+<label>📢 13. Чи готовий виходити на збори клану:</label><input type="text" name="attend_meetings" required>
+<label>📖 14. Наскільки добре знаєш правила серверу (1–10):</label><input type="number" name="server_knowledge" min="1" max="10" required>
+<label>🎯 15. Які навички маєш у грі:</label><textarea name="skills" required></textarea>
+<label>🛡️ 16. Чи готовий виконувати вказівки старших:</label><input type="text" name="follow_instructions" required>
+<label>🚗 17. Чи є авто/бізнес, яким можеш допомагати:</label><input type="text" name="resources" required>
+<label>⚠️ 18. Чи був бан/варн на сервері:</label><input type="text" name="bans" required>
+<label>🤝 19. Чи готовий працювати в команді:</label><input type="text" name="teamwork" required>
+<label>📝 20. Додаткова інформація про себе:</label><textarea name="extra_info"></textarea>
 
-  <!-- Таблиця -->
-  <section class="report" id="report">
-    <h2>Щомісячний звіт</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Ім’я</th>
-          <th>Внесок</th>
-          <th>Статус</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Олег</td>
-          <td>120%</td>
-          <td>Активний</td>
-        </tr>
-        <tr>
-          <td>Ірина</td>
-          <td>95%</td>
-          <td>На проєкті</td>
-        </tr>
-        <tr>
-          <td>Богдан</td>
-          <td>110%</td>
-          <td>Лідер</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+<button type="submit">Надіслати заявку</button>
+</form>
+<p class="note">Заявки зберігаються у реальному часі. Панель адміністратора доступна лише для вас.</p>
 
-  <!-- Форма -->
-  <section class="form" id="form">
-    <h2>Форма заявки</h2>
-    <form id="joinForm">
-      <input type="text" placeholder="Ваше ім’я" required>
-      <input type="email" placeholder="E-mail" required>
-      <textarea placeholder="Коментар" required></textarea>
-      <button type="submit">Відправити</button>
-    </form>
-    <p id="formMessage"></p>
-  </section>
+<!-- Панель адміністратора -->
+<div class="admin-panel" id="adminPanel">
+<h2>Адмін-панель клану</h2>
+<table id="applicationsTable">
+<tr>
+<th>Нік</th><th>ID</th><th>Вік</th><th>Місто</th><th>Час у грі</th><th>Причина</th><th>Допомога</th><th>Дії</th>
+</tr>
+</table>
+</div>
 
-  <!-- Футер -->
-  <footer>
-    <p>© <span id="year"></span> Corporate Office Portal</p>
-  </footer>
+</div>
 
-  <script src="script.js"></script>
+<script>
+  // === Firebase конфіг ===
+  const firebaseConfig = {
+    apiKey: "ВАШ_API_KEY",
+    authDomain: "ВАШ_PROJECT_ID.firebaseapp.com",
+    databaseURL: "https://ВАШ_PROJECT_ID-default-rtdb.firebaseio.com",
+    projectId: "ВАШ_PROJECT_ID",
+    storageBucket: "ВАШ_PROJECT_ID.appspot.com",
+    messagingSenderId: "ВАШ_SENDER_ID",
+    appId: "ВАШ_APP_ID"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+  const auth = firebase.auth();
+
+  // === Логін через Google для адміна ===
+  auth.onAuthStateChanged(user => {
+    if (user && user.email === "bodrosik@gmail.com") {
+      document.getElementById("adminPanel").style.display = "block";
+      loadApplications();
+    } else {
+      document.getElementById("adminPanel").style.display = "none";
+    }
+  });
+
+  // Функція для логіну адміна
+  function loginAdmin() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider);
+  }
+
+  // Форма відправки
+  document.getElementById("clanForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    const data = {};
+    new FormData(this).forEach((value,key)=>{data[key]=value;});
+    data.timestamp = Date.now();
+    db.ref("applications").push(data)
+      .then(()=>{alert("Заявка надіслана!"); this.reset();})
+      .catch(err=>{alert("Помилка: "+err)});
+  });
+
+  // Завантаження заявок для адміна
+  function loadApplications(){
+    const table = document.getElementById("applicationsTable");
+    db.ref("applications").on("value", snapshot=>{
+      table.innerHTML = `<tr>
+        <th>Нік</th><th>ID</th><th>Вік</th><th>Місто</th><th>Час у грі</th><th>Причина</th><th>Допомога</th><th>Дії</th>
+      </tr>`;
+      snapshot.forEach(child=>{
+        const app = child.val();
+        const row = table.insertRow();
+        row.insertCell(0).innerText = app.nickname;
+        row.insertCell(1).innerText = app.id;
+        row.insertCell(2).innerText = app.age;
+        row.insertCell(3).innerText = app.timezone;
+        row.insertCell(4).innerText = app.daily_time;
+        row.insertCell(5).innerText = app.reason_to_join;
+        row.insertCell(6).innerText = app.contribution;
+        const actionCell = row.insertCell(7);
+        const delBtn = document.createElement("button");
+        delBtn.innerText = "Видалити";
+        delBtn.onclick = ()=>db.ref("applications/"+child.key).remove();
+        actionCell.appendChild(delBtn);
+      });
+    });
+  }
+
+  // Автологін для адміна (можна зробити через кнопку)
+  loginAdmin();
+</script>
 </body>
 </html>
