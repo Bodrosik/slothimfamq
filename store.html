@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Магазин — BerezivkaMC</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">BerezivkaMC</a>
+      <nav class="nav">
+        <a href="index.html">Головна</a>
+        <a href="store.html">Магазин</a>
+        <a href="donate.html">Донат</a>
+      </nav>
+      <a class="cta" href="donate.html">Донат</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Магазин</h1>
+    <p>Обери пакунок і оплати — отримай предмети, ранги або косметику.</p>
+
+    <section class="products-grid">
+      <article class="product">
+        <h4>Набір стартера</h4>
+        <p>₴50 / 2 € — інструменти, броня, трохи ресурсів</p>
+        <a class="btn" href="donate.html">Купити</a>
+      </article>
+
+      <article class="product">
+        <h4>Сейф VIP</h4>
+        <p>₴250 / 10 € — унікальний кейс, бонуси</p>
+        <a class="btn" href="donate.html">Купити</a>
+      </article>
+
+      <article class="product">
+        <h4>Ключ до чанка</h4>
+        <p>₴500 / 20 € — приватна ділянка</p>
+        <a class="btn" href="donate.html">Купити</a>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© <span id="year3"></span> BerezivkaMC</small>
+    </div>
+  </footer>
+
+  <script>document.getElementById('year3').textContent = new Date().getFullYear();</script>
+</body>
+</html>
