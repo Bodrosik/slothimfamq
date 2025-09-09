@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Донат — BerezivkaMC</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">BerezivkaMC</a>
+      <nav class="nav">
+        <a href="index.html">Головна</a>
+        <a href="store.html">Магазин</a>
+        <a href="donate.html">Донат</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="donate-hero">
+      <h1>Підтримати сервер</h1>
+      <p>Донат допомагає оплатити хостинг, плагіни та івенти. Взамін — ексклюзивні ранги і привілеї.</p>
+    </section>
+
+    <section class="donation-options">
+      <article class="donation-card">
+        <h3>Ранг — VIP</h3>
+        <p>Ціна: <strong>5 €</strong></p>
+        <ul>
+          <li>+50% досвід</li>
+          <li>Пріоритет у черзі</li>
+          <li>Особливий чат-тегі</li>
+        </ul>
+        <!-- Replace the form/action with your payment processor -->
+        <form action="https://your-payment-processor.example/checkout" method="POST">
+          <input type="hidden" name="item" value="VIP">
+          <input type="hidden" name="amount" value="5.00">
+          <button class="btn">Оплатити 5 €</button>
+        </form>
+      </article>
+
+      <article class="donation-card">
+        <h3>Ранг — PRO</h3>
+        <p>Ціна: <strong>10 €</strong></p>
+        <ul>
+          <li>Всі можливості VIP</li>
+          <li>Унікальний костюм</li>
+          <li>Щомісячні набори</li>
+        </ul>
+        <form action="https://your-payment-processor.example/checkout" method="POST">
+          <input type="hidden" name="item" value="PRO">
+          <input type="hidden" name="amount" value="10.00">
+          <button class="btn">Оплатити 10 €</button>
+        </form>
+      </article>
+    </section>
+
+    <section class="manual-pay">
+      <h3>Якщо автоматичний платіж недоступний</h3>
+      <p>Надішли платіж вручну на картку або гаманці і заповни форму:</p>
+      <a class="btn ghost" href="https://forms.gle/YOUR_PAYOUT_FORM" target="_blank">Форма підтвердження платежу</a>
+    </section>
+
+    <section class="terms">
+      <h3>Умови</h3>
+      <p>Повернення коштів можливе в межах 48 годин за виняткових обставин (звертайтесь до адміністрації).</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© <span id="year2"></span> BerezivkaMC</small>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year2').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
