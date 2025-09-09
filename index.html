@@ -1,213 +1,103 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Реєстрація</title>
-
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-
-<style>
-/* === Загальний офісний стиль === */
-body {
-  margin:0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f9f9f9;
-  color: #222;
-}
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 50px 20px;
-  text-align: center;
-}
-h1 {
-  font-size: 36px;
-  margin-bottom: 40px;
-  color: #1a3c6e;
-}
-button {
-  background-color: #1a3c6e;
-  color: #fff;
-  border: none;
-  padding: 15px 30px;
-  font-size: 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  margin: 10px;
-}
-button:hover {
-  background-color: #145290;
-}
-
-/* === Модальне вікно форми === */
-.modal {
-  display: none;
-  position: fixed;
-  top:0; left:0; width:100%; height:100%;
-  background: rgba(0,0,0,0.6);
-  justify-content: center;
-  align-items: center;
-}
-.modal-content {
-  background:#fff;
-  padding:30px;
-  border-radius:12px;
-  width:90%;
-  max-width:500px;
-  max-height:90%;
-  overflow-y:auto;
-  text-align:left;
-  position:relative;
-}
-.close {
-  position:absolute;
-  top:10px;
-  right:15px;
-  font-size:24px;
-  cursor:pointer;
-  color:#333;
-}
-form label {
-  display:block;
-  margin-top:10px;
-  font-weight:bold;
-}
-form input, form textarea {
-  width:100%;
-  padding:10px;
-  margin-top:5px;
-  border-radius:6px;
-  border:1px solid #ccc;
-  font-size:16px;
-}
-form button {
-  width:100%;
-  margin-top:20px;
-}
-
-/* === Панель адміністратора === */
-.admin-panel {
-  display:none;
-  margin-top:50px;
-}
-.admin-panel h2 {
-  color:#1a3c6e;
-  margin-bottom:20px;
-}
-table {
-  width:100%;
-  border-collapse: collapse;
-}
-table, th, td {
-  border:1px solid #ccc;
-}
-th, td {
-  padding:10px;
-  text-align:left;
-}
-
-/* === Адаптивність === */
-@media(max-width:768px){
-  button{width:90%; font-size:16px;}
-  .modal-content{padding:20px;}
-}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BerezivkaMC — Minecraft Server</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="Офіційний сайт Minecraft сервера — інформація, донат, магазин, статус сервера." />
 </head>
 <body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">BerezivkaMC</a>
+      <nav class="nav">
+        <a href="index.html">Головна</a>
+        <a href="store.html">Магазин</a>
+        <a href="donate.html">Донат</a>
+        <a href="#status">Статус</a>
+        <a href="#contacts">Контакти</a>
+      </nav>
+      <a class="cta" href="store.html">Пiдключитись</a>
+      <button class="nav-toggle" aria-label="Меню" onclick="toggleNav()">☰</button>
+    </div>
+  </header>
 
-<div class="container">
-<h1>Реєстрація на сайті</h1>
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <h1>Ласкаво просимо на BerezivkaMC</h1>
+        <p>Плагіни, івенти, рейт 1.0, щотижневі турніри та донат-послуги для підтримки сервера.</p>
+        <div class="hero-actions">
+          <a class="btn" href="store.html">Магазин</a>
+          <a class="btn ghost" href="donate.html">Підтримати</a>
+        </div>
+        <ul class="server-info">
+          <li>IP: <strong id="server-ip">berezivka2tochka0.aternos.me</strong></li>
+          <li>Гравців: <strong id="player-count">—</strong></li>
+          <li>Версія: <strong id="mc-version">—</strong></li>
+        </ul>
+      </div>
+    </section>
 
-<button id="openFormBtn">Зареєструватися</button>
+    <section class="features container">
+      <article>
+        <h2>Що є на сервері</h2>
+        <ul>
+          <li>Економіка, магазини, міні-ігри</li>
+          <li>Ранги, які можна купити на сайті</li>
+          <li>Підтримка: Discord та Telegram</li>
+        </ul>
+      </article>
 
-<!-- Модальне вікно форми -->
-<div class="modal" id="formModal">
-  <div class="modal-content">
-    <span class="close" id="closeModal">&times;</span>
-    <h2>Форма реєстрації</h2>
-    <form id="regForm">
-      <label>Email:</label><input type="email" name="email" required>
-      <label>Нік:</label><input type="text" name="nickname" required>
-      <label>Додаткові дані:</label><textarea name="info" placeholder="Наприклад, ваш досвід..." ></textarea>
-      <button type="submit">Надіслати</button>
-    </form>
-  </div>
-</div>
+      <article id="status" class="status-card">
+        <h3>Статус сервера</h3>
+        <div id="status-box">
+          <p id="status-text">Завантаження...</p>
+        </div>
+        <small>Оновлюється автоматично через API (замініть IP у script.js)</small>
+      </article>
+    </section>
 
-<!-- Адмін-панель -->
-<div class="admin-panel" id="adminPanel">
-<h2>Адмін-панель</h2>
-<table id="applicationsTable">
-<tr><th>Email</th><th>Нік</th><th>Інфо</th><th>Дії</th></tr>
-</table>
-</div>
+    <section class="howto container">
+      <h2>Як підключитись</h2>
+      <ol>
+        <li>Відкрий Minecraft → Multiplayer → Add Server</li>
+        <li>Введи IP: <strong id="howto-ip">berezivka2tochka0.aternos.me</strong></li>
+        <li>Натисни «Join Server»</li>
+      </ol>
+    </section>
 
-</div>
+    <section class="cta-banner">
+      <div class="container">
+        <h3>Підтримай сервер — отримай унікальний ранг</h3>
+        <a class="btn" href="donate.html">Донат</a>
+      </div>
+    </section>
 
-<script>
-// === Firebase конфігурація ===
-const firebaseConfig = {
-  apiKey: "ВАШ_API_KEY",
-  authDomain: "ВАШ_PROJECT_ID.firebaseapp.com",
-  databaseURL: "https://ВАШ_PROJECT_ID-default-rtdb.firebaseio.com",
-  projectId: "ВАШ_PROJECT_ID",
-  storageBucket: "ВАШ_PROJECT_ID.appspot.com",
-  messagingSenderId: "ВАШ_SENDER_ID",
-  appId: "ВАШ_APP_ID"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-const auth = firebase.auth();
+    <section class="faq container">
+      <h2>FAQ</h2>
+      <details><summary>Як отримати куплений ранг?</summary>
+        <p>Після оплати вкажи свій нік у формі — ранг надається вручну або автоматично (залежить від налаштувань). Зазвичай 5–30 хвилин.</p>
+      </details>
+      <details><summary>Які платіжні методи?</summary>
+        <p>PayPal, LiqPay, Fondy, Google Pay, банківська карта — залежить від менеджерів сервера.</p>
+      </details>
+    </section>
 
-// === Модальне вікно ===
-const modal = document.getElementById("formModal");
-document.getElementById("openFormBtn").onclick = ()=>modal.style.display="flex";
-document.getElementById("closeModal").onclick = ()=>modal.style.display="none";
-window.onclick = e=>{if(e.target==modal) modal.style.display="none";}
+    <section id="contacts" class="contacts container">
+      <h2>Контакти</h2>
+      <p>Discord: <a href="https://discord.gg/YOUR_DISCORD" target="_blank">Наш Discord</a></p>
+      <p>Telegram: <a href="https://t.me/YOUR_TELEGRAM" target="_blank">@YOUR_TELEGRAM</a></p>
+    </section>
+  </main>
 
-// === Логін для адміна ===
-auth.onAuthStateChanged(user=>{
-  if(user && user.email==="bodrosik@gmail.com"){
-    document.getElementById("adminPanel").style.display="block";
-    loadApplications();
-  } else {document.getElementById("adminPanel").style.display="none";}
-});
-function loginAdmin(){const provider=new firebase.auth.GoogleAuthProvider();auth.signInWithPopup(provider);}
-loginAdmin();
+  <footer class="site-footer">
+    <div class="container">
+      <small>© <span id="year"></span> BerezivkaMC — Усі права збережено.</small>
+    </div>
+  </footer>
 
-// === Відправка форми ===
-document.getElementById("regForm").addEventListener("submit", function(e){
-  e.preventDefault();
-  const data={}; new FormData(this).forEach((v,k)=>data[k]=v); data.timestamp=Date.now();
-  db.ref("registrations").push(data)
-    .then(()=>{alert("Реєстрація успішна!"); this.reset(); modal.style.display="none";})
-    .catch(err=>alert("Помилка: "+err));
-});
-
-// === Завантаження заявок для адміна ===
-function loadApplications(){
-  const table = document.getElementById("applicationsTable");
-  db.ref("registrations").on("value", snapshot=>{
-    table.innerHTML=`<tr><th>Email</th><th>Нік</th><th>Інфо</th><th>Дії</th></tr>`;
-    snapshot.forEach(child=>{
-      const app=child.val();
-      const row=table.insertRow();
-      row.insertCell(0).innerText=app.email;
-      row.insertCell(1).innerText=app.nickname;
-      row.insertCell(2).innerText=app.info;
-      const actionCell=row.insertCell(3);
-      const delBtn=document.createElement("button");
-      delBtn.innerText="Видалити";
-      delBtn.onclick=()=>db.ref("registrations/"+child.key).remove();
-      actionCell.appendChild(delBtn);
-    });
-  });
-}
-</script>
-
+  <script src="script.js"></script>
 </body>
 </html>
