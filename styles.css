@@ -1,61 +1,42 @@
-:root {
-  --bg: #f8f9fa;
-  --text: #222;
-  --primary: #007bff;
+:root{
+  --accent: #2b90ff;
+  --bg: #0f1226;
+  --card: #11131b;
+  --muted: #9aa4b2;
+  --radius: 10px;
+  --container: 1100px;
+  color-scheme: dark;
 }
-body.dark {
-  --bg: #1e1e1e;
-  --text: #f8f9fa;
-  --primary: #0dcaf0;
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;color:#e7eef8;background:linear-gradient(180deg,#071022 0%, #0c1220 100%);-webkit-font-smoothing:antialiased}
+.container{max-width:var(--container);margin:0 auto;padding:20px}
+.site-header{background:rgba(255,255,255,0.02);backdrop-filter: blur(4px);position:sticky;top:0;z-index:40;border-bottom:1px solid rgba(255,255,255,0.03)}
+.header-inner{display:flex;align-items:center;gap:16px;padding:14px 20px}
+.brand{font-weight:800;color:var(--accent);text-decoration:none;font-size:1.1rem}
+.nav{margin-left:auto;display:flex;gap:12px}
+.nav a{color:#dce9ff;text-decoration:none;padding:6px 8px;border-radius:6px}
+.cta{background:var(--accent);color:#fff;padding:8px 12px;border-radius:8px;text-decoration:none}
+.nav-toggle{display:none;background:none;border:0;color:#fff;font-size:18px}
+.hero{padding:60px 0;background:linear-gradient(180deg, rgba(43,144,255,0.06), transparent);border-bottom:1px solid rgba(255,255,255,0.02)}
+.hero-inner h1{font-size:2rem;margin:0 0 8px}
+.hero-inner p{color:var(--muted);margin:0 0 18px}
+.hero-actions .btn{margin-right:10px}
+.btn{display:inline-block;padding:10px 14px;border-radius:8px;text-decoration:none;background:var(--accent);color:#fff}
+.btn.ghost, .btn.ghost:visited{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#dbeaff}
+.features{display:flex;gap:20px;padding:40px 0;flex-wrap:wrap}
+.features article{flex:1;min-width:260px;background:var(--card);padding:18px;border-radius:12px}
+.status-card{width:320px}
+.server-info{list-style:none;padding:0;margin-top:18px;display:flex;gap:12px;color:var(--muted)}
+.howto{background:rgba(255,255,255,0.02);padding:20px;border-radius:12px;margin:20px 0}
+.cta-banner{padding:24px;background:linear-gradient(90deg, rgba(43,144,255,0.06), rgba(43,144,255,0.03));border-radius:12px;margin:12px 0}
+.faq details{background:var(--card);padding:12px;border-radius:8px;margin:8px 0}
+.donation-options{display:flex;gap:12px;flex-wrap:wrap}
+.donation-card{background:var(--card);padding:16px;border-radius:12px;flex:1;min-width:260px}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.product{background:var(--card);padding:14px;border-radius:10px}
+.site-footer{padding:18px 0;color:var(--muted);text-align:center;border-top:1px solid rgba(255,255,255,0.02);margin-top:40px}
+@media (max-width:830px){
+  .nav{display:none}
+  .nav-toggle{display:block;margin-left:auto}
+  .header-inner{gap:8px}
 }
-
-* {margin: 0; padding: 0; box-sizing: border-box;}
-body {
-  font-family: Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  text-align: center;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-header {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 20px 40px;
-  background: #fff; 
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-body.dark header {background: #2c2c2c;}
-.logo {font-size: 24px; font-weight: bold;}
-nav a {
-  margin: 0 15px; text-decoration: none;
-  color: var(--text); font-weight: 500;
-}
-nav a:hover {color: var(--primary);}
-
-.hero {
-  flex: 1;
-  display: flex; flex-direction: column;
-  justify-content: center; align-items: center;
-}
-.hero h1 {font-size: 60px; margin-bottom: 20px;}
-.hero p {font-size: 20px; margin-bottom: 40px;}
-
-.circles {
-  display: flex; gap: 40px;
-}
-.circle {
-  width: 120px; height: 120px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-.circle:hover {transform: scale(1.1);}
-.light {background: #f1f1f1; border: 4px solid #ccc;}
-.dark {background: #222; border: 4px solid #555;}
-
-footer {
-  padding: 20px; background: #fff;
-}
-body.dark footer {background: #2c2c2c;}
