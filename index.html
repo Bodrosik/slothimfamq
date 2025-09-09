@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BereziVkaMC - Minecraft Server</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Хедер / Навігація -->
+    <!-- Хедер -->
     <header>
         <div class="logo">BereziVkaMC</div>
         <nav>
@@ -22,38 +23,71 @@
         </nav>
     </header>
 
-    <!-- Головний банер -->
+    <!-- Герой секція -->
     <section id="hero">
-        <h1>Ласкаво просимо на BereziVkaMC!</h1>
-        <p>Грай на нашому сервері та отримуй унікальні можливості з донатом!</p>
-        <a href="donate.html" class="btn">Підтримати сервер</a>
+        <div class="hero-content">
+            <h1>Грай на BereziVkaMC!</h1>
+            <p>Міцний Minecraft сервер з реалістичним світом і донат-перевагами.</p>
+            <a href="donate.html" class="btn">Підтримати сервер</a>
+        </div>
+        <div class="hero-image">
+            <img src="https://via.placeholder.com/600x400.png?text=Minecraft+Server" alt="Minecraft Server">
+        </div>
     </section>
 
     <!-- Статус сервера -->
-    <section id="status">
+    <section id="status" class="section">
         <h2>Статус сервера</h2>
-        <p>Поточний стан: <span id="server-status">Завантаження...</span></p>
+        <div class="status-card">
+            <p>IP сервера: <strong>berezivka2tochka0.aternos.me</strong></p>
+            <p>Статус: <span id="server-status">Завантаження...</span></p>
+            <p>Гравців онлайн: <span id="online-players">0</span></p>
+        </div>
+    </section>
+
+    <!-- Магазин / Донат -->
+    <section id="shop" class="section">
+        <h2>Популярні пакети донату</h2>
+        <div class="card-container">
+            <div class="card">
+                <h3>Бронза</h3>
+                <p>50 грн — базові привілеї</p>
+                <a href="donate.html" class="btn small">Купити</a>
+            </div>
+            <div class="card">
+                <h3>Срібло</h3>
+                <p>100 грн — середній пакет бонусів</p>
+                <a href="donate.html" class="btn small">Купити</a>
+            </div>
+            <div class="card">
+                <h3>Золото</h3>
+                <p>200 грн — топові переваги</p>
+                <a href="donate.html" class="btn small">Купити</a>
+            </div>
+        </div>
     </section>
 
     <!-- FAQ -->
-    <section id="faq">
+    <section id="faq" class="section">
         <h2>Часті питання</h2>
-        <div class="faq-item">
-            <h3>Як підключитися до сервера?</h3>
-            <p>Введи IP: <strong>berezivka2tochka0.aternos.me</strong> у Minecraft.</p>
-        </div>
-        <div class="faq-item">
-            <h3>Які доступні режими гри?</h3>
-            <p>Survival, Creative, Grief.</p>
-        </div>
-        <div class="faq-item">
-            <h3>Як купити донат?</h3>
-            <p>Перейди в розділ <a href="donate.html">Донат</a> та обери пакет.</p>
+        <div class="faq-container">
+            <div class="faq-item">
+                <h3>Як підключитися до сервера?</h3>
+                <p>Введи IP: <strong>berezivka2tochka0.aternos.me</strong> у Minecraft.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Які режими гри?</h3>
+                <p>Survival, Creative, Grief.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Як купити донат?</h3>
+                <p>Перейди в розділ <a href="donate.html">Донат</a> та обери пакет.</p>
+            </div>
         </div>
     </section>
 
     <!-- Контакти -->
-    <section id="contacts">
+    <section id="contacts" class="section">
         <h2>Контакти</h2>
         <p>Discord: <a href="https://discord.gg/тут_твій_лінк">Приєднатись</a></p>
         <p>Telegram: <a href="https://t.me/тут_твій_лінк">Написати</a></p>
