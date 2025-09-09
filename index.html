@@ -1,103 +1,68 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BerezivkaMC — Minecraft Server</title>
-  <link rel="stylesheet" href="styles.css" />
-  <meta name="description" content="Офіційний сайт Minecraft сервера — інформація, донат, магазин, статус сервера." />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BereziVkaMC - Minecraft Server</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="index.html">BerezivkaMC</a>
-      <nav class="nav">
-        <a href="index.html">Головна</a>
-        <a href="store.html">Магазин</a>
-        <a href="donate.html">Донат</a>
-        <a href="#status">Статус</a>
-        <a href="#contacts">Контакти</a>
-      </nav>
-      <a class="cta" href="store.html">Пiдключитись</a>
-      <button class="nav-toggle" aria-label="Меню" onclick="toggleNav()">☰</button>
-    </div>
-  </header>
+    <!-- Хедер / Навігація -->
+    <header>
+        <div class="logo">BereziVkaMC</div>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">Головна</a></li>
+                <li><a href="donate.html">Донат</a></li>
+                <li><a href="store.html">Магазин</a></li>
+                <li><a href="#status">Статус</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#contacts">Контакти</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <main>
-    <section class="hero">
-      <div class="container hero-inner">
-        <h1>Ласкаво просимо на BerezivkaMC</h1>
-        <p>Плагіни, івенти, рейт 1.0, щотижневі турніри та донат-послуги для підтримки сервера.</p>
-        <div class="hero-actions">
-          <a class="btn" href="store.html">Магазин</a>
-          <a class="btn ghost" href="donate.html">Підтримати</a>
+    <!-- Головний банер -->
+    <section id="hero">
+        <h1>Ласкаво просимо на BereziVkaMC!</h1>
+        <p>Грай на нашому сервері та отримуй унікальні можливості з донатом!</p>
+        <a href="donate.html" class="btn">Підтримати сервер</a>
+    </section>
+
+    <!-- Статус сервера -->
+    <section id="status">
+        <h2>Статус сервера</h2>
+        <p>Поточний стан: <span id="server-status">Завантаження...</span></p>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+        <h2>Часті питання</h2>
+        <div class="faq-item">
+            <h3>Як підключитися до сервера?</h3>
+            <p>Введи IP: <strong>berezivka2tochka0.aternos.me</strong> у Minecraft.</p>
         </div>
-        <ul class="server-info">
-          <li>IP: <strong id="server-ip">berezivka2tochka0.aternos.me</strong></li>
-          <li>Гравців: <strong id="player-count">—</strong></li>
-          <li>Версія: <strong id="mc-version">—</strong></li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="features container">
-      <article>
-        <h2>Що є на сервері</h2>
-        <ul>
-          <li>Економіка, магазини, міні-ігри</li>
-          <li>Ранги, які можна купити на сайті</li>
-          <li>Підтримка: Discord та Telegram</li>
-        </ul>
-      </article>
-
-      <article id="status" class="status-card">
-        <h3>Статус сервера</h3>
-        <div id="status-box">
-          <p id="status-text">Завантаження...</p>
+        <div class="faq-item">
+            <h3>Які доступні режими гри?</h3>
+            <p>Survival, Creative, Grief.</p>
         </div>
-        <small>Оновлюється автоматично через API (замініть IP у script.js)</small>
-      </article>
+        <div class="faq-item">
+            <h3>Як купити донат?</h3>
+            <p>Перейди в розділ <a href="donate.html">Донат</a> та обери пакет.</p>
+        </div>
     </section>
 
-    <section class="howto container">
-      <h2>Як підключитись</h2>
-      <ol>
-        <li>Відкрий Minecraft → Multiplayer → Add Server</li>
-        <li>Введи IP: <strong id="howto-ip">berezivka2tochka0.aternos.me</strong></li>
-        <li>Натисни «Join Server»</li>
-      </ol>
+    <!-- Контакти -->
+    <section id="contacts">
+        <h2>Контакти</h2>
+        <p>Discord: <a href="https://discord.gg/тут_твій_лінк">Приєднатись</a></p>
+        <p>Telegram: <a href="https://t.me/тут_твій_лінк">Написати</a></p>
     </section>
 
-    <section class="cta-banner">
-      <div class="container">
-        <h3>Підтримай сервер — отримай унікальний ранг</h3>
-        <a class="btn" href="donate.html">Донат</a>
-      </div>
-    </section>
+    <footer>
+        <p>&copy; 2025 BereziVkaMC | Усі права захищені</p>
+    </footer>
 
-    <section class="faq container">
-      <h2>FAQ</h2>
-      <details><summary>Як отримати куплений ранг?</summary>
-        <p>Після оплати вкажи свій нік у формі — ранг надається вручну або автоматично (залежить від налаштувань). Зазвичай 5–30 хвилин.</p>
-      </details>
-      <details><summary>Які платіжні методи?</summary>
-        <p>PayPal, LiqPay, Fondy, Google Pay, банківська карта — залежить від менеджерів сервера.</p>
-      </details>
-    </section>
-
-    <section id="contacts" class="contacts container">
-      <h2>Контакти</h2>
-      <p>Discord: <a href="https://discord.gg/YOUR_DISCORD" target="_blank">Наш Discord</a></p>
-      <p>Telegram: <a href="https://t.me/YOUR_TELEGRAM" target="_blank">@YOUR_TELEGRAM</a></p>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <small>© <span id="year"></span> BerezivkaMC — Усі права збережено.</small>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
