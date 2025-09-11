@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Awesome Office — Гнучкий корпоративний сайт</title>
+  <meta name="description" content="Офісний шаблон сайту — адаптивний, сучасний, готовий до GitHub Pages" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="#">
+        <!-- Просте SVG лого -->
+        <img src="assets/logo.svg" alt="Awesome Office Logo" class="logo" />
+        <span class="brand-name">Awesome Office</span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="main-nav">
+        <span class="sr-only">Відкрити меню</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <nav id="main-nav" class="main-nav" hidden>
+        <ul>
+          <li><a href="#about">Про нас</a></li>
+          <li><a href="#services">Послуги</a></li>
+          <li><a href="#team">Команда</a></li>
+          <li><a href="#contact">Контакти</a></li>
+          <li><a class="btn btn-primary" href="#contact">Зв'язатися</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-left">
+          <h1 class="hero-title">Сучасний офіс для сучасних задач</h1>
+          <p class="hero-sub">Розробка, менеджмент, дизайн — все під одним дахом. Адаптивні рішення для телефону та ноутбука.</p>
+          <p class="hero-cta">
+            <a href="#services" class="btn btn-primary">Наші послуги</a>
+            <a href="#contact" class="btn btn-ghost">Замовити консультацію</a>
+          </p>
+        </div>
+        <div class="hero-right">
+          <img src="assets/hero.jpg" alt="Офіс" class="hero-illustration" />
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="section about">
+      <div class="container">
+        <div class="section-head">
+          <h2>Про нас</h2>
+          <p>Ми створюємо цифрові рішення, які працюють на будь-якому пристрої — від телефону до великого монітора.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <svg class="card-icon" width="40" height="40" viewBox="0 0 24 24"><path d="M3 12h18M12 3v18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <h3>Адаптивний дизайн</h3>
+            <p>Дбайливо оптимізуємо інтерфейси під усі розміри екрану.</p>
+          </article>
+          <article class="card">
+            <svg class="card-icon" width="40" height="40" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4L8.5 13 3 9h7z" stroke="currentColor" stroke-width="1" fill="none"/></svg>
+            <h3>Продуктивність</h3>
+            <p>Швидкі сторінки, оптимізований код і доступність.</p>
+          </article>
+          <article class="card">
+            <svg class="card-icon" width="40" height="40" viewBox="0 0 24 24"><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+            <h3>Готові до продакшену</h3>
+            <p>Легко розгортати на GitHub Pages або Netlify.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="section services">
+      <div class="container">
+        <h2 class="section-title">Наші послуги</h2>
+        <div class="services-grid">
+          <div class="service">
+            <h3>Веб-розробка</h3>
+            <p>Чистий HTML/CSS/JS або SPA на React/Vue — за бажанням.</p>
+          </div>
+          <div class="service">
+            <h3>UI/UX дизайн</h3>
+            <p>Прототипи, Figma-проєкти та адаптивні макети.</p>
+          </div>
+          <div class="service">
+            <h3>Підтримка</h3>
+            <p>Оновлення, хостинг та моніторинг.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section id="team" class="section team">
+      <div class="container">
+        <h2 class="section-title">Наша команда</h2>
+        <div class="team-grid">
+          <figure class="team-member">
+            <img src="assets/team1.jpg" alt="Ім'я 1" loading="lazy"/>
+            <figcaption>
+              <strong>Олена</strong>
+              <span>Дизайнерка</span>
+            </figcaption>
+          </figure>
+          <figure class="team-member">
+            <img src="assets/team2.jpg" alt="Ім'я 2" loading="lazy"/>
+            <figcaption>
+              <strong>Іван</strong>
+              <span>Фронтенд</span>
+            </figcaption>
+          </figure>
+          <figure class="team-member">
+            <img src="assets/team3.jpg" alt="Ім'я 3" loading="lazy"/>
+            <figcaption>
+              <strong>Марія</strong>
+              <span>PM</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section contact">
+      <div class="container contact-grid">
+        <div>
+          <h2 class="section-title">Зв'язок</h2>
+          <p>Надішліть нам повідомлення — відповімо за 24 години.</p>
+          <ul class="contact-list">
+            <li>Email: <a href="mailto:hello@awesome.office">hello@awesome.office</a></li>
+            <li>Телефон: <a href="tel:+380000000000">+38 (000) 000-00-00</a></li>
+          </ul>
+        </div>
+        <form class="contact-form" id="contactForm" novalidate>
+          <label>
+            Ім'я
+            <input type="text" name="name" required />
+          </label>
+          <label>
+            Email
+            <input type="email" name="email" required />
+          </label>
+          <label>
+            Повідомлення
+            <textarea name="message" rows="4" required></textarea>
+          </label>
+          <div class="form-row">
+            <button type="submit" class="btn btn-primary">Надіслати</button>
+            <button type="reset" class="btn btn-ghost">Очистити</button>
+          </div>
+          <p class="form-status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Awesome Office — Всі права захищені</p>
+      <nav class="footer-nav">
+        <a href="#top">Наверх</a>
+        <a href="#privacy">Політика</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="js/app.js" defer></script>
+</body>
+</html>
