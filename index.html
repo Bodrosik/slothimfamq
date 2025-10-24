@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Шкільний щоденник — GitHub Pages</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Firebase SDKs (modular) -->
+  <script type="module" src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <h1>Щоденник класу</h1>
+    <div id="userInfo"></div>
+  </header>
+
+  <main class="container">
+    <section id="loginSection" class="card">
+      <h2>Вхід для викладача</h2>
+      <form id="loginForm">
+        <label>
+          Email
+          <input id="email" type="email" required placeholder="teacher@example.com" />
+        </label>
+        <label>
+          Пароль
+          <input id="password" type="password" required placeholder="ваш пароль" />
+        </label>
+        <div class="row">
+          <button type="submit" class="btn">Увійти</button>
+          <button id="logoutBtn" class="btn ghost" type="button" hidden>Вийти</button>
+        </div>
+        <p class="muted">Якщо ще не створили аккаунт — створіть його у Firebase Console (див. тутор нижче).</p>
+      </form>
+    </section>
+
+    <section id="journalSection" class="card hidden">
+      <h2>Журнал — <span id="classTitle">Клас 1-А</span></h2>
+
+      <div class="controls">
+        <label class="small">
+          Фільтр:
+          <select id="filterSelect">
+            <option value="all">Усі</option>
+            <option value="hasRemarks">Є зауваження</option>
+          </select>
+        </label>
+        <button id="addCommentMode" class="btn small ghost">Додати швидку примітку</button>
+      </div>
+
+      <div id="studentsList" class="students-grid">
+        <!-- JS згенерує 10 карток учнів -->
+      </div>
+      <div class="muted small">Зміни зберігаються автоматично. Видалення — хард (передбачено підтвердження).</div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>Зроблено для шкільного проєкту • Зберігання: Firebase Realtime DB</small>
+  </footer>
+
+  <!-- Modal for editing -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content card">
+      <button id="closeModal" class="close">&times;</button>
+      <h3 id="modalTitle">Оцінки та зауваження</h3>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+</body>
+</html>
